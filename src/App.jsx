@@ -54,16 +54,17 @@ const App = () => {
   };
 
   const handleSave = async (cat) => {
+    console.log("handleSave");
+    console.log(cat);
     try {
       const urlAxios = "/favourites";
       const objAxios = { image_id: cat.id };
-      // exec axios
+
       const resAxios = await api.post(urlAxios, objAxios);
-      // return data
       const { data, status } = resAxios;
       console.log(data);
       console.log(status);
-      loadRandomCat();
+      loadFavoriteCat();
     } catch (error) {
       console.log(error);
       setError(error);
@@ -114,13 +115,13 @@ const App = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center bg-white">
+    <div className="flex flex-col justify-center items-center bg-white container mx-auto p-3 ">
       <Typography className="mt-6" variant="h2" color="green">
         Gatitos Aletorios
       </Typography>
 
       <section>
-        <article className="grid grid-cols-3 gap-5">
+        <article className="grid grid-cols-3 gap-3">
           {cats.map((cat) => (
             <div
               key={cat.id}
@@ -129,7 +130,7 @@ const App = () => {
               <img
                 src={cat.url}
                 alt={cat.id}
-                className="h-56 w-56 rounded-full object-cover object-center m-2"
+                className="h-28 w-28 md:h-56 md:w-56 rounded-full object-cover object-center m-2"
               />
               <Button color="green" onClick={() => handleSave(cat)}>
                 Save Cat
@@ -139,21 +140,23 @@ const App = () => {
         </article>
         <button></button>
       </section>
+
       <Typography className="mt-6" variant="h2" color="red">
         Gatitos Favoritos
       </Typography>
 
       <section>
         <article className="grid grid-cols-3 gap-5">
+          {console.log(favoritesCats)}
           {favoritesCats.map((cat) => (
             <div
               key={cat.id}
               className="flex flex-col justify-center items-center m-1"
             >
               <img
-                src={`${cat.image.url}`}
-                alt={`${cat.image.id}`}
-                className="h-56 w-56 rounded-full object-cover object-center m-2"
+                src={`${cat.image?.url}`}
+                alt={`${cat.image?.id}`}
+                className="h-28 w-28  md:h-56 md:w-56  rounded-full object-cover object-center m-2"
               />
               <Button color="red" onClick={() => handleDelete(cat)}>
                 Delete Cat
@@ -162,14 +165,17 @@ const App = () => {
           ))}
         </article>
       </section>
+
       <Typography className="mt-6" variant="h2" color="blue">
         Cargar Gatitos
       </Typography>
 
-      <section>
+      <section className="h-56 w-full flex justify-center items-center">
         <form action="" id="uploading" ref={formRef} onSubmit={handleUpdate}>
           <input type="file" name="photo" />
-          <button type="submit">Update Cat</button>
+          <Button color="blue" type="submit">
+            Update Cat
+          </Button>
         </form>
       </section>
     </div>
