@@ -1,5 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
+import { Button } from "@material-tailwind/react";
+import { Spinner } from "@material-tailwind/react";
+import { Typography } from "@material-tailwind/react";
 
 const App = () => {
   const [cats, setCats] = useState([]);
@@ -9,14 +12,15 @@ const App = () => {
   const formRef = useRef(null);
 
   // axios
+  const PROXY_URL = "https://cors-anywhere.herokuapp.com/";
+  const BASE_URL = "https://api.thecatapi.com/v1/";
   const API_KEY =
     "live_BgeabuZRHRH2irUsFWjZREQBJ38KmhA2OdWWkOycJQLQ54j44JApcrWGIqXZn9Ym";
-  const BASE_URL = "https://api.thecatapi.com/v1/";
 
   const api = axios.create({
     baseURL: BASE_URL,
     headers: { "X-Custom-Header": "foobar", "x-api-key": `${API_KEY}` },
-    timeout: 1000,
+    timeout: 3000,
   });
 
   const loadRandomCat = async () => {
@@ -24,15 +28,15 @@ const App = () => {
     try {
       const url = "/images/search?limit=3";
       const res = await api.get(url);
-      const { data, status } = res;
-      loadFavoriteCat();
+      const { data } = res;
+      //
       setCats(data);
+      loadFavoriteCat();
       setLoading(false);
-      console.log(data);
-      console.log(status);
+      console.log(" data : ", data);
     } catch (error) {
-      console.log(error);
       setError(error);
+      console.log(error);
     }
   };
 
@@ -40,10 +44,9 @@ const App = () => {
     try {
       const url = "/favourites";
       const res = await api.get(url);
-      const { data, status } = res;
+      const { data } = res;
       setFavoritesCats(data);
       console.log(data);
-      console.log(status);
     } catch (error) {
       console.log(error);
       setError(error);
@@ -73,9 +76,9 @@ const App = () => {
       const res = await api.delete(url);
       const { data, status } = res;
       //
+      setFavoritesCats((prevFav) => prevFav.filter((fav) => fav.id !== cat.id));
       console.log(data);
       console.log(status);
-      loadRandomCat();
     } catch (error) {
       console.log(error);
       setError(error);
@@ -103,33 +106,66 @@ const App = () => {
   }, []);
 
   if (loading) {
-    return <h1>Cargando...</h1>;
+    return (
+      <div className="flex w-full h-screen  flex-col justify-center items-center bg-white">
+        <Spinner className="h-16 w-16" />
+      </div>
+    );
   }
 
   return (
-    <div>
-      <h2>Gatitos Aletorios</h2>
+    <div className="flex flex-col justify-center items-center bg-white">
+      <Typography className="mt-6" variant="h2" color="green">
+        Gatitos Aletorios
+      </Typography>
+
       <section>
-        <article>
+        <article className="grid grid-cols-3 gap-5">
           {cats.map((cat) => (
-            <div key={cat.id}>
-              <img src={cat.url} alt={cat.id} />
-              <button onClick={() => handleSave(cat)}>Save Cat</button>
+            <div
+              key={cat.id}
+              className="flex flex-col justify-center items-center m-1"
+            >
+              <img
+                src={cat.url}
+                alt={cat.id}
+                className="h-56 w-56 rounded-full object-cover object-center m-2"
+              />
+              <Button color="green" onClick={() => handleSave(cat)}>
+                Save Cat
+              </Button>
             </div>
           ))}
         </article>
         <button></button>
       </section>
-      <h2>Gatitos Favoritos</h2>
+      <Typography className="mt-6" variant="h2" color="red">
+        Gatitos Favoritos
+      </Typography>
+
       <section>
-        {favoritesCats.map((cat) => (
-          <div key={cat.id}>
-            <img src={`${cat.image.url}`} alt={`${cat.image.id}`} />
-            <button onClick={() => handleDelete(cat)}>Delete Cat</button>
-          </div>
-        ))}
+        <article className="grid grid-cols-3 gap-5">
+          {favoritesCats.map((cat) => (
+            <div
+              key={cat.id}
+              className="flex flex-col justify-center items-center m-1"
+            >
+              <img
+                src={`${cat.image.url}`}
+                alt={`${cat.image.id}`}
+                className="h-56 w-56 rounded-full object-cover object-center m-2"
+              />
+              <Button color="red" onClick={() => handleDelete(cat)}>
+                Delete Cat
+              </Button>
+            </div>
+          ))}
+        </article>
       </section>
-      <h2>Cargar Gatitos</h2>
+      <Typography className="mt-6" variant="h2" color="blue">
+        Cargar Gatitos
+      </Typography>
+
       <section>
         <form action="" id="uploading" ref={formRef} onSubmit={handleUpdate}>
           <input type="file" name="photo" />
