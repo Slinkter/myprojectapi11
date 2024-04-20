@@ -86,18 +86,21 @@ const App = () => {
     }
   };
 
-  const handleUpdate = async () => {
+  const handleUpdate = async (e) => {
+    e.preventDefault();
     try {
       const obj = new FormData(formRef.current);
-      const url = `/images/upload`;
+      const url = "/images/upload";
       const res = await api.post(url, obj);
+      console.log(res);
       //
-      const { data, status } = res;
-      console.log(data);
-      console.log(status);
-      loadRandomCat();
+      // const { data, status } = res;
+      //console.log(data);
+      // console.log(status);
+      // loadRandomCat();
+      //loadFavoriteCat();
     } catch (error) {
-      console.log(error);
+      console.log("Error:", error.message); // Imprime el mensaje de error
       setError(error);
     }
   };
@@ -125,14 +128,18 @@ const App = () => {
           {cats.map((cat) => (
             <div
               key={cat.id}
-              className="flex flex-col justify-center items-center m-1"
+              className="flex flex-col justify-center items-center m-1 gap-3"
             >
               <img
                 src={cat.url}
                 alt={cat.id}
-                className="h-28 w-28 md:h-56 md:w-56 rounded-full object-cover object-center m-2"
+                className="h-28 w-28 md:h-56 md:w-56 rounded-full object-cover object-center m-2 transition ease-in-out  hover:-translate-y-1 hover:scale-110 duration-300"
               />
-              <Button color="green" onClick={() => handleSave(cat)}>
+              <Button
+                color="green"
+                onClick={() => handleSave(cat)}
+                className="transition ease-in-out  hover:-translate-y-1 hover:scale-110 duration-300"
+              >
                 Save Cat
               </Button>
             </div>
@@ -151,14 +158,18 @@ const App = () => {
           {favoritesCats.map((cat) => (
             <div
               key={cat.id}
-              className="flex flex-col justify-center items-center m-1"
+              className="flex flex-col justify-center items-center m-1 gap-3"
             >
               <img
                 src={`${cat.image?.url}`}
                 alt={`${cat.image?.id}`}
-                className="h-28 w-28  md:h-56 md:w-56  rounded-full object-cover object-center m-2"
+                className="h-28 w-28 md:h-56 md:w-56 rounded-full object-cover object-center m-2 transition ease-in-out  hover:-translate-y-1 hover:scale-110 duration-300"
               />
-              <Button color="red" onClick={() => handleDelete(cat)}>
+              <Button
+                color="red"
+                onClick={() => handleDelete(cat)}
+                className="transition ease-in-out  hover:-translate-y-1 hover:scale-110 duration-300"
+              >
                 Delete Cat
               </Button>
             </div>
@@ -166,18 +177,24 @@ const App = () => {
         </article>
       </section>
 
-      <Typography className="mt-6" variant="h2" color="blue">
+      {/*  
+      
+       <Typography className="mt-6" variant="h2" color="blue">
         Cargar Gatitos
       </Typography>
-
       <section className="h-56 w-full flex justify-center items-center">
-        <form action="" id="uploading" ref={formRef} onSubmit={handleUpdate}>
+        <form
+          action=""
+          id="uploading"
+          ref={formRef}
+          onSubmit={(e) => handleUpdate(e)}
+        >
           <input type="file" name="photo" />
           <Button color="blue" type="submit">
             Update Cat
           </Button>
         </form>
-      </section>
+      </section> */}
     </div>
   );
 };
