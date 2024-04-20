@@ -4,6 +4,17 @@ import { Button } from "@material-tailwind/react";
 import { Spinner } from "@material-tailwind/react";
 import { Typography } from "@material-tailwind/react";
 
+const PROXY_URL = "https://cors-anywhere.herokuapp.com/";
+const BASE_URL = "https://api.thecatapi.com/v1/";
+const API_KEY =
+  "live_BgeabuZRHRH2irUsFWjZREQBJ38KmhA2OdWWkOycJQLQ54j44JApcrWGIqXZn9Ym";
+
+const api = axios.create({
+  baseURL: BASE_URL,
+  headers: { "X-Custom-Header": "foobar", "x-api-key": `${API_KEY}` },
+  timeout: 3000,
+});
+
 const App = () => {
   const [cats, setCats] = useState([]);
   const [favoritesCats, setFavoritesCats] = useState([]);
@@ -11,31 +22,18 @@ const App = () => {
   const [error, setError] = useState(false);
   const formRef = useRef(null);
 
-  // axios
-  const PROXY_URL = "https://cors-anywhere.herokuapp.com/";
-  const BASE_URL = "https://api.thecatapi.com/v1/";
-  const API_KEY =
-    "live_BgeabuZRHRH2irUsFWjZREQBJ38KmhA2OdWWkOycJQLQ54j44JApcrWGIqXZn9Ym";
-
-  const api = axios.create({
-    baseURL: BASE_URL,
-    headers: { "X-Custom-Header": "foobar", "x-api-key": `${API_KEY}` },
-    timeout: 3000,
-  });
-
   const loadRandomCat = async () => {
     setLoading(true);
     try {
       const url = "/images/search?limit=3";
       const res = await api.get(url);
       const { data } = res;
-      //
       setCats(data);
-      loadFavoriteCat();
+      // loadFavoriteCat();
       setLoading(false);
       console.log(" data : ", data);
     } catch (error) {
-      setError(error);
+      setError(error.message);
       console.log(error);
     }
   };
@@ -46,43 +44,38 @@ const App = () => {
       const res = await api.get(url);
       const { data } = res;
       setFavoritesCats(data);
-      console.log(data);
     } catch (error) {
       console.log(error);
-      setError(error);
+      setError(error.message);
     }
   };
 
   const handleSave = async (cat) => {
-    console.log("handleSave");
-    console.log(cat);
     try {
+      if (favoritesCats.some((fav) => fav.image.id === cat.id)) {
+        console.log("son iguales id");
+        return;
+      }
+
       const urlAxios = "/favourites";
       const objAxios = { image_id: cat.id };
-
-      const resAxios = await api.post(urlAxios, objAxios);
-      const { data, status } = resAxios;
-      console.log(data);
-      console.log(status);
+      await api.post(urlAxios, objAxios);
+      //  setFavoritesCats((prevFavs) => [...prevFavs, { image: { id: cat.id } }]);
       loadFavoriteCat();
     } catch (error) {
       console.log(error);
-      setError(error);
+      setError(error.message);
     }
   };
 
   const handleDelete = async (cat) => {
     try {
       const url = `/favourites/${cat.id}`;
-      const res = await api.delete(url);
-      const { data, status } = res;
-      //
+      await api.delete(url);
       setFavoritesCats((prevFav) => prevFav.filter((fav) => fav.id !== cat.id));
-      console.log(data);
-      console.log(status);
     } catch (error) {
       console.log(error);
-      setError(error);
+      setError(error.message);
     }
   };
 
@@ -91,22 +84,16 @@ const App = () => {
     try {
       const obj = new FormData(formRef.current);
       const url = "/images/upload";
-      const res = await api.post(url, obj);
-      console.log(res);
-      //
-      // const { data, status } = res;
-      //console.log(data);
-      // console.log(status);
-      // loadRandomCat();
-      //loadFavoriteCat();
+      await api.post(url, obj);
     } catch (error) {
       console.log("Error:", error.message); // Imprime el mensaje de error
-      setError(error);
+      setError(error.message);
     }
   };
 
   useEffect(() => {
     loadRandomCat();
+    loadFavoriteCat();
   }, []);
 
   if (loading) {
@@ -138,6 +125,7 @@ const App = () => {
               <Button
                 color="green"
                 onClick={() => handleSave(cat)}
+                disabled={favoritesCats.some((fav) => fav.image.id === cat.id)}
                 className="transition ease-in-out  hover:-translate-y-1 hover:scale-110 duration-300"
               >
                 Save Cat
