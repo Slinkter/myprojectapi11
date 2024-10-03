@@ -1,190 +1,169 @@
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
-import { Button } from "@material-tailwind/react";
-import { Spinner } from "@material-tailwind/react";
-import { Typography } from "@material-tailwind/react";
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
-const PROXY_URL = "https://cors-anywhere.herokuapp.com/";
+import { Button, Spinner, Typography } from "@material-tailwind/react";
+
 const BASE_URL = "https://api.thecatapi.com/v1/";
 const API_KEY =
-  "live_BgeabuZRHRH2irUsFWjZREQBJ38KmhA2OdWWkOycJQLQ54j44JApcrWGIqXZn9Ym";
+    "live_BgeabuZRHRH2irUsFWjZREQBJ38KmhA2OdWWkOycJQLQ54j44JApcrWGIqXZn9Ym";
 
 const api = axios.create({
-  baseURL: BASE_URL,
-  headers: { "X-Custom-Header": "foobar", "x-api-key": `${API_KEY}` },
-  timeout: 3000,
+    baseURL: BASE_URL,
+    headers: { "X-Custom-Header": "foobar", "x-api-key": API_KEY },
+    timeout: 3000,
 });
 
-const App = () => {
-  const [cats, setCats] = useState([]);
-  const [favoritesCats, setFavoritesCats] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const formRef = useRef(null);
-
-  const loadRandomCat = async () => {
-    setLoading(true);
+// Función genérica para manejar peticiones
+const fetchData = async (method, url, data = null) => {
     try {
-      const url = "/images/search?limit=3";
-      const res = await api.get(url);
-      const { data } = res;
-      setCats(data);
-      // loadFavoriteCat();
-      setLoading(false);
-      console.log(" data : ", data);
+        const res = await api[method](url, data);
+        return res.data;
     } catch (error) {
-      setError(error.message);
-      console.log(error);
+        console.error(`Error fetching data: ${error.message}`);
+        throw error;
     }
-  };
+};
 
-  const loadFavoriteCat = async () => {
-    try {
-      const url = "/favourites";
-      const res = await api.get(url);
-      const { data } = res;
-      setFavoritesCats(data);
-    } catch (error) {
-      console.log(error);
-      setError(error.message);
-    }
-  };
-
-  const handleSave = async (cat) => {
-    try {
-      if (favoritesCats.some((fav) => fav.image.id === cat.id)) {
-        console.log("son iguales id");
-        return;
-      }
-
-      const urlAxios = "/favourites";
-      const objAxios = { image_id: cat.id };
-      await api.post(urlAxios, objAxios);
-      //  setFavoritesCats((prevFavs) => [...prevFavs, { image: { id: cat.id } }]);
-      loadFavoriteCat();
-    } catch (error) {
-      console.log(error);
-      setError(error.message);
-    }
-  };
-
-  const handleDelete = async (cat) => {
-    try {
-      const url = `/favourites/${cat.id}`;
-      await api.delete(url);
-      setFavoritesCats((prevFav) => prevFav.filter((fav) => fav.id !== cat.id));
-    } catch (error) {
-      console.log(error);
-      setError(error.message);
-    }
-  };
-
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    try {
-      const obj = new FormData(formRef.current);
-      const url = "/images/upload";
-      await api.post(url, obj);
-    } catch (error) {
-      console.log("Error:", error.message); // Imprime el mensaje de error
-      setError(error.message);
-    }
-  };
-
-  useEffect(() => {
-    loadRandomCat();
-    loadFavoriteCat();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="flex w-full h-screen  flex-col justify-center items-center bg-white">
-        <Spinner className="h-16 w-16" />
-      </div>
-    );
-  }
-
-  return (
-    <div className="flex flex-col justify-center items-center bg-white container mx-auto p-3 ">
-      <Typography className="mt-6" variant="h2" color="green">
-        Gatitos Aletorios
-      </Typography>
-
-      <section>
-        <article className="grid grid-cols-3 gap-3">
-          {cats.map((cat) => (
-            <div
-              key={cat.id}
-              className="flex flex-col justify-center items-center m-1 gap-3"
-            >
-              <img
-                src={cat.url}
-                alt={cat.id}
-                className="h-28 w-28 md:h-56 md:w-56 rounded-full object-cover object-center m-2 transition ease-in-out  hover:-translate-y-1 hover:scale-110 duration-300"
-              />
-              <Button
-                color="green"
-                onClick={() => handleSave(cat)}
-                disabled={favoritesCats.some((fav) => fav.image.id === cat.id)}
-                className="transition ease-in-out  hover:-translate-y-1 hover:scale-110 duration-300"
-              >
-                Save Cat
-              </Button>
-            </div>
-          ))}
-        </article>
-        <button></button>
-      </section>
-
-      <Typography className="mt-6" variant="h2" color="red">
-        Gatitos Favoritos
-      </Typography>
-
-      <section>
-        <article className="grid grid-cols-3 gap-5">
-          {console.log(favoritesCats)}
-          {favoritesCats.map((cat) => (
-            <div
-              key={cat.id}
-              className="flex flex-col justify-center items-center m-1 gap-3"
-            >
-              <img
-                src={`${cat.image?.url}`}
-                alt={`${cat.image?.id}`}
-                className="h-28 w-28 md:h-56 md:w-56 rounded-full object-cover object-center m-2 transition ease-in-out  hover:-translate-y-1 hover:scale-110 duration-300"
-              />
-              <Button
-                color="red"
-                onClick={() => handleDelete(cat)}
-                className="transition ease-in-out  hover:-translate-y-1 hover:scale-110 duration-300"
-              >
-                Delete Cat
-              </Button>
-            </div>
-          ))}
-        </article>
-      </section>
-
-      {/*  
-      
-       <Typography className="mt-6" variant="h2" color="blue">
-        Cargar Gatitos
-      </Typography>
-      <section className="h-56 w-full flex justify-center items-center">
-        <form
-          action=""
-          id="uploading"
-          ref={formRef}
-          onSubmit={(e) => handleUpdate(e)}
+// Componente reutilizable para mostrar gatos
+const CatCard = ({ cat, onAction, actionLabel, actionColor, disabled }) => (
+    <div className="flex flex-col justify-center items-center m-1 gap-3">
+        <img
+            src={cat.url || cat.image?.url}
+            alt={cat.id || cat.image?.id}
+            className="h-28 w-28 md:h-56 md:w-56 rounded-full object-cover object-center m-2 transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300"
+        />
+        <Button
+            className="transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300"
+            color={actionColor}
+            onClick={() => onAction(cat)}
+            disabled={disabled}
         >
-          <input type="file" name="photo" />
-          <Button color="blue" type="submit">
-            Update Cat
-          </Button>
-        </form>
-      </section> */}
+            {actionLabel}
+        </Button>
     </div>
-  );
+);
+
+const App = () => {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+    const [cats, setCats] = useState([]);
+    const [favoritesCats, setFavoritesCats] = useState([]);
+
+    const getCatsRandom = async () => {
+        setLoading(true);
+        try {
+            const data = await fetchData("get", "/images/search?limit=3");
+            setCats(data);
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const loadFavoriteCats = async () => {
+        try {
+            const data = await fetchData("get", "/favourites");
+            setFavoritesCats(data);
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+
+    const handleSave = async (cat) => {
+        if (favoritesCats.some((fav) => fav.image.id === cat.id)) return;
+        try {
+            await fetchData("post", "/favourites", { image_id: cat.id });
+            loadFavoriteCats();
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+
+    const handleDelete = async (cat) => {
+        try {
+            await fetchData("delete", `/favourites/${cat.id}`);
+            setFavoritesCats((prevFavs) =>
+                prevFavs.filter((fav) => fav.id !== cat.id)
+            );
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+
+    useEffect(() => {
+        getCatsRandom();
+        loadFavoriteCats();
+    }, []);
+
+    if (loading) {
+        return (
+            <div className="flex w-full h-screen flex-col justify-center items-center bg-white">
+                <Spinner className="h-16 w-16" />
+            </div>
+        );
+    }
+
+    return (
+        <div className="flex flex-col justify-center items-center bg-white container mx-auto p-3">
+            <Typography className="mt-6" variant="h2" color="green">
+                Gatitos Aleatorios
+            </Typography>
+
+            <section>
+                <article className="grid grid-cols-3 gap-3">
+                    {cats.map((cat) => (
+                        <CatCard
+                            key={cat.id}
+                            cat={cat}
+                            onAction={() => handleSave(cat)}
+                            actionLabel="Save"
+                            actionColor="green"
+                            disabled={favoritesCats.some(
+                                (fav) => fav.image.id === cat.id
+                            )}
+                        />
+                    ))}
+                </article>
+            </section>
+
+            <Typography className="mt-6" variant="h2" color="red">
+                Gatitos Favoritos
+            </Typography>
+
+            <section>
+                <article className="grid grid-cols-2 md:grid-cols-3 gap-5">
+                    {favoritesCats.map((cat) => (
+                        <CatCard
+                            key={cat.id}
+                            cat={cat}
+                            onAction={() => handleDelete(cat)}
+                            actionLabel="Delete"
+                            actionColor="red"
+                            disabled={false}
+                        />
+                    ))}
+                </article>
+            </section>
+        </div>
+    );
+};
+
+CatCard.propTypes = {
+    cat: PropTypes.shape({
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+            .isRequired, // Puede ser string o number
+        url: PropTypes.string,
+        image: PropTypes.shape({
+            id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+            url: PropTypes.string,
+        }),
+    }).isRequired,
+    onAction: PropTypes.func.isRequired,
+    actionLabel: PropTypes.string.isRequired,
+    actionColor: PropTypes.string.isRequired,
+    disabled: PropTypes.bool.isRequired,
 };
 
 export default App;
