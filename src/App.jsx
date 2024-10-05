@@ -1,7 +1,6 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import axios from "axios";
 import PropTypes from "prop-types";
-
 import { Button, Spinner, Typography } from "@material-tailwind/react";
 
 const BASE_URL = "https://api.thecatapi.com/v1/";
