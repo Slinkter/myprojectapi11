@@ -10,45 +10,7 @@ import {
     saveCat,
 } from "./redux/catsSlice";
 
-const BASE_URL = "https://api.thecatapi.com/v1/";
-const API_KEY =
-    "live_BgeabuZRHRH2irUsFWjZREQBJ38KmhA2OdWWkOycJQLQ54j44JApcrWGIqXZn9Ym";
-
-const api = axios.create({
-    baseURL: BASE_URL,
-    headers: { "X-Custom-Header": "foobar", "x-api-key": API_KEY },
-    timeout: 3000,
-});
-
-// Función genérica para manejar peticiones
-const fetchData = async (method, url, data = null) => {
-    try {
-        const res = await api[method](url, data);
-        return res.data;
-    } catch (error) {
-        console.error(`Error fetching data: ${error.message}`);
-        throw error;
-    }
-};
-
-// Componente reutilizable para mostrar gatos
-const CatCard = ({ cat, onAction, actionLabel, actionColor, disabled }) => (
-    <div className="flex flex-col justify-center items-center m-1 gap-3">
-        <img
-            src={cat.url || cat.image?.url}
-            alt={cat.id || cat.image?.id}
-            className="h-28 w-28 md:h-56 md:w-56 rounded-full object-cover object-center m-2 transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300"
-        />
-        <Button
-            className="transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300"
-            color={actionColor}
-            onClick={() => onAction(cat)}
-            disabled={disabled}
-        >
-            {actionLabel}
-        </Button>
-    </div>
-);
+import CatCard from "./components/CatCard";
 
 const App = () => {
     const dispatch = useDispatch();

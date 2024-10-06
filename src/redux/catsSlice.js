@@ -12,7 +12,7 @@ const api = axios.create({
 });
 
 const fetchCatsRandom = createAsyncThunk("cats/fetchRandom", async () => {
-    const res = await api.get("/images/search?limit=2");
+    const res = await api.get("/images/search?limit=3");
     return res.data;
 });
 const fetchCatsFav = createAsyncThunk("cats/fetchFavorites", async () => {
