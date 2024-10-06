@@ -2,6 +2,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
 import { Button, Spinner, Typography } from "@material-tailwind/react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    deleteCat,
+    fetchCatsFav,
+    fetchCatsRandom,
+    saveCat,
+} from "./redux/catsSlice";
 
 const BASE_URL = "https://api.thecatapi.com/v1/";
 const API_KEY =
@@ -44,57 +51,13 @@ const CatCard = ({ cat, onAction, actionLabel, actionColor, disabled }) => (
 );
 
 const App = () => {
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
-    const [cats, setCats] = useState([]);
-    const [favoritesCats, setFavoritesCats] = useState([]);
-
-    const getCatsRandom = async () => {
-        setLoading(true);
-        try {
-            const data = await fetchData("get", "/images/search?limit=3");
-            setCats(data);
-        } catch (error) {
-            setError(error.message);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const loadFavoriteCats = async () => {
-        try {
-            const data = await fetchData("get", "/favourites");
-            setFavoritesCats(data);
-        } catch (error) {
-            setError(error.message);
-        }
-    };
-
-    const handleSave = async (cat) => {
-        if (favoritesCats.some((fav) => fav.image.id === cat.id)) return;
-        try {
-            await fetchData("post", "/favourites", { image_id: cat.id });
-            loadFavoriteCats();
-        } catch (error) {
-            setError(error.message);
-        }
-    };
-
-    const handleDelete = async (cat) => {
-        try {
-            await fetchData("delete", `/favourites/${cat.id}`);
-            setFavoritesCats((prevFavs) =>
-                prevFavs.filter((fav) => fav.id !== cat.id)
-            );
-        } catch (error) {
-            setError(error.message);
-        }
-    };
+    const dispatch = useDispatch();
+    const { cats, favorites, loading } = useSelector((state) => state.cats);
 
     useEffect(() => {
-        getCatsRandom();
-        loadFavoriteCats();
-    }, []);
+        dispatch(fetchCatsRandom());
+        dispatch(fetchCatsFav());
+    }, [dispatch]);
 
     if (loading) {
         return (
@@ -116,10 +79,10 @@ const App = () => {
                         <CatCard
                             key={cat.id}
                             cat={cat}
-                            onAction={() => handleSave(cat)}
+                            onAction={() => dispatch(saveCat(cat))}
                             actionLabel="Save"
                             actionColor="green"
-                            disabled={favoritesCats.some(
+                            disabled={favorites.some(
                                 (fav) => fav.image.id === cat.id
                             )}
                         />
@@ -133,11 +96,11 @@ const App = () => {
 
             <section>
                 <article className="grid grid-cols-2 md:grid-cols-3 gap-5">
-                    {favoritesCats.map((cat) => (
+                    {favorites.map((cat) => (
                         <CatCard
                             key={cat.id}
                             cat={cat}
-                            onAction={() => handleDelete(cat)}
+                            onAction={() => dispatch(deleteCat(cat))}
                             actionLabel="Delete"
                             actionColor="red"
                             disabled={false}
