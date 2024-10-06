@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import PropTypes from "prop-types";
-import { Button, Spinner, Typography } from "@material-tailwind/react";
+import { useEffect } from "react";
+import { Spinner, Typography } from "@material-tailwind/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     deleteCat,
@@ -13,6 +11,7 @@ import {
 import CatCard from "./components/CatCard";
 
 const App = () => {
+    window.document.title = "Projecto 11 - Luis J Cueva ";
     const dispatch = useDispatch();
     const { cats, favorites, loading } = useSelector((state) => state.cats);
 
@@ -57,7 +56,7 @@ const App = () => {
             </Typography>
 
             <section>
-                <article className="grid grid-cols-2 md:grid-cols-3 gap-5">
+                <article className="grid grid-cols-3 md:grid-cols-3 gap-5">
                     {favorites.map((cat) => (
                         <CatCard
                             key={cat.id}
@@ -72,22 +71,6 @@ const App = () => {
             </section>
         </div>
     );
-};
-
-CatCard.propTypes = {
-    cat: PropTypes.shape({
-        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-            .isRequired, // Puede ser string o number
-        url: PropTypes.string,
-        image: PropTypes.shape({
-            id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-            url: PropTypes.string,
-        }),
-    }).isRequired,
-    onAction: PropTypes.func.isRequired,
-    actionLabel: PropTypes.string.isRequired,
-    actionColor: PropTypes.string.isRequired,
-    disabled: PropTypes.bool.isRequired,
 };
 
 export default App;

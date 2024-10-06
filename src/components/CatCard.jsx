@@ -1,5 +1,6 @@
-import { Button } from "@material-tailwind/react";
 import React from "react";
+import PropTypes from "prop-types";
+import { Button } from "@material-tailwind/react";
 
 const CatCard = ({ cat, onAction, actionLabel, actionColor, disabled }) => (
     <div className="flex flex-col justify-center items-center m-1 gap-3">
@@ -18,5 +19,19 @@ const CatCard = ({ cat, onAction, actionLabel, actionColor, disabled }) => (
         </Button>
     </div>
 );
-
+CatCard.propTypes = {
+    cat: PropTypes.shape({
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+            .isRequired, // Puede ser string o number
+        url: PropTypes.string,
+        image: PropTypes.shape({
+            id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+            url: PropTypes.string,
+        }),
+    }).isRequired,
+    onAction: PropTypes.func.isRequired,
+    actionLabel: PropTypes.string.isRequired,
+    actionColor: PropTypes.string.isRequired,
+    disabled: PropTypes.bool.isRequired,
+};
 export default CatCard;
