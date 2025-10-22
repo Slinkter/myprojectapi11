@@ -1,0 +1,32 @@
+/**
+ * @file Botón para cambiar entre modo claro y oscuro.
+ * @description Muestra un icono de sol o luna y permite al usuario cambiar el tema.
+ */
+
+import React from "react";
+import { useTheme } from "../context/ThemeContext";
+import { IconButton } from "@material-tailwind/react";
+
+const SunIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.95-4.243l-1.59-1.59M3 12h2.25m.386-6.364l1.59 1.591M12 12a2.25 2.25 0 00-2.25 2.25 2.25 2.25 0 002.25 2.25 2.25 2.25 0 002.25-2.25A2.25 2.25 0 0012 12z" />
+    </svg>
+);
+
+const MoonIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+    </svg>
+);
+
+const ThemeToggleButton = () => {
+    const { theme, toggleTheme } = useTheme();
+
+    return (
+        <IconButton variant="text" onClick={toggleTheme} className="text-blue-gray-700 dark:text-white">
+            {theme === "light" ? <MoonIcon /> : <SunIcon />}
+        </IconButton>
+    );
+};
+
+export default ThemeToggleButton;

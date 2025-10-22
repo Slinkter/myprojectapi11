@@ -1,76 +1,85 @@
-import { useEffect } from "react";
-import { Spinner, Typography } from "@material-tailwind/react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-    deleteCat,
-    fetchCatsFav,
-    fetchCatsRandom,
-    saveCat,
-} from "./redux/catsSlice";
+/**
+ * @file Componente principal de la aplicación.
+ * @description Orquesta la obtención de datos y renderiza las listas de gatos, ahora con soporte para tema oscuro/claro.
+ */
 
-import CatCard from "./components/CatCard";
+import React, { useEffect, Suspense } from "react";
+import { Alert, Typography } from "@material-tailwind/react";
+import { useCats } from "./hooks/useCats";
+import CatListSkeleton from "./components/skeletons/CatListSkeleton";
+import ThemeToggleButton from "./components/ThemeToggleButton";
+import FontDropdown from "./components/FontDropdown";
+
+const CatList = React.lazy(() => import("./components/CatList"));
 
 const App = () => {
-    window.document.title = "Projecto 11 - Luis J Cueva ";
-    const dispatch = useDispatch();
-    const { cats, favorites, loading } = useSelector((state) => state.cats);
+    const {
+        randomCats,
+        favouriteCats,
+        loading,
+        error,
+        loadRandomCats,
+        loadFavouriteCats,
+        saveFavouriteCat,
+        deleteFavouriteCat,
+    } = useCats();
 
     useEffect(() => {
-        dispatch(fetchCatsRandom());
-        dispatch(fetchCatsFav());
-    }, [dispatch]);
+        loadRandomCats();
+        loadFavouriteCats();
+        window.document.title = "Cat Gallery - Dark Mode";
+        // La clase del body ahora se maneja en el ThemeContext
+        // document.body.classList.add("bg-gray-50");
+    }, [loadRandomCats, loadFavouriteCats]);
 
-    if (loading) {
-        return (
-            <div className="flex w-full h-screen flex-col justify-center items-center bg-white">
-                <Spinner className="h-16 w-16" />
-            </div>
-        );
-    }
+    const isCatInFavourites = (randomCat) => {
+        return favouriteCats.some((favCat) => favCat.id === randomCat.id);
+    };
 
     return (
-        <div className="flex flex-col justify-center items-center bg-white container mx-auto p-3">
-            <Typography className="mt-6" variant="h2" color="green">
-                Gatitos Aleatorios
-            </Typography>
+        <div className="min-h-screen">
+            <header className="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-10">
+                <div className="container mx-auto px-4 py-2 flex justify-between items-center">
+                    <Typography variant="h1" color="blue-gray" className="text-2xl font-bold dark:text-white">
+                        Cat Gallery
+                    </Typography>
+                    <FontDropdown />
+                    <ThemeToggleButton />
+                </div>
+            </header>
 
-            <section>
-                <article className="grid grid-cols-3 gap-3">
-                    {cats.map((cat) => (
-                        <CatCard
-                            key={cat.id}
-                            cat={cat}
-                            onAction={() => dispatch(saveCat(cat))}
-                            actionLabel="Save"
-                            actionColor="green"
-                            disabled={favorites.some(
-                                (fav) => fav.image.id === cat.id
-                            )}
-                        />
-                    ))}
-                </article>
-            </section>
+            <main className="container mx-auto p-4">
+                {error && (
+                    <Alert color="red" className="my-4">
+                        An error occurred: {error}
+                    </Alert>
+                )}
 
-            <Typography className="mt-6" variant="h2" color="red">
-                Gatitos Favoritos
-            </Typography>
+                <Suspense fallback={<CatListSkeleton />}>
+                    <CatList
+                        title="Random Kittens"
+                        cats={randomCats}
+                        onAction={saveFavouriteCat}
+                        actionType="save"
+                        isActionDisabled={isCatInFavourites}
+                        loading={loading.random}
+                    />
+                </Suspense>
 
-            <section>
-                <article className="grid grid-cols-3 md:grid-cols-3 gap-5">
-                    {favorites.map((cat) => (
-                        <CatCard
-                            key={cat.id}
-                            cat={cat}
-                            onAction={() => dispatch(deleteCat(cat))}
-                            actionLabel="Delete"
-                            actionColor="red"
-                            disabled={false}
-                        />
-                    ))}
-                </article>
-            </section>
+                <Suspense fallback={<CatListSkeleton />}>
+                    <CatList
+                        title="Favourite Kittens"
+                        cats={favouriteCats}
+                        onAction={deleteFavouriteCat}
+                        actionType="delete"
+                        isActionDisabled={() => false}
+                        loading={loading.favourites}
+                    />
+                </Suspense>
+            </main>
         </div>
     );
 };
 
 export default App;
+
