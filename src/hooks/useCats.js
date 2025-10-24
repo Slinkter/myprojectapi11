@@ -17,15 +17,15 @@ import {
 /**
  * Hook `useCats` para gestionar el estado y las acciones relacionadas con los gatos.
  *
- * @returns {{ 
- *  randomCats: Array<object>, 
- *  favouriteCats: Array<object>, 
- *  loading: object, 
- *  error: string|null, 
- *  loadRandomCats: () => void, 
- *  loadFavouriteCats: () => void, 
- *  saveFavouriteCat: (cat: object) => void, 
- *  deleteFavouriteCat: (cat: object) => void 
+ * @returns {{
+ *  randomCats: Array<object>,
+ *  favouriteCats: Array<object>,
+ *  loading: object,
+ *  error: string|null,
+ *  loadRandomCats: () => void,
+ *  loadFavouriteCats: () => void,
+ *  saveFavouriteCat: (cat: object) => void,
+ *  deleteFavouriteCat: (cat: object) => void
  * }} - Objeto con el estado y los manejadores de acciones.
  */
 export const useCats = () => {

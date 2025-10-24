@@ -1,0 +1,7 @@
+/**
+ * @file Estilos específicos para el componente principal de la aplicación (App.jsx).
+ * @description Este archivo puede contener estilos que no son utilidades de Tailwind
+ * o que son demasiado específicos para ser incluidos en `index.css`.
+ * Actualmente, este archivo está vacío, ya que la mayoría de los estilos
+ * se manejan a través de las clases de utilidad de Tailwind directamente en los componentes.
+ */

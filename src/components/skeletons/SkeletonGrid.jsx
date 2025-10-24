@@ -3,7 +3,7 @@
  * @description Muestra una rejilla de tarjetas esqueléticas para simular la carga de contenido.
  */
 
-import React from "react";
+import PropTypes from 'prop-types';
 import SkeletonCard from "./SkeletonCard";
 
 const SkeletonGrid = ({ count = 5 }) => (
@@ -13,5 +13,9 @@ const SkeletonGrid = ({ count = 5 }) => (
         ))}
     </div>
 );
+
+SkeletonGrid.propTypes = {
+    count: PropTypes.number,
+};
 
 export default SkeletonGrid;

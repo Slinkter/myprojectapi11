@@ -1,35 +1,46 @@
 /**
  * @file Componente para mostrar una tarjeta de gato individual.
- * @description Muestra la imagen de un gato con una animación de entrada y un botón de acción al pasar el cursor.
+ * @description Muestra la imagen de un gato con una animación de entrada y un botón de acción
+ * superpuesto que aparece al pasar el cursor. El componente está memoizado para optimizar el rendimiento.
  */
 
 import React from "react";
 import PropTypes from "prop-types";
+import { HeartIcon, TrashIcon } from "./icons";
 
-// SVG Icons for actions
-const HeartIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
-        <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-1.383-.597 15.247 15.247 0 01-1.383-.597c-.114-.06-.227-.119-.34-.18a15.247 15.247 0 01-4.753-3.542C4.73 11.249 4.5 9.259 4.5 7.5a3 3 0 013-3c.996 0 1.927.393 2.645 1.04.718-.647 1.649-1.04 2.645-1.04a3 3 0 013 3c0 1.759-.23 3.75-1.689 6.16a15.247 15.247 0 01-4.753 3.542c-.113.06-.226.119-.34.18-.462.258-.928.5-1.383.597l-.022.012-.007.003z" />
-    </svg>
-);
-
-const TrashIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
-        <path fillRule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 013.878.512.75.75 0 11-.256 1.478l-.209-.035-1.005 13.006a3 3 0 01-2.991 2.77H8.084a3 3 0 01-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 01-.256-1.478A48.567 48.567 0 017.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.9h1.368c1.603 0 2.816 1.336 2.816 2.9zM12 3.25a.75.75 0 01.75.75v.008l.008.008.008.008.008.008.008.008.008.008.007.008h3.22c.345 0 .626.28.626.625v.008l-.001.004-.002.004-.002.004-.003.005-.003.005-.004.005-.004.006-.005.006-.005.006h-10.4c-.345 0-.626-.28-.626-.625v-.008l.001-.004.002-.004.002-.004.003-.005.003-.005.004-.005.004-.006.005-.006.005-.006h3.22a.75.75 0 01.75-.75V3.25z" clipRule="evenodd" />
-    </svg>
-);
-
+import { BsFillHeartFill } from "react-icons/bs";
+import { BsTrashFill } from "react-icons/bs";
+/**
+ * Renderiza una tarjeta individual para un gato.
+ *
+ * @component
+ * @param {object} props - Las propiedades del componente.
+ * @param {object} props.cat - El objeto del gato a mostrar.
+ * @param {function} props.onAction - La función a ejecutar cuando se hace clic en el botón de acción.
+ * @param {string} props.actionType - El tipo de acción ("save" o "delete") para determinar el icono.
+ * @param {boolean} props.disabled - Si el botón de acción debe estar deshabilitado.
+ * @param {number} props.index - El índice de la tarjeta, usado para un retraso en la animación de entrada.
+ * @returns {JSX.Element} Una tarjeta de gato.
+ */
 const CatCard = ({ cat, onAction, actionType, disabled, index }) => {
+    // Clases dinámicas para el botón de acción, controlando la visibilidad y el estado del cursor.
     const buttonClasses = `absolute inset-0 bg-black bg-opacity-40 flex justify-center items-center 
                          text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 
                          ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`;
 
+    // Determina el color del icono basado en el tipo de acción y si está deshabilitado.
     const iconColor = disabled
         ? "text-gray-400"
         : actionType === "save"
-        ? "text-green-400"
+        ? "text-red-500"
         : "text-red-400";
 
+    /**
+     * Manejador para el evento de clic en el botón de acción.
+     * Previene el comportamiento por defecto y la propagación del evento.
+     * Llama a la función `onAction` solo si el botón no está deshabilitado.
+     * @param {React.MouseEvent} e - El evento de clic.
+     */
     const handleAction = (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -41,6 +52,7 @@ const CatCard = ({ cat, onAction, actionType, disabled, index }) => {
     return (
         <div
             className="relative group aspect-square rounded-lg overflow-hidden shadow-md opacity-0 animate-fade-in-scale"
+            // Aplica un retraso a la animación basado en el índice para un efecto escalonado.
             style={{ animationDelay: `${index * 75}ms` }}
         >
             <img
@@ -48,9 +60,14 @@ const CatCard = ({ cat, onAction, actionType, disabled, index }) => {
                 alt={`A cute cat (id: ${cat.id})`}
                 className="w-full h-full object-cover"
             />
+            {/* Capa superpuesta con el botón de acción. */}
             <div className={buttonClasses} onClick={handleAction}>
                 <div className={iconColor}>
-                    {actionType === "save" ? <HeartIcon /> : <TrashIcon />}
+                    {actionType === "save" ? (
+                        <BsFillHeartFill className="w-10 h-10" />
+                    ) : (
+                        <BsTrashFill className="w-10 h-10" />
+                    )}
                 </div>
             </div>
         </div>
@@ -58,15 +75,22 @@ const CatCard = ({ cat, onAction, actionType, disabled, index }) => {
 };
 
 CatCard.propTypes = {
+    /** El objeto del gato que contiene id y url. */
     cat: PropTypes.shape({
         id: PropTypes.string.isRequired,
         url: PropTypes.string.isRequired,
     }).isRequired,
+    /** Función que se llama al hacer clic en la acción. */
     onAction: PropTypes.func.isRequired,
+    /** Define el icono y el comportamiento del botón. */
     actionType: PropTypes.oneOf(["save", "delete"]).isRequired,
+    /** Si es `true`, el botón de acción está inactivo. */
     disabled: PropTypes.bool.isRequired,
-    /** El índice de la tarjeta, usado para el retraso de la animación */
+    /** El índice de la tarjeta, usado para el retraso de la animación. */
     index: PropTypes.number.isRequired,
 };
 
-export default React.memo(CatCard);
+// Se memoiza el componente para evitar re-renderizados innecesarios si las props no cambian.
+const MemoizedCatCard = React.memo(CatCard);
+
+export default MemoizedCatCard;

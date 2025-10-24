@@ -3,7 +3,7 @@
  * @description Muestra una versión esquelética de la lista de gatos, incluyendo el título y una rejilla de tarjetas.
  */
 
-import React from "react";
+
 import SkeletonCard from "./SkeletonCard";
 
 const CatListSkeleton = () => {
