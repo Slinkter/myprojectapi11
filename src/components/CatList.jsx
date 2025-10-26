@@ -1,13 +1,14 @@
 /**
  * @file Componente para renderizar una lista de tarjetas de gatos.
- * @description Muestra un título y una rejilla de gatos. Muestra un esqueleto de rejilla
- * mientras carga los datos. No renderiza nada si la lista de gatos está vacía y no está cargando.
+ * @description Muestra un título y una rejilla de gatos.
+ * Muestra un esqueleto de rejilla  mientras carga los datos.
+ * No renderiza nada si la lista de gatos está vacía y no está cargando.
  */
 
-import PropTypes from "prop-types";
 import { Typography } from "@material-tailwind/react";
-import CatCard from "./CatCard";
+import PropTypes from "prop-types";
 import SkeletonGrid from "./skeletons/SkeletonGrid";
+import CatCard from "./CatCard";
 
 /**
  * Muestra una sección con un título y una lista de gatos en formato de rejilla.
@@ -22,16 +23,13 @@ import SkeletonGrid from "./skeletons/SkeletonGrid";
  * @param {boolean} props.loading - Si es `true`, muestra el esqueleto de carga.
  * @returns {JSX.Element|null} El componente de la lista de gatos o `null`.
  */
-const CatList = ({
-    title,
-    cats,
-    onAction,
-    actionType,
-    isActionDisabled,
-    loading,
-}) => {
+const CatList = (props) => {
     // Optimización: No renderizar la sección si no hay gatos y no se están cargando.
     // Esto es útil para la lista de favoritos, que puede estar vacía al principio.
+
+    const { title, cats, onAction, actionType, isActionDisabled, loading } =
+        props;
+
     if (!loading && cats.length === 0) {
         return null;
     }

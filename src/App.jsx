@@ -45,11 +45,11 @@ const App = () => {
     /**
      * Verifica si un gato de la lista aleatoria ya se encuentra en la lista de favoritos.
      *
-     * @param {object} randomCat - El objeto del gato aleatorio a verificar.
+     * @param {object} cat - El objeto del gato aleatorio a verificar.
      * @returns {boolean} `true` si el gato ya es favorito, `false` en caso contrario.
      */
-    const isCatInFavourites = (randomCat) => {
-        return favouriteCats.some((favCat) => favCat.id === randomCat.id);
+    const isCatInFavourites = (cat) => {
+        return favouriteCats.some((favCat) => favCat.id === cat.id);
     };
 
     return (
@@ -73,13 +73,6 @@ const App = () => {
 
             {/* Contenido principal de la aplicación. */}
             <main className="container mx-auto p-4">
-                {/* Muestra una alerta en caso de error en la API. */}
-                {error && (
-                    <Alert color="red" className="my-4">
-                        An error occurred: {error}
-                    </Alert>
-                )}
-
                 {/* Suspense se usa para mostrar un fallback (esqueleto) mientras el componente CatList se carga de forma diferida. */}
                 <Suspense fallback={<CatListSkeleton />}>
                     <CatList
@@ -102,6 +95,13 @@ const App = () => {
                         loading={loading.favourites}
                     />
                 </Suspense>
+
+                {/* Muestra una alerta en caso de error en la API. */}
+                {error && (
+                    <Alert color="red" className="my-4">
+                        An error occurred: {error}
+                    </Alert>
+                )}
             </main>
         </div>
     );

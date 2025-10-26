@@ -6,7 +6,6 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import { HeartIcon, TrashIcon } from "./icons";
 
 import { BsFillHeartFill } from "react-icons/bs";
 import { BsTrashFill } from "react-icons/bs";
@@ -24,7 +23,7 @@ import { BsTrashFill } from "react-icons/bs";
  */
 const CatCard = ({ cat, onAction, actionType, disabled, index }) => {
     // Clases dinámicas para el botón de acción, controlando la visibilidad y el estado del cursor.
-    const buttonClasses = `absolute inset-0 bg-black bg-opacity-40 flex justify-center items-center 
+    const buttonClasses = `absolute flex justify-center items-center  bg-black bg-opacity-40 inset-0
                          text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 
                          ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`;
 
@@ -64,9 +63,9 @@ const CatCard = ({ cat, onAction, actionType, disabled, index }) => {
             <div className={buttonClasses} onClick={handleAction}>
                 <div className={iconColor}>
                     {actionType === "save" ? (
-                        <BsFillHeartFill className="w-10 h-10" />
+                        <BsFillHeartFill className="w-8 h-8" />
                     ) : (
-                        <BsTrashFill className="w-10 h-10" />
+                        <BsTrashFill className="w-8 h-8" />
                     )}
                 </div>
             </div>
