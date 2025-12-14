@@ -6,7 +6,7 @@
  */
 
 import React, { useEffect, Suspense } from "react";
-import { Alert, Typography } from "@material-tailwind/react";
+
 import { useCats } from "./hooks/useCats";
 import CatListSkeleton from "./components/skeletons/CatListSkeleton";
 import ThemeToggleButton from "./components/ThemeToggleButton";
@@ -57,13 +57,9 @@ const App = () => {
             {/* Encabezado fijo con el título y los controles de UI. */}
             <header className="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-10">
                 <div className="container mx-auto px-4 py-2 flex justify-between items-center">
-                    <Typography
-                        variant="h1"
-                        color="blue-gray"
-                        className="text-2xl font-bold dark:text-white"
-                    >
+                    <h1 className="text-2xl font-bold dark:text-white text-gray-900">
                         Cat Gallery
-                    </Typography>
+                    </h1>
                     <div className="flex items-center gap-4">
                         <FontDropdown />
                         <ThemeToggleButton />
@@ -98,9 +94,12 @@ const App = () => {
 
                 {/* Muestra una alerta en caso de error en la API. */}
                 {error && (
-                    <Alert color="red" className="my-4">
+                    <div
+                        className="my-4 p-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                        role="alert"
+                    >
                         An error occurred: {error}
-                    </Alert>
+                    </div>
                 )}
             </main>
         </div>

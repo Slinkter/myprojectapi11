@@ -4,14 +4,19 @@
  * Las personalizaciones y componentes se definen en capas (@layer) para una mejor organización y rendimiento.
  */
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --font-sans: var(--font-family), ui-sans-serif, system-ui, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+}
 
 @layer base {
-  body {
-    @apply bg-gray-50 dark:bg-gray-900 font-sans;
-  }
+    body {
+        @apply bg-gray-50 dark:bg-gray-900 font-sans;
+    }
 }
 
 /*
@@ -39,4 +44,3 @@
         }
     }
 }
-

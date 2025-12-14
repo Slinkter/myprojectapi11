@@ -23,8 +23,8 @@ import { BsTrashFill } from "react-icons/bs";
  */
 const CatCard = ({ cat, onAction, actionType, disabled, index }) => {
     // Clases dinámicas para el botón de acción, controlando la visibilidad y el estado del cursor.
-    const buttonClasses = `absolute flex justify-center items-center  bg-black bg-opacity-40 inset-0
-                         text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 
+    const buttonClasses = `absolute flex justify-center items-center bg-black/40 backdrop-blur-sm inset-0
+                         text-white opacity-0 group-hover:opacity-100 transition-all duration-300 
                          ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`;
 
     // Determina el color del icono basado en el tipo de acción y si está deshabilitado.
@@ -50,7 +50,7 @@ const CatCard = ({ cat, onAction, actionType, disabled, index }) => {
 
     return (
         <div
-            className="relative group aspect-square rounded-lg overflow-hidden shadow-md opacity-0 animate-fade-in-scale"
+            className="relative group aspect-square rounded-xl overflow-hidden shadow-md opacity-0 animate-fade-in-scale border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800"
             // Aplica un retraso a la animación basado en el índice para un efecto escalonado.
             style={{ animationDelay: `${index * 75}ms` }}
         >
@@ -61,11 +61,13 @@ const CatCard = ({ cat, onAction, actionType, disabled, index }) => {
             />
             {/* Capa superpuesta con el botón de acción. */}
             <div className={buttonClasses} onClick={handleAction}>
-                <div className={iconColor}>
+                <div
+                    className={`${iconColor} bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg transform group-hover:scale-110 transition-transform duration-200`}
+                >
                     {actionType === "save" ? (
-                        <BsFillHeartFill className="w-8 h-8" />
+                        <BsFillHeartFill className="w-6 h-6" />
                     ) : (
-                        <BsTrashFill className="w-8 h-8" />
+                        <BsTrashFill className="w-6 h-6" />
                     )}
                 </div>
             </div>

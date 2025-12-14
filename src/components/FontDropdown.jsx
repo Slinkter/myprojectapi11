@@ -5,7 +5,6 @@
  * de Material Tailwind con las opciones de fuente y está estilizado para soportar temas claro/oscuro.
  */
 
-import { Select, Option } from "@material-tailwind/react";
 import { useFont } from "../hooks/useFont";
 
 /**
@@ -20,23 +19,20 @@ const FontDropdown = () => {
 
     return (
         <div className="w-72">
-            <Select
+            <select
                 value={font}
-                onChange={(value) => changeFont(value)}
-                label="Select Font"
-                // Se aplican clases para asegurar la legibilidad en ambos temas (claro/oscuro).
-                className="text-gray-900 dark:text-gray-200"
-                // `labelProps` se usa para anular estilos por defecto de Material Tailwind que pueden interferir.
-                labelProps={{
-                    className: "before:content-none after:content-none",
-                }}
+                onChange={(e) => changeFont(e.target.value)}
+                className="w-full p-2.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 
+                         text-gray-900 dark:text-gray-200 text-sm rounded-lg 
+                         focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block"
+                aria-label="Select Font"
             >
                 {fonts.map((f) => (
-                    <Option key={f.name} value={f.family}>
+                    <option key={f.name} value={f.family}>
                         {f.name}
-                    </Option>
+                    </option>
                 ))}
-            </Select>
+            </select>
         </div>
     );
 };

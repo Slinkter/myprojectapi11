@@ -5,7 +5,6 @@
  * No renderiza nada si la lista de gatos está vacía y no está cargando.
  */
 
-import { Typography } from "@material-tailwind/react";
 import PropTypes from "prop-types";
 import SkeletonGrid from "./skeletons/SkeletonGrid";
 import CatCard from "./CatCard";
@@ -36,13 +35,9 @@ const CatList = (props) => {
 
     return (
         <section className="w-full mb-12">
-            <Typography
-                variant="h3"
-                color="blue-gray"
-                className="text-xl font-semibold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2 dark:text-gray-200"
-            >
+            <h3 className="text-xl text-gray-800 dark:text-gray-200 font-semibold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">
                 {title}
-            </Typography>
+            </h3>
 
             {/* Muestra el esqueleto si está cargando y aún no hay gatos para mostrar. */}
             {loading && cats.length === 0 ? (
