@@ -6,25 +6,27 @@
  */
 
 import { useFont } from "@features/font/hooks/useFont";
+import { BsChevronDown } from "react-icons/bs";
 
 /**
  * Componente que renderiza un menú desplegable para cambiar la fuente global de la aplicación.
  * Se integra con el `FontContext` a través del hook `useFont`.
  *
  * @component
- * @returns {JSX.Element} Un componente `Select` de Material Tailwind.
+ * @returns {JSX.Element} Un componente de selección de fuente personalizado.
  */
 const FontDropdown = () => {
     const { font, changeFont, fonts } = useFont();
 
     return (
-        <div className="w-72">
+        <div className="relative w-48">
             <select
                 value={font}
                 onChange={(e) => changeFont(e.target.value)}
-                className="w-full p-2.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 
-                         text-gray-900 dark:text-gray-200 text-sm rounded-lg 
-                         focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block"
+                className="w-full p-2.5 pr-8 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 
+                           text-gray-900 dark:text-gray-200 text-sm rounded-full 
+                           focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-500 focus:outline-none
+                           appearance-none cursor-pointer"
                 aria-label="Select Font"
             >
                 {fonts.map((f) => (
@@ -33,6 +35,9 @@ const FontDropdown = () => {
                     </option>
                 ))}
             </select>
+            <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
+                <BsChevronDown className="w-4 h-4 text-gray-400" />
+            </div>
         </div>
     );
 };

@@ -1,82 +1,97 @@
-# Implementación Técnica
+# Implementación Técnica (Versión 4.0)
 
 ## 1. Arquitectura del Sistema
 
-La aplicación sigue una arquitectura de **Single Page Application (SPA)** basada en componentes, utilizando el patrón de gestión de estado mediante **React Context + Hooks**.
+La aplicación ha evolucionado hacia una **Arquitectura por Features (Feature-Based Architecture)**, un enfoque moderno que mejora la escalabilidad, mantenibilidad y encapsulación del código.
 
-### Stack Tecnológico
+### 1.1. Estructura de Directorios
 
--   **Core:** React 18 (Migrado a React 19 en dependencias).
--   **Build Tool:** Vite 7.x.
--   **Estilos:** Tailwind CSS v4.1 (Alpha/Beta).
--   **Estado:** React Context (Tema/Fuente) + LocalStorage.
--   **Gestor de Paquetes:** pnpm v10.x.
+La estructura de `src/` se organiza de la siguiente manera, abandonando la agrupación por tipo de archivo (ej. `/components`, `/hooks`) en favor de la agrupación por funcionalidad:
 
-## 2. Detalle de Implementación de Módulos
+```
+src/
+├── app/
+│   └── store.js         # Configuración central del store de Redux
+├── features/
+│   ├── cats/            # Feature para la lógica de los gatos
+│   ├── font/            # Feature para la selección de fuente
+│   └── theme/           # Feature para el cambio de tema
+├── shared/
+│   └── components/      # Componentes reutilizables y agnósticos
+└── ...                  # Archivos de entrada (main.jsx, etc.)
+```
 
-### 2.1 Módulo de Estilos (Tailwind v4)
+-   **`/app`**: Contiene la configuración y la lógica central de la aplicación, como el store de Redux, que es transversal a todas las features.
+-   **`/features`**: Es el núcleo de la arquitectura. Cada subdirectorio es una "porción vertical" de la aplicación que encapsula toda su lógica: componentes, hooks, estado, etc.
+-   **`/shared`**: Contiene elementos verdaderamente reutilizables que no pertenecen a ninguna feature en particular, como componentes de UI genéricos (esqueletos, botones, etc.).
 
-A diferencia de la v3, la configuración se ha centralizado en CSS ("CSS-First").
+### 1.2. Alias de Ruta (`@`)
 
--   **Archivo:** `src/index.css`
--   **Configuración:**
-    ```css
-    @import "tailwindcss";
-    @custom-variant dark (&:where(.dark, .dark *));
-    @theme {
-        --font-sans: var(--font-family), ui-sans-serif, system-ui;
-    }
+Para mantener las importaciones limpias y robustas, se han configurado alias de ruta en `vite.config.js` y `jsconfig.json`. Esto previene las rutas relativas frágiles (`../../../`) y mejora la legibilidad.
+
+-   **`@app`**: Apunta a `src/app/`
+-   **`@features`**: Apunta a `src/features/`
+-   **`@shared`**: Apunta a `src/shared/`
+
+**Ejemplo de uso:**
+```javascript
+import { useCats } from '@features/cats/hooks/useCats';
+import store from '@app/store';
+```
+
+## 2. Stack Tecnológico y Filosofía de Estilos
+
+-   **Core:** React 19
+-   **Build Tool:** Vite
+-   **Gestión de Estado:**
+    -   **Redux Toolkit:** Para el estado global de la aplicación y la gestión de datos asíncronos (API de gatos).
+    -   **React Context:** Para estado de UI simple y localizado (tema y fuente).
+-   **Notificaciones:** React Hot Toast
+-   **Iconos:** React Icons
+-   **Estilos:** **Utility-First** con **Tailwind CSS**. La filosofía es aplicar estilos directamente en el marcado JSX a través de clases de utilidad, y abstraer la reutilización a nivel de **componentes de React**, no de clases CSS.
+
+## 3. Detalle de Implementación de Módulos Clave
+
+### 3.1. Gestión de Estado
+
+La estrategia de estado híbrida es una decisión de diseño clave:
+
+-   **Redux (`@app/store.js`, `@features/cats/redux/catsSlice.js`):**
+    -   Maneja la lógica compleja y asíncrona. Los `createAsyncThunk` en `catsSlice` gestionan las llamadas a la API, incluyendo los estados de `pending`, `fulfilled` y `rejected`.
+    -   El hook **`useCats`** actúa como una **Fachada (Facade Pattern)**, proporcionando una API simple y limpia para que los componentes interactúen con el estado de los gatos sin necesidad de conocer la implementación de Redux.
+
+-   **Context (`@features/theme`, `@features/font`):**
+    -   Se utiliza para estado de UI que es síncrono y de alcance más global pero simple. Es más ligero que Redux para casos de uso como el cambio de tema.
+
+### 3.2. Mejoras de Experiencia de Usuario (UX)
+
+-   **Notificaciones Toast:**
+    -   Se ha integrado `react-hot-toast`. El componente `<Toaster />` se renderiza en `App.jsx`.
+    -   El hook `useCats` ahora contiene funciones `async` que utilizan `.unwrap()` sobre el `dispatch` del thunk. Esto permite manejar la promesa y despachar una notificación de éxito o error de forma centralizada.
+    ```javascript
+    // en useCats.js
+    await dispatch(saveCat(cat)).unwrap();
+    toast.success("Cat saved to favourites!");
     ```
-    -   **`@custom-variant`:** Define manualmente la estrategia de clase para el modo oscuro, permitiendo que el toggle JS funcione.
-    -   **`@theme`:** Sobrescribe la variable de fuente sans-serif para usar una variable CSS dinámica.
 
-### 2.2 Gestión de Temas (`ThemeContext`)
+-   **Manejo de Errores con Reintento:**
+    -   El mensaje de error en `App.jsx` ya no es estático. Ahora incluye un icono de `MdErrorOutline` y un botón **"Retry"**.
+    -   Este botón invoca la función `handleRetry`, que vuelve a despachar las acciones `loadRandomCats` y `loadFavouriteCats`, permitiendo al usuario recuperarse de fallos de red sin recargar la página.
 
--   **Estrategia:** Manipulación directa del DOM.
--   **Lógica:** Al cambiar el tema, se añade/elimina la clase `dark` en la etiqueta `<html>`.
--   **Persistencia:** Se guarda la preferencia en `localStorage['theme']`.
+-   **Estado Vacío para Favoritos:**
+    -   El componente `CatList` ahora acepta una prop `emptyStateMessage`.
+    -   En lugar de renderizar `null`, si la lista de gatos está vacía y no está cargando, muestra un mensaje amigable y estilizado, mejorando la experiencia del primer uso.
 
-### 2.3 Gestión de Fuentes (`FontContext`)
+### 3.3. Consistencia de Interfaz de Usuario (UI)
 
--   **Estrategia:** Variables CSS Globales.
--   **Lógica:** El contexto actualiza la variable `--font-family` en el `documentElement.style`.
--   **Integración:** Tailwind consume esta variable gracias a la configuración en `index.css`.
+-   **Sistema de Iconos Unificado:**
+    -   Todos los iconos de la aplicación (corazón, papelera, sol, luna, chevron) ahora provienen de la librería `react-icons`.
+    -   Esto asegura consistencia visual y facilita el mantenimiento y la actualización de los iconos en el futuro.
 
-### 2.4 Componentes UI Refactorizados
+-   **Estilización de Componentes Nativos (`FontDropdown`):**
+    -   El componente `<select>` ha sido rediseñado para que su apariencia sea consistente con el resto de la UI.
+    -   Se utilizó la clase `appearance-none` de Tailwind para eliminar el estilo por defecto del navegador y se añadió un icono de chevron (`BsChevronDown`) superpuesto para indicar su funcionalidad de dropdown.
 
-Se eliminó la dependencia de librerías de componentes pesadas. Se crearon componentes "dumb" (presentacionales) altamente reutilizables.
+## 4. Guía de Despliegue
 
--   **`CatCard`:** Utiliza `group-hover` de Tailwind para efectos de overlay y `backdrop-blur` para estética moderna.
--   **`FontDropdown`:** Implementado con un `<select>` nativo pero estilizado exhaustivamente con clases de utilidad para que parezca un componente custom, garantizando accesibilidad nativa y cero JS extra para la lógica del dropdown.
-
-## 3. Guía de Despliegue
-
-### Requisitos Previos
-
--   Node.js v18+
--   pnpm
-
-### Pasos para Ejecución Local
-
-1.  Clonar el repositorio.
-2.  Instalar dependencias:
-    ```bash
-    pnpm install
-    ```
-3.  Iniciar servidor de desarrollo (Vite):
-    ```bash
-    pnpm run dev
-    ```
-4.  La aplicación estará disponible en `http://localhost:5173`.
-
-### Pasos para Build de Producción
-
-1.  Ejecutar el comando de construcción:
-    ```bash
-    pnpm run build
-    ```
-2.  Los archivos estáticos se generarán en la carpeta `dist/`.
-3.  Previsualizar el build:
-    ```bash
-    pnpm run preview
-    ```
+La guía de despliegue no ha cambiado. El proceso de `pnpm install` y `pnpm run build` genera los archivos estáticos en el directorio `dist/` de la misma manera.

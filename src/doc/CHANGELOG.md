@@ -1,3 +1,57 @@
+# Changelog
+
+---
+
+## Versión 4.0: Arquitectura por Features y Mejoras UI/UX
+
+**Fecha:** 26 de Diciembre, 2025
+
+### Resumen Ejecutivo
+
+Esta versión representa una maduración significativa de la arquitectura del proyecto y una mejora sustancial en la experiencia de usuario (UX) y la consistencia de la interfaz (UI). Se refactorizó la base de código a una **arquitectura por features**, se implementaron **alias de ruta** para mejorar la mantenibilidad y se resolvieron múltiples inconsistencias y oportunidades de mejora identificadas en el diagnóstico de UI/UX.
+
+### 1. Cambios Arquitectónicos
+
+-   **Refactorización a Arquitectura por Features:**
+    -   Se abandonó la organización de carpetas por tipo de archivo (`/components`, `/hooks`, `/redux`) en favor de una estructura por funcionalidad (`/features/cats`, `/features/theme`, `/features/font`).
+    -   Cada feature ahora contiene sus propios componentes, hooks y lógica de estado, mejorando la encapsulación y la escalabilidad.
+    -   Se creó una carpeta `/shared` para componentes reutilizables no específicos de una feature (ej. `skeletons`).
+
+-   **Implementación de Alias de Ruta (`@`):**
+    -   Se configuró `vite.config.js` y `jsconfig.json` para introducir alias de ruta (`@features`, `@shared`, `@app`).
+    -   Todas las rutas de importación relativas largas (`../../../`) fueron reemplazadas por rutas absolutas limpias (ej. `import Component from '@shared/components/Component'`), mejorando drásticamente la legibilidad y facilitando futuras refactorizaciones.
+
+-   **Reorganización de Archivos Core:**
+    -   El archivo `store.js` de Redux fue movido a una nueva carpeta `src/app`, que representa el núcleo de la aplicación.
+    -   Se eliminaron las carpetas `src/redux`, `src/context`, `src/hooks` y `src/services` después de la migración.
+
+### 2. Mejoras de UI/UX
+
+-   **Unificación del Sistema de Iconos (UI):**
+    -   Se eliminaron los iconos SVG hardcodeados en `ThemeToggleButton.jsx`.
+    -   Se reemplazaron con iconos (`BsSunFill`, `BsMoonFill`) de la librería `react-icons`, unificando el sistema de iconos del proyecto y mejorando la mantenibilidad.
+
+-   **Implementación de Notificaciones "Toast" (UX):**
+    -   Se añadió la librería `react-hot-toast`.
+    -   Ahora, al guardar o eliminar un gato de favoritos, el usuario recibe una notificación emergente de éxito o error, proporcionando un feedback inmediato y claro.
+
+-   **Mejora de Estado Vacío (UX):**
+    -   La sección de "Favourite Kittens" ya no desaparece si está vacía. En su lugar, muestra un mensaje amigable ("You have no favourite kittens yet...") que guía al usuario sobre cómo utilizar la funcionalidad.
+
+-   **Mejora en el Manejo de Errores (UX):**
+    -   El componente de error que aparece al fallar la API fue mejorado. Ahora incluye un icono de alerta y un **botón "Reintentar"**, permitiendo al usuario volver a ejecutar la petición de datos sin necesidad de recargar la página.
+
+-   **Rediseño del `FontDropdown` (UI):**
+    -   Se aplicaron estilos de Tailwind CSS personalizados al componente `<select>` para eliminar la apariencia nativa del navegador.
+    -   Se añadió un icono de chevron y se ajustaron los estilos para que la apariencia del dropdown sea consistente con la estética "premium" del resto de la aplicación.
+
+### 3. Correcciones y Mantenimiento
+
+-   **Resolución de Problemas de Build:** Se diagnosticaron y corrigieron varios errores de build que surgieron debido a la eliminación accidental de archivos (`store.js`, `constants.js`) durante la refactorización.
+-   **Arreglo de Configuración de ESLint:** Se resolvió un conflicto de incompatibilidad con ESLint v9, realizando un downgrade a una versión estable de ESLint v8 y sus plugins correspondientes para asegurar que el proceso de `linting` funcione correctamente.
+
+---
+
 ## Versión 3.0: Migración a Tailwind CSS v4 y Refactorización Core
 
 ### Resumen Ejecutivo
@@ -108,7 +162,7 @@ El proyecto ahora corre sobre una arquitectura moderna, sin dependencias inneces
                 sans: ['var(--font-family)', 'sans-serif'],
             },
             ```
-        -   Esto permite que cualquier elemento que use `font-sans` (o que herede de él) adopte dinámicamente la fuente seleccionada a través de la variable CSS.
+        -   Esto permite que cualquier elemento que use `font-sans` (o que lo herede de él) adopte dinámicamente la fuente seleccionada a través de la variable CSS.
 
     3.  **`index.html` (Importación de Google Fonts):**
 

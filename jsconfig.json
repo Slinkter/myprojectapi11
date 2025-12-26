@@ -4,7 +4,7 @@
         "paths": {
             "@features/*": ["./src/features/*"],
             "@shared/*": ["./src/shared/*"],
-            "@redux/*": ["./src/redux/*"]
+            "@app/*": ["./src/app/*"]
         },
         "jsx": "react-jsx",
         "allowSyntheticDefaultImports": true

@@ -18,7 +18,7 @@ export default defineConfig({
         alias: {
             "@features": path.resolve(__dirname, "./src/features"),
             "@shared": path.resolve(__dirname, "./src/shared"),
-            "@redux": path.resolve(__dirname, "./src/redux"),
+            "@app": path.resolve(__dirname, "./src/app"),
         },
     },
 });

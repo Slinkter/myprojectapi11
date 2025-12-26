@@ -7,6 +7,7 @@
 
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
 import {
     fetchRandomCats,
     fetchFavouriteCats,
@@ -24,8 +25,8 @@ import {
  *  error: string|null,
  *  loadRandomCats: () => void,
  *  loadFavouriteCats: () => void,
- *  saveFavouriteCat: (cat: object) => void,
- *  deleteFavouriteCat: (cat: object) => void
+ *  saveFavouriteCat: (cat: object) => Promise<void>,
+ *  deleteFavouriteCat: (cat: object) => Promise<void>
  * }} - Objeto con el estado y los manejadores de acciones.
  */
 export const useCats = () => {
@@ -47,15 +48,28 @@ export const useCats = () => {
     }, [dispatch]);
 
     const saveFavouriteCat = useCallback(
-        (cat) => {
-            dispatch(saveCat(cat));
+        async (cat) => {
+            try {
+                // .unwrap() convierte el resultado del thunk en una promesa que se resuelve
+                // con el payload de 'fulfilled' o se rechaza con el de 'rejected'.
+                await dispatch(saveCat(cat)).unwrap();
+                toast.success("Cat saved to favourites!");
+            } catch (err) {
+                // El error aquí es el payload de la acción 'rejected'.
+                toast.error(`Failed to save: ${err}`);
+            }
         },
         [dispatch]
     );
 
     const deleteFavouriteCat = useCallback(
-        (cat) => {
-            dispatch(deleteCat(cat));
+        async (cat) => {
+            try {
+                await dispatch(deleteCat(cat)).unwrap();
+                toast.success("Cat removed from favourites!");
+            } catch (err) {
+                toast.error(`Failed to delete: ${err}`);
+            }
         },
         [dispatch]
     );

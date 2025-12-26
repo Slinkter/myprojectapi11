@@ -1,117 +1,138 @@
-# Proyecto de Galería de Gatos con React y Redux
+# Cat Gallery - React Project (v4.0)
 
-Este proyecto es una aplicación web que muestra una galería de imágenes de gatos obtenidas desde [TheCatAPI](https://thecatapi.com/). Permite a los usuarios ver imágenes de gatos aleatorias y guardarlas en una lista de favoritos.
+![Project Banner](api11.png)
 
-Esta versión del proyecto ha sido completamente refactorizada para seguir principios de **Arquitectura Limpia** y **Clean Code**, mejorando su mantenibilidad, escalabilidad y rendimiento.
+Una moderna y optimizada Single Page Application (SPA) desarrollada con React que permite a los usuarios explorar una galería de imágenes de gatos, guardar sus favoritos y personalizar la interfaz de usuario en tiempo real.
 
-![Captura de Pantalla de la Aplicación](./api11.png)
-
----
-
-## Características
-
--   **Gatos Aleatorios:** Muestra una selección de imágenes de gatos obtenidas de forma aleatoria.
--   **Galería de Favoritos:** Permite guardar los gatos que más te gusten en una sección de favoritos.
--   **Persistencia (Simulada):** Los gatos favoritos se pueden añadir y eliminar, actualizando el estado de la aplicación de forma optimista.
--   **Diseño Responsivo:** La interfaz se adapta a diferentes tamaños de pantalla.
+Este proyecto sirve como un caso de estudio avanzado sobre arquitectura de frontend, buenas prácticas y optimización de rendimiento en el ecosistema de React.
 
 ---
 
-## Instalación y Configuración
+## 1. Tecnologías Principales
 
-Sigue estos pasos para configurar y ejecutar el proyecto en tu entorno local.
-
-### Prerrequisitos
-
--   [Node.js](https://nodejs.org/) (versión 18 o superior)
--   [npm](https://www.npmjs.com/) (generalmente se instala con Node.js)
--   Una **API Key** de [TheCatAPI](https://thecatapi.com/signup).
-
-### Pasos
-
-1.  **Clona el repositorio:**
-
-    ```bash
-    git clone https://github.com/slinkter/myprojectapi0x.git
-    cd myprojectapi0x
-    ```
-
-2.  **Instala las dependencias:**
-
-    ```bash
-    npm install
-    ```
-
-3.  **Configura las variables de entorno:**
-
-    Crea un archivo `.env` en la raíz del proyecto y añade las siguientes variables. Reemplaza `TU_API_KEY` con la clave que obtuviste de TheCatAPI.
-
-    ```env
-    VITE_API_KEY="TU_API_KEY"
-    VITE_BASE_URL="https://api.thecatapi.com/v1"
-    ```
-
-    > **Importante:** El archivo `.env` está incluido en el `.gitignore` para evitar que las claves secretas se suban al repositorio.
+-   **Core:** [React 19](https://react.dev/)
+-   **Build Tool:** [Vite](https://vitejs.dev/)
+-   **Estilos:** [Tailwind CSS](https://tailwindcss.com/) (Utility-First)
+-   **Gestión de Estado:**
+    -   [Redux Toolkit](https://redux-toolkit.js.org/): para el estado global y la lógica asíncrona.
+    -   [React Context](https://react.dev/learn/passing-data-deeply-with-context): para el estado de la UI (tema y fuente).
+-   **Notificaciones:** [React Hot Toast](https://react-hot-toast.com/)
+-   **Iconos:** [React Icons](https://react-icons.github.io/react-icons/)
+-   **Cliente HTTP:** [Axios](https://axios-http.com/)
+-   **Gestor de Paquetes:** [pnpm](https://pnpm.io/)
 
 ---
 
-## Ejecución
+## 2. Arquitectura del Sistema
 
-Una vez completada la instalación, puedes ejecutar la aplicación en modo de desarrollo:
+El proyecto está construido sobre una **Arquitectura por Features (Feature-Based Architecture)**, diseñada para maximizar la escalabilidad, mantenibilidad y el encapsulamiento del código.
 
-```bash
-npm run dev
-```
+-   **Filosofía Principal:** En lugar de agrupar archivos por su tipo (ej. `/components`, `/hooks`), el código se organiza por funcionalidad o "feature" (ej. `/features/cats`, `/features/theme`).
+-   **Separación de Responsabilidades:** Se utiliza una estrategia de estado híbrida y robusta:
+    1.  **Redux Toolkit** para gestionar el estado complejo y asíncrono de la aplicación (la data de los gatos).
+    2.  **React Context** para el estado de la UI, que es más simple y localizado (tema y fuente).
+-   **Alias de Ruta (`@`):** Se utilizan alias (`@app`, `@features`, `@shared`) para simplificar las importaciones, mejorar la legibilidad y hacer la base de código más robusta ante refactorizaciones.
+-   **Estilos Utility-First:** Se sigue estrictamente la metodología de Tailwind CSS. La reutilización y abstracción se logran a través de **componentes de React**, no mediante clases CSS personalizadas.
 
-Esto iniciará un servidor de desarrollo local. Abre tu navegador y visita [http://localhost:5173](http://localhost:5173) para ver la aplicación en funcionamiento.
-
----
-
-## Arquitectura del Proyecto
-
-El proyecto ha sido reestructurado para separar responsabilidades, siguiendo los principios de la Arquitectura Limpia. La estructura de la carpeta `src` es la siguiente:
+### Estructura de Carpetas (`src`)
 
 ```
 src/
-├── components/     # Componentes de React reutilizables y de presentación
-│   ├── CatCard.jsx
-│   └── CatList.jsx
-├── hooks/          # Custom Hooks de React para encapsular lógica
-│   └── useCats.js
-├── redux/          # Configuración y slices de Redux
-│   ├── catsSlice.js
-│   └── store.js
-├── services/       # Módulos para interactuar con APIs externas
-│   └── catApi.js
-├── App.jsx         # Componente principal que ensambla la aplicación
-└── main.jsx        # Punto de entrada de la aplicación
+├── app/
+│   └── store.js         # Configuración central del store de Redux
+├── features/
+│   ├── cats/            # Feature: Lógica y UI para los gatos
+│   ├── font/            # Feature: Lógica y UI para la selección de fuente
+│   └── theme/           # Feature: Lógica y UI para el cambio de tema
+├── shared/
+│   └── components/      # Componentes reutilizables (esqueletos, etc.)
+├── doc/
+│   └── ...              # Documentación técnica y de arquitectura
+├── services/
+│   └── catApi.js        # Lógica para interactuar con TheCatAPI
+├── main.jsx             # Punto de entrada de la aplicación
+└── App.jsx              # Componente raíz de la aplicación
 ```
-
-### Mejoras Aplicadas
-
-1.  **Capa de Servicios (`/services`):**
-    -   Se creó `catApi.js` para aislar toda la lógica de `axios` y las llamadas a la API. Esto desacopla la obtención de datos de la lógica de estado y hace que el código sea más fácil de probar y mantener.
-
-2.  **Custom Hook (`/hooks`):**
-    -   Se implementó `useCats.js`, un *custom hook* que encapsula toda la interacción con el *store* de Redux (selección de estado y despacho de acciones). Los componentes ahora pueden consumir el estado y los manejadores de eventos sin conocer los detalles de implementación de Redux.
-
-3.  **Componentes Atómicos y Reutilizables (`/components`):**
-    -   `App.jsx` se limpió de lógica y ahora actúa como un contenedor.
-    -   Se creó `CatList.jsx`, un componente reutilizable para renderizar cualquier lista de gatos, eliminando el código duplicado que existía anteriormente.
-    -   `CatCard.jsx` se simplificó y ahora espera una estructura de datos normalizada.
-
-4.  **Gestión de Estado Optimizada (`/redux`):**
-    -   El `catsSlice.js` fue refactorizado para usar el nuevo servicio de API.
-    -   Las acciones de `guardar` y `eliminar` ahora realizan **actualizaciones optimistas**, modificando el estado local inmediatamente y mejorando la experiencia del usuario al no tener que esperar una recarga completa de la lista.
 
 ---
 
-## Scripts Disponibles
+## 3. Instalación y Ejecución
 
-En el archivo `package.json` puedes encontrar los siguientes scripts:
+### Requisitos Previos
+-   Node.js v18+
+-   pnpm
 
--   `npm run dev`: Inicia el servidor de desarrollo.
--   `npm run build`: Compila la aplicación para producción en la carpeta `dist/`.
--   `npm run lint`: Ejecuta ESLint para analizar el código en busca de errores y problemas de estilo.
--   `npm run preview`: Sirve localmente el *build* de producción para previsualización.
--   `npm run deploy`: Despliega la aplicación en GitHub Pages (requiere configuración previa).
+### Pasos
+
+1.  **Clonar el repositorio:**
+    ```bash
+    git clone <URL_DEL_REPOSITORIO>
+    cd myprojectapi11
+    ```
+
+2.  **Instalar dependencias:**
+    ```bash
+    pnpm install
+    ```
+
+3.  **Ejecutar en modo de desarrollo:**
+    La aplicación estará disponible en `http://localhost:5173`.
+    ```bash
+    pnpm run dev
+    ```
+
+4.  **Construir para producción:**
+    Los archivos estáticos se generarán en la carpeta `dist/`.
+    ```bash
+    pnpm run build
+    ```
+
+5.  **Linting:**
+    Ejecutar el linter para verificar la calidad del código.
+    ```bash
+    pnpm run lint
+    ```
+
+---
+
+## 4. Detalle de Módulos y Features
+
+### Feature: `cats`
+-   **Responsabilidad:** Gestionar todo lo relacionado con los gatos: obtenerlos de la API, guardarlos como favoritos, eliminarlos y mostrar las listas.
+-   **Componentes Clave:** `CatList`, `CatCard`.
+-   **Estado:** Gestionado por `catsSlice.js` (Redux) y expuesto a través del hook `useCats.js`.
+
+### Feature: `theme`
+-   **Responsabilidad:** Gestionar el cambio entre el modo claro y oscuro.
+-   **Componentes Clave:** `ThemeToggleButton`.
+-   **Estado:** Gestionado por `ThemeContext.jsx` y persistido en `localStorage`.
+
+### Feature: `font`
+-   **Responsabilidad:** Gestionar el cambio dinámico de la tipografía de la aplicación.
+-   **Componentes Clave:** `FontDropdown`.
+-   **Estado:** Gestionado por `FontContext.jsx` y persistido en `localStorage`.
+
+### Módulo `shared`
+-   Contiene componentes agnósticos y reutilizables, como los esqueletos de carga (`SkeletonGrid`, `SkeletonCard`), que pueden ser utilizados por cualquier feature.
+
+---
+
+## 5. Decisiones de Diseño y Buenas Prácticas
+
+-   **Componente Fachada (`useCats`):** El hook `useCats` actúa como una fachada que simplifica la interacción con el store de Redux. Los componentes de React no necesitan saber sobre `dispatch` o `useSelector`; simplemente consumen el hook.
+-   **Optimización de Rendimiento:**
+    -   **Lazy Loading de Componentes:** `CatList` se carga de forma diferida con `React.lazy`.
+    -   **Lazy Loading de Imágenes:** Las imágenes de los gatos utilizan el atributo nativo `loading="lazy"`.
+    -   **Memoización:** `CatCard` está envuelto en `React.memo` para prevenir re-renderizados innecesarios.
+-   **Experiencia de Usuario (UX):**
+    -   **Feedback Inmediato:** Se utilizan notificaciones "toast" para confirmar acciones.
+    -   **Manejo de Errores Resiliente:** El mensaje de error incluye un botón "Reintentar".
+    -   **Estados de Carga y Vacíos:** Se usan esqueletos de carga y mensajes informativos para guiar al usuario.
+-   **Sistema de Iconos Unificado:** Todos los iconos provienen de `react-icons` para garantizar consistencia visual y de mantenimiento.
+
+## 6. Roadmap y Mejoras Futuras
+
+-   [ ] **Paginación:** Implementar paginación o scroll infinito en la lista de "Random Kittens" para cargar más imágenes.
+-   [ ] **Pruebas Unitarias y de Integración:** Añadir cobertura de pruebas con una librería como Vitest.
+-   [ ] **Componente de Dropdown Personalizado:** Reemplazar el `<select>` nativo de `FontDropdown` por un componente de dropdown totalmente personalizado y accesible para un control visual total.
+-   [ ] **Animaciones Avanzadas:** Explorar librerías como `Framer Motion` para añadir animaciones más ricas a la interfaz.
