@@ -5,7 +5,7 @@
  * de Material Tailwind con las opciones de fuente y está estilizado para soportar temas claro/oscuro.
  */
 
-import { useFont } from "../hooks/useFont";
+import { useFont } from "@features/font/hooks/useFont";
 
 /**
  * Componente que renderiza un menú desplegable para cambiar la fuente global de la aplicación.

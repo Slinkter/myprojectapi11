@@ -6,7 +6,7 @@
  */
 
 import { useContext } from "react";
-import { ThemeContext } from "../context/ThemeContext";
+import { ThemeContext } from "@features/theme/context/ThemeContext";
 
 /**
  * Hook `useTheme` que proporciona acceso al contexto del tema.

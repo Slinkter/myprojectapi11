@@ -12,7 +12,7 @@ import {
     fetchFavouriteCats,
     saveCat,
     deleteCat,
-} from "../redux/catsSlice";
+} from "@features/cats/redux/catsSlice";
 
 /**
  * Hook `useCats` para gestionar el estado y las acciones relacionadas con los gatos.

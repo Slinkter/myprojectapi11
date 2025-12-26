@@ -6,7 +6,7 @@
  */
 
 import { useContext } from "react";
-import { FontContext } from "../context/FontContext";
+import { FontContext } from "@features/font/context/FontContext";
 
 /**
  * Hook `useFont` que proporciona acceso al contexto de la fuente.

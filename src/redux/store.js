@@ -6,7 +6,7 @@
  */
 
 import { configureStore } from "@reduxjs/toolkit";
-import catsReducer from "./catsSlice";
+import catsReducer from "@features/cats/redux/catsSlice";
 
 /**
  * El store de Redux para la aplicación.

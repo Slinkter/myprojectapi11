@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@features/*": ["./src/features/*"],
+            "@shared/*": ["./src/shared/*"],
+            "@redux/*": ["./src/redux/*"]
+        },
+        "jsx": "react-jsx",
+        "allowSyntheticDefaultImports": true
+    },
+    "include": ["src"]
+}

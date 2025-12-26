@@ -7,13 +7,13 @@
 
 import React, { useEffect, Suspense } from "react";
 
-import { useCats } from "./hooks/useCats";
-import CatListSkeleton from "./components/skeletons/CatListSkeleton";
-import ThemeToggleButton from "./components/ThemeToggleButton";
-import FontDropdown from "./components/FontDropdown";
+import { useCats } from "@features/cats/hooks/useCats";
+import CatListSkeleton from "@shared/components/skeletons/CatListSkeleton";
+import ThemeToggleButton from "@features/theme/components/ThemeToggleButton";
+import FontDropdown from "@features/font/components/FontDropdown";
 
 // Carga diferida (Lazy Loading) del componente CatList para optimizar el rendimiento inicial.
-const CatList = React.lazy(() => import("./components/CatList"));
+const CatList = React.lazy(() => import("@features/cats/components/CatList"));
 
 /**
  * Componente raíz de la aplicación.

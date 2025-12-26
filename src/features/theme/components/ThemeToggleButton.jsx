@@ -4,7 +4,7 @@
  * cambiar el tema de la aplicación utilizando el `ThemeContext`.
  */
 
-import { useTheme } from "../hooks/useTheme";
+import { useTheme } from "@features/theme/hooks/useTheme";
 
 /**
  * Icono de Sol para representar el tema oscuro (botón para cambiar a claro).

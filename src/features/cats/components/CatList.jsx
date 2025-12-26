@@ -6,7 +6,7 @@
  */
 
 import PropTypes from "prop-types";
-import SkeletonGrid from "./skeletons/SkeletonGrid";
+import SkeletonGrid from "@shared/components/skeletons/SkeletonGrid";
 import CatCard from "./CatCard";
 
 /**

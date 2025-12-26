@@ -9,11 +9,10 @@
  */
 
 import ReactDOM from "react-dom/client";
-
 import { Provider } from "react-redux";
-import store from "./redux/store.js";
-import { AppThemeProvider } from "./context/ThemeContext";
-import { AppFontProvider } from "./context/FontContext.jsx";
+import store from "@redux/store";
+import { AppThemeProvider } from "@features/theme/context/ThemeContext";
+import { AppFontProvider } from "@features/font/context/FontContext.jsx";
 import App from "./App.jsx";
 import "./index.css";
 

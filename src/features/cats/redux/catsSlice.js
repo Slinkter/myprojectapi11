@@ -5,7 +5,7 @@
  */
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { catApiService } from "../services/catApi";
+import { catApiService } from "@features/cats/api/catApi";
 
 // --- Thunks asíncronos para interactuar con la API de gatos ---
 

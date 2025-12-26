@@ -5,6 +5,8 @@
  * guardado o con la preferencia del sistema del usuario.
  */
 
+/* eslint-disable react-refresh/only-export-components */
+
 import { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
