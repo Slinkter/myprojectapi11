@@ -1,32 +1,20 @@
 /**
- * @file Punto de entrada de la aplicación React.
- * @description Este archivo renderiza el componente raíz (`App`) en el DOM.
- * También envuelve la aplicación con todos los proveedores de contexto necesarios:
- * - `MaterialThemeProvider`: para los componentes de Material Tailwind.
- * - `Provider`: para el estado global de Redux.
- * - `AppThemeProvider`: para el tema (oscuro/claro).
- * - `AppFontProvider`: para la gestión de la fuente.
+ * @file React Application Entry Point.
+ * @description Renders the root component (`App`) into the DOM.
+ * Also wraps the application with necessary context providers:
+ * - `Provider`: Global Redux state.
  */
 
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import store from "@app/store";
-import { AppThemeProvider } from "@features/theme/context/ThemeContext";
-import { AppFontProvider } from "@features/font/context/FontContext.jsx";
 import App from "./App.jsx";
 import "./index.css";
 
-// Renderiza la aplicación en el elemento 'root' del DOM.
+// Renders the application into the 'root' DOM element.
 ReactDOM.createRoot(document.getElementById("root")).render(
-    // Proveedor de tema para Material Tailwind.
-    <Provider store={store}>
-        {/* Proveedor de tema personalizado (oscuro/claro). */}
-        <AppThemeProvider>
-            {/* Proveedor de fuente personalizado. */}
-            <AppFontProvider>
-                {/* Componente principal de la aplicación. */}
-                <App />
-            </AppFontProvider>
-        </AppThemeProvider>
-    </Provider>
+  // The Redux Provider wraps the entire application.
+  <Provider store={store}>
+    <App />
+  </Provider>
 );

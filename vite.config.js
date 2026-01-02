@@ -8,17 +8,18 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default defineConfig({
-    plugins: [
-        react({
-            jsxRuntime: "automatic",
-        }),
-    ],
-    base: "https://slinkter.github.io/myprojectapi11",
-    resolve: {
-        alias: {
-            "@features": path.resolve(__dirname, "./src/features"),
-            "@shared": path.resolve(__dirname, "./src/shared"),
-            "@app": path.resolve(__dirname, "./src/app"),
-        },
+  plugins: [
+    react({
+      jsxRuntime: "automatic",
+    }),
+  ],
+  base: "https://slinkter.github.io/myprojectapi11",
+  resolve: {
+    alias: {
+      "@features": path.resolve(__dirname, "./src/features"),
+      "@shared": path.resolve(__dirname, "./src/shared"),
+      "@app": path.resolve(__dirname, "./src/app"),
+      "@config": path.resolve(__dirname, "./src/config"),
     },
+  },
 });

@@ -5,20 +5,52 @@
  * Actualmente, solo se utiliza el `catsReducer`.
  */
 
+/**
+
+ * @file Configuración del store de Redux.
+
+ * @description Crea y configura el store, combinando los reducers y exportando
+
+ * los tipos `RootState` y `AppDispatch` para su uso en toda la aplicación.
+
+ */
+
 import { configureStore } from "@reduxjs/toolkit";
+
 import catsReducer from "@features/cats/redux/catsSlice";
 
-/**
- * El store de Redux para la aplicación.
- * `configureStore` simplifica la creación del store, aplicando automáticamente
- * middleware como Redux Thunk y habilitando las Redux DevTools.
- * @type {import('@reduxjs/toolkit').EnhancedStore}
- */
+import themeReducer from "@features/theme/redux/themeSlice";
+
+import fontReducer from "@features/font/redux/fontSlice";
+
+
+
 const store = configureStore({
-    // El objeto `reducer` mapea los nombres de los slices del estado a sus respectivos reducers.
+
     reducer: {
+
         cats: catsReducer,
+
+        theme: themeReducer,
+
+        font: fontReducer,
+
     },
+
 });
 
+
+
+/**
+
+ * @typedef {ReturnType<typeof store.getState>} RootState
+
+ * @typedef {typeof store.dispatch} AppDispatch
+
+ */
+
+
+
 export default store;
+
+

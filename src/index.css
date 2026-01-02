@@ -1,46 +1,45 @@
 /*
- * Archivo CSS principal.
- * Se utiliza la directiva @tailwind para inyectar las utilidades de Tailwind CSS.
- * Las personalizaciones y componentes se definen en capas (@layer) para una mejor organización y rendimiento.
+ * Main CSS file.
+ * Uses the @tailwind directive to inject Tailwind CSS utilities.
+ * Customizations and components are defined in layers (@layer) for better organization and performance.
  */
 
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-    --font-sans: var(--font-family), ui-sans-serif, system-ui, sans-serif,
-        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-        "Noto Color Emoji";
+  --font-sans: var(--font-family), ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 @layer base {
-    body {
-        @apply bg-gray-50 dark:bg-gray-900 font-sans;
-    }
+  body {
+    @apply bg-gray-50 dark:bg-gray-900 font-sans;
+  }
 }
 
 /*
- * Capa de utilidades personalizadas.
- * Aquí se pueden añadir clases de utilidad que se comportarán como las de Tailwind.
- * Ideal para animaciones, gradientes o efectos reutilizables.
+ * Custom utilities layer.
+ * Here you can add utility classes that behave like Tailwind's.
+ * Ideal for animations, gradients, or reusable effects.
  */
 @layer utilities {
-    /*
-     * Animación de entrada con fundido y escala.
-     * Se utiliza para la aparición escalonada de las tarjetas de gatos.
+  /*
+     * Entrance animation with fade and scale.
+     * Used for the staggered appearance of cat cards.
      */
-    .animate-fade-in-scale {
-        animation: fade-in-scale 0.3s ease-out forwards;
-    }
+  .animate-fade-in-scale {
+    animation: fade-in-scale 0.3s ease-out forwards;
+  }
 
-    @keyframes fade-in-scale {
-        from {
-            opacity: 0;
-            transform: scale(0.95);
-        }
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
+  @keyframes fade-in-scale {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
     }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
 }

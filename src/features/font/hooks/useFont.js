@@ -1,19 +1,34 @@
 /**
- * @file Custom Hook para acceder al contexto de la fuente.
- * @description Este hook abstrae el uso de `useContext` para el `FontContext`,
- * proporcionando una forma limpia y reutilizable de acceder al estado de la fuente
- * y a las funciones relacionadas en cualquier componente.
+ * @file Custom Hook para gestionar el estado de la fuente.
+ * @description Abstrae la interacción con el store de Redux para la fuente,
+ * proveyendo la familia actual, la lista de fuentes y una función para cambiarla.
  */
-
-import { useContext } from "react";
-import { FontContext } from "@features/font/context/FontContext";
+import { useDispatch, useSelector } from "react-redux";
+import { changeFont as changeFontAction } from "@features/font/redux/fontSlice";
 
 /**
- * Hook `useFont` que proporciona acceso al contexto de la fuente.
- *
- * @returns {object} El valor del contexto de la fuente, que incluye:
- * - `font`: La familia de fuentes CSS actual.
- * - `changeFont`: La función para actualizar la fuente.
- * - `fonts`: El array de fuentes disponibles.
+ * @typedef {import("..//redux/fontSlice").Font} Font
  */
-export const useFont = () => useContext(FontContext);
+
+/**
+ * Hook `useFont` para acceder al estado de la fuente y modificarlo.
+ * @returns {{
+ *  font: string,
+ *  fonts: Font[],
+ *  changeFont: (newFontFamily: string) => void
+ * }}
+ */
+export const useFont = () => {
+    const dispatch = useDispatch();
+    const { family: font, list: fonts } = useSelector((state) => state.font);
+
+    /**
+     * Despacha la acción para cambiar la fuente.
+     * @param {string} newFontFamily La nueva familia de fuentes a aplicar.
+     */
+    const changeFont = (newFontFamily) => {
+        dispatch(changeFontAction(newFontFamily));
+    };
+
+    return { font, fonts, changeFont };
+};

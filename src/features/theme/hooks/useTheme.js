@@ -5,14 +5,28 @@
  * para alternarlo desde cualquier componente.
  */
 
-import { useContext } from "react";
-import { ThemeContext } from "@features/theme/context/ThemeContext";
+/**
+ * @file Custom Hook para gestionar el estado del tema.
+ * @description Abstrae la interacción con el store de Redux para el tema,
+ * proveyendo el modo actual y una función para alternarlo.
+ */
+import { useDispatch, useSelector } from "react-redux";
+import { toggleTheme as toggleThemeAction } from "@features/theme/redux/themeSlice";
 
 /**
- * Hook `useTheme` que proporciona acceso al contexto del tema.
- *
- * @returns {{theme: string, toggleTheme: () => void}} El valor del contexto del tema, que incluye:
- * - `theme`: El tema actual ("light" or "dark").
- * - `toggleTheme`: La función para cambiar entre los temas.
+ * Hook `useTheme` para acceder al estado del tema y alternarlo.
+ * @returns {{
+ *  theme: "dark" | "light",
+ *  toggleTheme: () => void
+ * }}
  */
-export const useTheme = () => useContext(ThemeContext);
+export const useTheme = () => {
+    const dispatch = useDispatch();
+    const theme = useSelector((state) => state.theme.mode);
+
+    const toggleTheme = () => {
+        dispatch(toggleThemeAction());
+    };
+
+    return { theme, toggleTheme };
+};

@@ -1,87 +1,93 @@
 /**
- * @file Custom Hook para gestionar la lógica de los gatos.
- * @description Este hook abstrae la interacción con el store de Redux,
- * proveyendo a los componentes los datos de los gatos (aleatorios y favoritos),
- * el estado de carga/error y las funciones para interactuar con ellos.
+ * @file Custom Hook (Facade) to manage cat logic.
+ * @description Abstracts Redux store interactions, providing components
+ * with a simplified API to access cat data and actions.
  */
 
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import {
-    fetchRandomCats,
-    fetchFavouriteCats,
-    saveCat,
-    deleteCat,
+  fetchRandomCats,
+  fetchFavouriteCats,
+  saveCat,
+  deleteCat,
 } from "@features/cats/redux/catsSlice";
 
 /**
- * Hook `useCats` para gestionar el estado y las acciones relacionadas con los gatos.
+ * @typedef {import('@features/cats/api/catApi').Cat} Cat
+ * @typedef {import('@features/cats/redux/catsSlice').CatsState} CatsState
+ * @typedef {import('@app/store').RootState} RootState
+ */
+
+/**
+ * Hook `useCats`: a facade for cat state and actions.
  *
  * @returns {{
- *  randomCats: Array<object>,
- *  favouriteCats: Array<object>,
- *  loading: object,
+ *  randomCats: Cat[],
+ *  favouriteCats: Cat[],
+ *  loading: CatsState['loading'],
  *  error: string|null,
  *  loadRandomCats: () => void,
  *  loadFavouriteCats: () => void,
- *  saveFavouriteCat: (cat: object) => Promise<void>,
- *  deleteFavouriteCat: (cat: object) => Promise<void>
- * }} - Objeto con el estado y los manejadores de acciones.
+ *  saveFavouriteCat: (cat: Cat) => Promise<void>,
+ *  deleteFavouriteCat: (cat: Cat) => Promise<void>
+ * }}
  */
 export const useCats = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    // Selección del estado desde el store de Redux
-    const randomCats = useSelector((state) => state.cats.random);
-    const favouriteCats = useSelector((state) => state.cats.favourites);
-    const loading = useSelector((state) => state.cats.loading);
-    const error = useSelector((state) => state.cats.error);
+  // Selects cat state from Redux store.
+  const { randomCats, favouriteCats, loading, error } = useSelector(
+    /** @param {RootState} state */
+    (state) => ({
+      randomCats: state.cats.random,
+      favouriteCats: state.cats.favourites,
+      loading: state.cats.loading,
+      error: state.cats.error,
+    })
+  );
 
-    // Despachadores de acciones memoizados con useCallback para optimizar el rendimiento
-    const loadRandomCats = useCallback(() => {
-        dispatch(fetchRandomCats());
-    }, [dispatch]);
+  const loadRandomCats = useCallback(() => {
+    dispatch(fetchRandomCats());
+  }, [dispatch]);
 
-    const loadFavouriteCats = useCallback(() => {
-        dispatch(fetchFavouriteCats());
-    }, [dispatch]);
+  const loadFavouriteCats = useCallback(() => {
+    dispatch(fetchFavouriteCats());
+  }, [dispatch]);
 
-    const saveFavouriteCat = useCallback(
-        async (cat) => {
-            try {
-                // .unwrap() convierte el resultado del thunk en una promesa que se resuelve
-                // con el payload de 'fulfilled' o se rechaza con el de 'rejected'.
-                await dispatch(saveCat(cat)).unwrap();
-                toast.success("Cat saved to favourites!");
-            } catch (err) {
-                // El error aquí es el payload de la acción 'rejected'.
-                toast.error(`Failed to save: ${err}`);
-            }
-        },
-        [dispatch]
-    );
+  const saveFavouriteCat = useCallback(
+    async (cat) => {
+      try {
+        await dispatch(saveCat(cat)).unwrap();
+        toast.success("Cat saved to favourites!");
+      } catch (err) {
+        toast.error(`Failed to save: ${err}`);
+      }
+    },
+    [dispatch]
+  );
 
-    const deleteFavouriteCat = useCallback(
-        async (cat) => {
-            try {
-                await dispatch(deleteCat(cat)).unwrap();
-                toast.success("Cat removed from favourites!");
-            } catch (err) {
-                toast.error(`Failed to delete: ${err}`);
-            }
-        },
-        [dispatch]
-    );
+  const deleteFavouriteCat = useCallback(
+    async (cat) => {
+      try {
+        await dispatch(deleteCat(cat)).unwrap();
+        toast.success("Cat removed from favourites!");
+      } catch (err) {
+        toast.error(`Failed to delete: ${err}`);
+      }
+    },
+    [dispatch]
+  );
 
-    return {
-        randomCats,
-        favouriteCats,
-        loading,
-        error,
-        loadRandomCats,
-        loadFavouriteCats,
-        saveFavouriteCat,
-        deleteFavouriteCat,
-    };
+  return {
+    randomCats,
+    favouriteCats,
+    loading,
+    error,
+    loadRandomCats,
+    loadFavouriteCats,
+    saveFavouriteCat,
+    deleteFavouriteCat,
+  };
 };

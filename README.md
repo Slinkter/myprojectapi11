@@ -1,138 +1,90 @@
-# Cat Gallery - React Project (v4.0)
+# Cat Gallery - Clean Architecture
 
-![Project Banner](api11.png)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![React](https://img.shields.io/badge/react-%2320232a.svg?style=flat&logo=react&logoColor=%2361DAFB)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=flat&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=flat&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=flat&logo=redux&logoColor=white)](https://redux.js.org/)
 
-Una moderna y optimizada Single Page Application (SPA) desarrollada con React que permite a los usuarios explorar una galería de imágenes de gatos, guardar sus favoritos y personalizar la interfaz de usuario en tiempo real.
+A modern, scalable Single Page Application (SPA) demonstrating **Senior Frontend Architecture** principles.
 
-Este proyecto sirve como un caso de estudio avanzado sobre arquitectura de frontend, buenas prácticas y optimización de rendimiento en el ecosistema de React.
+## 📄 Description and Purpose
 
----
+The **Cat Gallery** is a demonstration of a scalable frontend architecture using React, Redux Toolkit, and Tailwind CSS. It is designed to withstand complexity growth by decoupling business logic from UI components and organizing code by features (Feature-Sliced approach).
 
-## 1. Tecnologías Principales
+**Key Goals:**
+*   **Separation of Concerns:** UI components focuses only on rendering; logic is delegated to Custom Hooks.
+*   **Maintainability:** Feature-based folder structure ensures that code related to a specific domain (e.g., Cats, Fonts, Theme) stays together.
+*   **Performance:** Implements `React.memo` for rendering optimization and `React.lazy`/`Suspense` for code splitting.
 
--   **Core:** [React 19](https://react.dev/)
--   **Build Tool:** [Vite](https://vitejs.dev/)
--   **Estilos:** [Tailwind CSS](https://tailwindcss.com/) (Utility-First)
--   **Gestión de Estado:**
-    -   [Redux Toolkit](https://redux-toolkit.js.org/): para el estado global y la lógica asíncrona.
-    -   [React Context](https://react.dev/learn/passing-data-deeply-with-context): para el estado de la UI (tema y fuente).
--   **Notificaciones:** [React Hot Toast](https://react-hot-toast.com/)
--   **Iconos:** [React Icons](https://react-icons.github.io/react-icons/)
--   **Cliente HTTP:** [Axios](https://axios-http.com/)
--   **Gestor de Paquetes:** [pnpm](https://pnpm.io/)
+## 🚀 Installation and Setup
 
----
+### Prerequisites
+*   Node.js v18+
+*   pnpm v8+ (Recommended) or npm
 
-## 2. Arquitectura del Sistema
+### Steps
 
-El proyecto está construido sobre una **Arquitectura por Features (Feature-Based Architecture)**, diseñada para maximizar la escalabilidad, mantenibilidad y el encapsulamiento del código.
-
--   **Filosofía Principal:** En lugar de agrupar archivos por su tipo (ej. `/components`, `/hooks`), el código se organiza por funcionalidad o "feature" (ej. `/features/cats`, `/features/theme`).
--   **Separación de Responsabilidades:** Se utiliza una estrategia de estado híbrida y robusta:
-    1.  **Redux Toolkit** para gestionar el estado complejo y asíncrono de la aplicación (la data de los gatos).
-    2.  **React Context** para el estado de la UI, que es más simple y localizado (tema y fuente).
--   **Alias de Ruta (`@`):** Se utilizan alias (`@app`, `@features`, `@shared`) para simplificar las importaciones, mejorar la legibilidad y hacer la base de código más robusta ante refactorizaciones.
--   **Estilos Utility-First:** Se sigue estrictamente la metodología de Tailwind CSS. La reutilización y abstracción se logran a través de **componentes de React**, no mediante clases CSS personalizadas.
-
-### Estructura de Carpetas (`src`)
-
-```
-src/
-├── app/
-│   └── store.js         # Configuración central del store de Redux
-├── features/
-│   ├── cats/            # Feature: Lógica y UI para los gatos
-│   ├── font/            # Feature: Lógica y UI para la selección de fuente
-│   └── theme/           # Feature: Lógica y UI para el cambio de tema
-├── shared/
-│   └── components/      # Componentes reutilizables (esqueletos, etc.)
-├── doc/
-│   └── ...              # Documentación técnica y de arquitectura
-├── services/
-│   └── catApi.js        # Lógica para interactuar con TheCatAPI
-├── main.jsx             # Punto de entrada de la aplicación
-└── App.jsx              # Componente raíz de la aplicación
-```
-
----
-
-## 3. Instalación y Ejecución
-
-### Requisitos Previos
--   Node.js v18+
--   pnpm
-
-### Pasos
-
-1.  **Clonar el repositorio:**
+1.  **Clone the repository**
     ```bash
-    git clone <URL_DEL_REPOSITORIO>
+    git clone https://github.com/your-username/myprojectapi11.git
     cd myprojectapi11
     ```
 
-2.  **Instalar dependencias:**
+2.  **Install dependencies**
     ```bash
     pnpm install
     ```
 
-3.  **Ejecutar en modo de desarrollo:**
-    La aplicación estará disponible en `http://localhost:5173`.
+3.  **Run the development server**
     ```bash
     pnpm run dev
     ```
 
-4.  **Construir para producción:**
-    Los archivos estáticos se generarán en la carpeta `dist/`.
+4.  **Build for production**
     ```bash
     pnpm run build
     ```
 
-5.  **Linting:**
-    Ejecutar el linter para verificar la calidad del código.
-    ```bash
-    pnpm run lint
-    ```
+## 🏗 Applied Architecture
+
+This project adopts a **Feature-Based Architecture**, deviating from the traditional "layer-based" (components/actions/reducers) structure.
+
+### 1. Folder Structure
+```
+src/
+├── app/             # Global app setup (store configuration)
+├── config/          # Environment variables and global config
+├── features/        # Business domains (The Core)
+│   ├── cats/        # Cats feature (components, hooks, redux, api)
+│   ├── font/        # User font settings
+│   └── theme/       # Dark/Light mode logic
+├── shared/          # Generic, reusable code
+│   ├── components/  # Loaders, generic layouts
+│   └── hooks/       # useAppearance, etc.
+└── App.jsx          # Main Layout Orchestrator
+```
+
+### 2. Key Design Patterns
+
+*   **Facade Pattern (Custom Hooks):**
+    Components do not access Redux `useSelector` or `useDispatch` directly. Instead, they use a custom hook (e.g., `useCats`) which exposes a simplified API (`{ randomCats, loadRandomCats, ... }`).
+    *   *Benefit:* Extracts complexity from UI, makes testing easier, and allows swapping state management libraries without breaking the UI.
+
+*   **Container/Presentation Separation:**
+    *   `RandomCatList` (Container): Connects to data sources.
+    *   `CatCard` (Presentation): Pure component, receives data via props.
+
+*   **Repository/Service Pattern:**
+    API calls are abstracted in `catApi.js`, isolating the HTTP client (Axios) from the rest of the application.
+
+## 🤝 Contributing
+
+1.  Fork the repository.
+2.  Create your feature branch (`git checkout -b feature/AmazingFeature`).
+3.  Commit your changes (`git commit -m 'Add some AmazingFeature'`).
+4.  Push to the branch (`git push origin feature/AmazingFeature`).
+5.  Open a Pull Request.
 
 ---
-
-## 4. Detalle de Módulos y Features
-
-### Feature: `cats`
--   **Responsabilidad:** Gestionar todo lo relacionado con los gatos: obtenerlos de la API, guardarlos como favoritos, eliminarlos y mostrar las listas.
--   **Componentes Clave:** `CatList`, `CatCard`.
--   **Estado:** Gestionado por `catsSlice.js` (Redux) y expuesto a través del hook `useCats.js`.
-
-### Feature: `theme`
--   **Responsabilidad:** Gestionar el cambio entre el modo claro y oscuro.
--   **Componentes Clave:** `ThemeToggleButton`.
--   **Estado:** Gestionado por `ThemeContext.jsx` y persistido en `localStorage`.
-
-### Feature: `font`
--   **Responsabilidad:** Gestionar el cambio dinámico de la tipografía de la aplicación.
--   **Componentes Clave:** `FontDropdown`.
--   **Estado:** Gestionado por `FontContext.jsx` y persistido en `localStorage`.
-
-### Módulo `shared`
--   Contiene componentes agnósticos y reutilizables, como los esqueletos de carga (`SkeletonGrid`, `SkeletonCard`), que pueden ser utilizados por cualquier feature.
-
----
-
-## 5. Decisiones de Diseño y Buenas Prácticas
-
--   **Componente Fachada (`useCats`):** El hook `useCats` actúa como una fachada que simplifica la interacción con el store de Redux. Los componentes de React no necesitan saber sobre `dispatch` o `useSelector`; simplemente consumen el hook.
--   **Optimización de Rendimiento:**
-    -   **Lazy Loading de Componentes:** `CatList` se carga de forma diferida con `React.lazy`.
-    -   **Lazy Loading de Imágenes:** Las imágenes de los gatos utilizan el atributo nativo `loading="lazy"`.
-    -   **Memoización:** `CatCard` está envuelto en `React.memo` para prevenir re-renderizados innecesarios.
--   **Experiencia de Usuario (UX):**
-    -   **Feedback Inmediato:** Se utilizan notificaciones "toast" para confirmar acciones.
-    -   **Manejo de Errores Resiliente:** El mensaje de error incluye un botón "Reintentar".
-    -   **Estados de Carga y Vacíos:** Se usan esqueletos de carga y mensajes informativos para guiar al usuario.
--   **Sistema de Iconos Unificado:** Todos los iconos provienen de `react-icons` para garantizar consistencia visual y de mantenimiento.
-
-## 6. Roadmap y Mejoras Futuras
-
--   [ ] **Paginación:** Implementar paginación o scroll infinito en la lista de "Random Kittens" para cargar más imágenes.
--   [ ] **Pruebas Unitarias y de Integración:** Añadir cobertura de pruebas con una librería como Vitest.
--   [ ] **Componente de Dropdown Personalizado:** Reemplazar el `<select>` nativo de `FontDropdown` por un componente de dropdown totalmente personalizado y accesible para un control visual total.
--   [ ] **Animaciones Avanzadas:** Explorar librerías como `Framer Motion` para añadir animaciones más ricas a la interfaz.
+*Maintained by Senior Fullstack Web Architect Agent*
