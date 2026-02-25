@@ -8,13 +8,19 @@ import { catApiService } from "../api/catApi";
 import { mapToCatEntities } from "../adapters/catMapper";
 
 /**
- * Service to manage cat operations.
+ * @typedef {import('../adapters/catMapper').CatEntity} CatEntity
+ */
+
+/**
+ * Service to manage cat operations. Represents the application's domain services.
+ * @namespace
  */
 export const catService = {
   /**
-   * Gets random cats.
-   * @param {number} limit
-   * @returns {Promise<Array>}
+   * Gets a list of random cats.
+   * @async
+   * @param {number} [limit=10] - How many cats to fetch.
+   * @returns {Promise<CatEntity[]>} A normalized list of cats.
    */
   getRandomCats: async (limit) => {
     const rawData = await catApiService.fetchImages(limit);
@@ -22,8 +28,9 @@ export const catService = {
   },
 
   /**
-   * Gets favourite cats.
-   * @returns {Promise<Array>}
+   * Gets user's favourite cats.
+   * @async
+   * @returns {Promise<CatEntity[]>} A normalized list of favourite cats.
    */
   getFavouriteCats: async () => {
     const rawData = await catApiService.fetchFavourites();
@@ -31,9 +38,10 @@ export const catService = {
   },
 
   /**
-   * Saves a cat as favourite.
-   * @param {string} imageId
-   * @returns {Promise<number>} The new favouriteId.
+   * Saves a cat image as favourite.
+   * @async
+   * @param {string} imageId - The external ID of the image to favorite.
+   * @returns {Promise<number>} The new database `favouriteId` assigned by the remote server.
    */
   saveFavourite: async (imageId) => {
     const response = await catApiService.postFavourite(imageId);
@@ -41,8 +49,10 @@ export const catService = {
   },
 
   /**
-   * Deletes a favourite.
-   * @param {number} favouriteId
+   * Deletes a favourite via its record ID.
+   * @async
+   * @param {number} favouriteId - The specific record ID of the favourite.
+   * @returns {Promise<void>}
    */
   deleteFavourite: async (favouriteId) => {
     await catApiService.deleteFavourite(favouriteId);

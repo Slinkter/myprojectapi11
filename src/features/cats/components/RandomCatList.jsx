@@ -9,13 +9,13 @@ import { useCats } from "@features/cats/hooks/useCats";
 import CatList from "./CatList";
 
 /**
- * @typedef {import('@features/cats/api/catApi').Cat} Cat
+ * @typedef {import('../adapters/catMapper').CatEntity} CatEntity
  */
 
 /**
  * Orchestrates fetching and rendering of the random cat list.
  * @component
- * @returns {JSX.Element}
+ * @returns {JSX.Element} The rendered React component.
  */
 const RandomCatList = () => {
   const {
@@ -42,14 +42,14 @@ const RandomCatList = () => {
 
   /**
    * Checks if a cat from the random list is already in favourites.
-   * @param {Cat} cat - The cat to check.
+   * @param {CatEntity} cat - The cat to check.
    * @returns {boolean} - `true` if the cat is a favourite.
    */
   const isCatInFavourites = useCallback(
     (cat) => {
       return favouriteContext.has(cat.id);
     },
-    [favouriteContext]
+    [favouriteContext],
   );
 
   return (

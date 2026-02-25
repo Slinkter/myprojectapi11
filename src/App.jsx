@@ -29,24 +29,14 @@ const FavouriteCatList = React.lazy(() =>
  */
 const App = () => {
   // Use isolated hook to manage title.
-  usePageTitle("Cat Gallery - Clean Architecture");
+  usePageTitle("Project API 11 - Cat Gallery");
 
   // Hook to manage global appearance effects.
   useAppearance();
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <Toaster
-        position="top-center"
-        reverseOrder={false}
-        toastOptions={{
-          className: "bg-card text-foreground border border-border shadow-lg",
-          style: {
-            borderRadius: "12px",
-          },
-        }}
-      />
-
+    <div className="min-h-dvh ">
+      {/* --- NAVBAR ---  */}
       <header className="sticky top-0 z-50 bg-background/80 border-b border-border backdrop-blur-md">
         <div className="container flex items-center justify-between px-4 py-3 mx-auto">
           <h1 className="text-2xl font-bold tracking-tight text-foreground">
@@ -58,18 +48,30 @@ const App = () => {
           </div>
         </div>
       </header>
-
+      {/* --- MAIN --- */}
       <main className="container mx-auto p-4">
+        {/*  */}
         <Suspense fallback={<CatListSkeleton />}>
           <RandomCatList />
         </Suspense>
-
+        {/*  */}
         <Suspense fallback={<CatListSkeleton />}>
           <FavouriteCatList />
         </Suspense>
-
+        {/*  */}
         <CatErrorHandler />
       </main>
+      {/* --- TOASTER --- */}
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+        toastOptions={{
+          className: "bg-card text-foreground border border-border shadow-lg",
+          style: {
+            borderRadius: "12px",
+          },
+        }}
+      />
     </div>
   );
 };

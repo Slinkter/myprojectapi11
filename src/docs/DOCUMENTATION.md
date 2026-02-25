@@ -1,33 +1,60 @@
 # Technical Documentation Hub
 
-> **Role:** Senior Fullstack Web Architect
-> **Project:** Cat Gallery
+> **Project:** Cat Gallery — Clean Architecture Reference
+> **Stack:** React 19 · Vite 7 · Redux Toolkit 2 · Tailwind CSS v4 · Framer Motion 12
 
-This document serves as the central index for all technical documentation related to the **Cat Gallery** project. It is intended for Developers, Architects, and QA Engineers.
-
-## 📚 Documentation Index
-
-### 1. Project Overview
-*   **[01-PROJECT-CHARTER.md](./01-PROJECT-CHARTER.md)**: High-level overview, business objectives, scope, and key stakeholders.
-*   **[02-REQUIREMENTS.md](./02-REQUIREMENTS.md)**: Detailed Functional (FR) and Non-Functional (NFR) requirements.
-*   **[03-USE-CASES.md](./03-USE-CASES.md)**: User interaction flows and system behavior specifications.
-
-### 2. Architecture & Design
-*   **[04-ARCHITECTURE.md](./04-ARCHITECTURE.md)**: Deep dive into Feature-Based Architecture, Design Patterns (Facade, Service, Adapter), and State Management.
-*   **[05-UI-DESIGN-SYSTEM.md](./05-UI-DESIGN-SYSTEM.md)**: Guidelines for UI usage, Tailwind tokens, color palettes, and typography.
-
-### 3. Development Workflow
-*   **[06-CONTRIBUTING.md](./06-CONTRIBUTING.md)**: Coding standards, Naming Conventions (Strict), JSDoc rules, and Git Workflow.
-*   **[07-SCRUM-PROCESS.md](./07-SCRUM-PROCESS.md)**: Definitions of Roles, Events, Artifacts, and Definition of Done (DoD).
-*   **[08-GLOSSARY.md](./08-GLOSSARY.md)**: Ubiquitous language and technical terminology used in the project.
+This is the central index for all technical documentation. Start here.
 
 ---
 
-## 🚀 Quick Start for Developers
+## 🚀 Quick Start Path (For Students)
 
-1.  **Read the [Architecture](./04-ARCHITECTURE.md)** doc to understand *where* code belongs.
-2.  **Read the [Contributing](./06-CONTRIBUTING.md)** doc to understand *how* to write code.
-3.  **Check the `README.md`** in the root for installation commands.
+1. **[00-SETUP-GUIDE.md](./00-SETUP-GUIDE.md)** ← **Start here** if you are setting up from scratch.
+2. **[04-ARCHITECTURE.md](./04-ARCHITECTURE.md)** — Understand where every file lives and why.
+3. **[06-CONTRIBUTING.md](./06-CONTRIBUTING.md)** — Understand how to write code that fits this project.
 
-## 🛠 Maintenance
-This documentation is a living entity. Updates must be submitted via Pull Request along with code changes. **Code without documentation updates will be rejected.**
+---
+
+## 📚 Full Documentation Index
+
+### 0. Getting Started
+
+| File                                     | Description                                                                                       |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| [00-SETUP-GUIDE.md](./00-SETUP-GUIDE.md) | Install Node, pnpm, create Vite project, get API key, configure `.env`, set up Redux and Tailwind |
+
+### 1. Project Overview
+
+| File                                             | Description                                                                |
+| ------------------------------------------------ | -------------------------------------------------------------------------- |
+| [01-PROJECT-CHARTER.md](./01-PROJECT-CHARTER.md) | Project goals, team, full tech stack table, and KPIs                       |
+| [02-REQUIREMENTS.md](./02-REQUIREMENTS.md)       | Functional and Non-Functional requirements with acceptance criteria tables |
+| [03-USE-CASES.md](./03-USE-CASES.md)             | Detailed user interaction flows for all 5 use cases                        |
+
+### 2. Architecture & Design
+
+| File                                               | Description                                                            |
+| -------------------------------------------------- | ---------------------------------------------------------------------- |
+| [04-ARCHITECTURE.md](./04-ARCHITECTURE.md)         | FSD layers, real file tree, data flow, Redux state shape, path aliases |
+| [05-UI-DESIGN-SYSTEM.md](./05-UI-DESIGN-SYSTEM.md) | Tailwind tokens, animation specs, skeleton rules, component guidelines |
+
+### 3. Development Workflow
+
+| File                                         | Description                                                                            |
+| -------------------------------------------- | -------------------------------------------------------------------------------------- |
+| [06-CONTRIBUTING.md](./06-CONTRIBUTING.md)   | Naming conventions, JSDoc rules (with real examples), architecture rules, Git workflow |
+| [07-SCRUM-PROCESS.md](./07-SCRUM-PROCESS.md) | DoD checklist, sprint events, issue labels, PR flow                                    |
+| [08-GLOSSARY.md](./08-GLOSSARY.md)           | Definitions for all architecture, domain, and UI/UX terms used in this project         |
+
+---
+
+## 🛠 Maintenance Rule
+
+This documentation is a **living artifact**. Every Pull Request that:
+
+- Adds a new dependency → update `00-SETUP-GUIDE.md` and `01-PROJECT-CHARTER.md`.
+- Changes folder structure → update `04-ARCHITECTURE.md` directory tree.
+- Changes component shape → update `05-UI-DESIGN-SYSTEM.md`.
+- Changes a Redux slice → update the state shape in `04-ARCHITECTURE.md`.
+
+**PRs without documentation updates will be rejected per DoD rule #8.**

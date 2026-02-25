@@ -7,7 +7,12 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { catService } from "../services/catService";
 
 /**
+ * @typedef {import('../adapters/catMapper').CatEntity} CatEntity
+ */
+
+/**
  * Thunk to fetch a list of random cats.
+ * @type {import('@reduxjs/toolkit').AsyncThunk<CatEntity[], void, {}>}
  */
 export const fetchRandomCats = createAsyncThunk(
   "cats/fetchRandom",
@@ -22,6 +27,7 @@ export const fetchRandomCats = createAsyncThunk(
 
 /**
  * Thunk to fetch the list of favourite cats.
+ * @type {import('@reduxjs/toolkit').AsyncThunk<CatEntity[], void, {}>}
  */
 export const fetchFavouriteCats = createAsyncThunk(
   "cats/fetchFavorites",
@@ -36,6 +42,7 @@ export const fetchFavouriteCats = createAsyncThunk(
 
 /**
  * Thunk to save a cat as favourite.
+ * @type {import('@reduxjs/toolkit').AsyncThunk<{cat: CatEntity, favouriteId: number}, CatEntity, {}>}
  */
 export const saveCat = createAsyncThunk(
   "cats/save",
@@ -51,6 +58,7 @@ export const saveCat = createAsyncThunk(
 
 /**
  * Thunk to delete a cat from favourites.
+ * @type {import('@reduxjs/toolkit').AsyncThunk<number, CatEntity, {}>}
  */
 export const deleteCat = createAsyncThunk(
   "cats/delete",

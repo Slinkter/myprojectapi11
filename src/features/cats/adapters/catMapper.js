@@ -4,9 +4,22 @@
  */
 
 /**
+ * @typedef {import('../api/catApi').RawApiCat} RawApiCat
+ * @typedef {import('../api/catApi').RawFavouriteCat} RawFavouriteCat
+ */
+
+/**
+ * Base Cat Domain Entity used throughout the application UI.
+ * @typedef {Object} CatEntity
+ * @property {string} id - The Cat image unique identifier.
+ * @property {string} url - The URL to the cat image.
+ * @property {number|null} favouriteId - The ID of the favourite record, if it exists in the user's favourites list (otherwise null).
+ */
+
+/**
  * Normalizes cat data into a consistent domain object.
- * @param {object} rawCat - Raw cat data from TheCatAPI.
- * @returns {object} The normalized cat entity.
+ * @param {RawApiCat | RawFavouriteCat} rawCat - Raw cat data from TheCatAPI.
+ * @returns {CatEntity} The normalized cat entity ready for the UI.
  */
 export const mapToCatEntity = (rawCat) => {
   // If it comes from 'favourites' endpoint, it has a different structure
@@ -28,8 +41,8 @@ export const mapToCatEntity = (rawCat) => {
 
 /**
  * Maps a list of raw cats to domain entities.
- * @param {Array} rawCats - Array of raw data.
- * @returns {Array} List of domain entities.
+ * @param {Array<RawApiCat | RawFavouriteCat>} rawCats - Array of raw data from external API.
+ * @returns {CatEntity[]} List of clean domain entities.
  */
 export const mapToCatEntities = (rawCats) => {
   if (!Array.isArray(rawCats)) return [];

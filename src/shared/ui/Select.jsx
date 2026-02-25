@@ -8,16 +8,22 @@ import PropTypes from "prop-types";
 import { BsChevronDown } from "react-icons/bs";
 
 /**
+ * @typedef {Object} SelectOption
+ * @property {string} value - The underlying value of the option.
+ * @property {string} label - The human-readable label for the option.
+ */
+
+/**
  * A styled select component.
  *
  * @component
- * @param {object} props
+ * @param {object} props - Component properties.
  * @param {string|number} props.value - Controlled value.
- * @param {function} props.onChange - Change handler.
- * @param {Array<{value: string, label: string}>} props.options - Options to display.
+ * @param {import('react').ChangeEventHandler<HTMLSelectElement>} props.onChange - Change handler passing the selected event.
+ * @param {SelectOption[]} props.options - Array of options to display.
  * @param {string} [props.className] - Optional container classes.
  * @param {string} [props.ariaLabel] - Accessibility label.
- * @returns {JSX.Element}
+ * @returns {JSX.Element} The rendered React component.
  */
 const Select = ({ value, onChange, options, className = "", ariaLabel }) => {
   return (

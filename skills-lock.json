@@ -6,6 +6,11 @@
       "sourceType": "github",
       "computedHash": "25872a21881a950edc3db1f3329664d60405d539660ce05b3265db2de06a7dfd"
     },
+    "jsdoc-typescript-docs": {
+      "source": "patricio0312rev/skills",
+      "sourceType": "github",
+      "computedHash": "96505a4a52e2cc4b14c942b6a8df66352c960cb5b3c27a26d45e0ea461910e14"
+    },
     "react-native-architecture": {
       "source": "wshobson/agents",
       "sourceType": "github",
@@ -20,6 +25,11 @@
       "source": "google-labs-code/stitch-skills",
       "sourceType": "github",
       "computedHash": "0c5e494ae2092c57a893874e6d288de3706a224385c7d26dc4769d9db3aaaa12"
+    },
+    "ui-ux-pro-max": {
+      "source": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "sourceType": "github",
+      "computedHash": "4cfe5e95a230616c17d92b44e3cd37bae543ce087a7756a446a62f77d7c58a37"
     },
     "vercel-react-best-practices": {
       "source": "vercel-labs/agent-skills",

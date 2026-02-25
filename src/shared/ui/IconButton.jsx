@@ -10,12 +10,12 @@ import PropTypes from "prop-types";
  * A circular button designed for icons.
  *
  * @component
- * @param {object} props
- * @param {React.ReactNode} props.children - The icon element.
- * @param {function} props.onClick - Click handler.
+ * @param {object} props - Component properties.
+ * @param {import('react').ReactNode} props.children - The icon element.
+ * @param {import('react').MouseEventHandler<HTMLButtonElement>} props.onClick - Click handler.
  * @param {string} [props.className] - Optional extra classes.
- * @param {string} [props.ariaLabel] - Accessibility label.
- * @returns {JSX.Element}
+ * @param {string} props.ariaLabel - Accessibility label.
+ * @returns {JSX.Element} The rendered React component.
  */
 const IconButton = ({ children, onClick, className = "", ariaLabel }) => {
   return (

@@ -7,24 +7,25 @@
 import PropTypes from "prop-types";
 import SkeletonGrid from "@shared/components/skeletons/SkeletonGrid";
 import CatCard from "./CatCard";
+import { motion, AnimatePresence } from "framer-motion";
 
 /**
- * @typedef {import('@features/cats/api/catApi').Cat} Cat
+ * @typedef {import('../adapters/catMapper').CatEntity} CatEntity
  */
 
 /**
  * Displays a section with a title and a list of cats in a grid format.
  *
  * @component
- * @param {object} props
+ * @param {object} props - Component properties.
  * @param {string} props.title - Section title.
- * @param {Cat[]} props.cats - Array of cats to display.
- * @param {(cat: Cat) => void} props.onAction - Function to execute on card action.
+ * @param {CatEntity[]} props.cats - Array of normalized cats to display.
+ * @param {(cat: CatEntity) => void} props.onAction - Function to execute on card action.
  * @param {'save' | 'delete'} props.actionType - Action type for the card.
- * @param {(cat: Cat) => boolean} props.isActionDisabled - Function that determines if action is disabled.
+ * @param {(cat: CatEntity) => boolean} props.isActionDisabled - Function that determines if action is disabled.
  * @param {boolean} props.loading - If `true`, shows loading skeleton.
- * @param {React.ReactNode} [props.emptyStateMessage] - Message to display if list is empty.
- * @returns {JSX.Element}
+ * @param {import('react').ReactNode} [props.emptyStateMessage] - Message to display if list is empty.
+ * @returns {JSX.Element} The rendered React component.
  */
 const CatList = (props) => {
   const {
@@ -48,22 +49,46 @@ const CatList = (props) => {
       {loading && cats.length === 0 ? (
         <SkeletonGrid />
       ) : isEmpty && emptyStateMessage ? (
-        <div className="px-4 py-12 text-center border-2 border-dashed rounded-xl text-muted-foreground border-border/50 bg-muted/20">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="px-4 py-12 text-center border-2 border-dashed rounded-xl text-muted-foreground border-border/50 bg-muted/20"
+        >
           {emptyStateMessage}
-        </div>
+        </motion.div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {cats.map((cat, index) => (
-            <CatCard
-              key={cat.id}
-              cat={cat}
-              index={index}
-              onAction={onAction}
-              actionType={actionType}
-              disabled={isActionDisabled(cat)}
-            />
-          ))}
-        </div>
+        <motion.div
+          layout
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+        >
+          <AnimatePresence mode="popLayout">
+            {cats.map((cat, index) => (
+              <motion.div
+                key={cat.id}
+                layout
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{
+                  opacity: 0,
+                  scale: 0.5,
+                  transition: { duration: 0.2, delay: 0 },
+                }}
+                transition={{
+                  duration: 0.3,
+                  delay: Math.min(index * 0.05, 0.5),
+                }}
+              >
+                <CatCard
+                  cat={cat}
+                  index={index}
+                  onAction={onAction}
+                  actionType={actionType}
+                  disabled={isActionDisabled(cat)}
+                />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
       )}
     </section>
   );

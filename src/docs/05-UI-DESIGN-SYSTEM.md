@@ -1,49 +1,118 @@
 # UI Design System & Guidelines
 
 ## 1. Design Philosophy
-**"Content First, Minimal Interface."**
-The design focuses on displaying high-quality images with minimal distraction. Controls are contextual (hover effects) or unobtrusive (sticky header).
 
-## 2. Color Palette (Tailwind CSS)
+**"Content First. Pixel-Perfect Minimalism."**
 
-### Light Mode
-*   **Background:** `bg-gray-100` (#F3F4F6)
-*   **Surface:** `bg-white` (#FFFFFF)
-*   **Text Primary:** `text-gray-900` (#111827)
-*   **Accent:** `text-red-500` (Favorites)
+The design prioritizes the cat images as the primary visual element. All controls are either:
 
-### Dark Mode
-*   **Background:** `dark:bg-gray-900` (#111827)
-*   **Surface:** `dark:bg-gray-800` (#1F2937)
-*   **Text Primary:** `dark:text-white` (#FFFFFF)
-*   **Text Secondary:** `dark:text-gray-400` (#9CA3AF)
+- **Contextual** — appear only on hover (action buttons, ID tag).
+- **Unobtrusive** — persistently visible but compact (sticky header with dropdowns).
+
+---
+
+## 2. Color System — Tailwind CSS v4 Semantic Tokens
+
+> ⚠️ **Rule:** Never use hardcoded Tailwind colors like `bg-gray-200` or `dark:bg-gray-800`. Always use semantic tokens that adapt to the active theme.
+
+| Token                   | Light Mode        | Dark Mode         | Usage             |
+| ----------------------- | ----------------- | ----------------- | ----------------- |
+| `bg-background`         | Light neutral     | Near-black        | Page background   |
+| `bg-card` / `bg-muted`  | White / off-white | Dark gray         | Card surfaces     |
+| `text-foreground`       | Near-black        | Near-white        | Primary text      |
+| `text-muted-foreground` | Medium gray       | Medium light gray | Secondary text    |
+| `border-border`         | Light gray        | Dark gray         | Borders, dividers |
+
+**Accent Colors (not semantic — use sparingly):**
+
+- `text-red-500` — Heart button (saved state), delete hover
+
+---
 
 ## 3. Typography
-*   **Dynamic Font Family:** Controlled via CSS variable `--font-family`.
-*   **Scale:**
-    *   H1: `text-2xl font-bold` (Header)
-    *   H3: `text-xl font-semibold` (Section Titles)
-    *   Body: `text-base` / `text-sm`
 
-## 4. Component Guidelines
+- **Dynamic Font Family:** Controlled via CSS custom property `--font-family` on `<body>`.
+- The font list is managed in `src/features/font/context/constants.js`.
 
-### Buttons
-*   **Icon Buttons:** Circular `rounded-full`, `p-2`.
-*   **States:** `hover:bg-gray-100` (Light) / `dark:hover:bg-gray-700` (Dark).
-*   **Accessibility:** All buttons must have `aria-label`.
+| Scale         | Class                               | Usage                    |
+| ------------- | ----------------------------------- | ------------------------ |
+| App Title     | `text-2xl font-bold tracking-tight` | `<h1>` in header         |
+| Section Title | `text-xl font-bold`                 | `<h3>` in `CatList`      |
+| Labels        | `text-sm font-medium`               | Select dropdown, buttons |
+| Micro text    | `text-[10px] font-mono`             | Cat ID tag on card       |
 
-### Cards (`CatCard`)
-*   **Shape:** `rounded-xl`.
-*   **Shadow:** `shadow-md`.
-*   **Interaction:**
-    *   Zoom interaction on `group-hover`.
-    *   Overlay appears with `opacity-100`.
+---
 
-### Loading States (`Skeletons`)
-*   Use `animate-pulse`.
-*   Match the exact dimensions of the content they replace (`aspect-square`).
+## 4. Component Specifications
 
-## 5. CSS Methodology
-We use **Utility-First CSS** (Tailwind).
-*   **Constraints:** Avoid arbitrary values (e.g., `w-[357px]`) unless absolutely necessary. Stick to the design tokens (`w-64`, `p-4`).
-*   **Grouping:** Use `classnames` or template literals for conditional styling, but prefer keeping logic in JS/JSX.
+### CatCard
+
+| Property         | Value                                                          |
+| ---------------- | -------------------------------------------------------------- |
+| Shape            | `rounded-2xl`                                                  |
+| Aspect ratio     | `aspect-square` (1:1)                                          |
+| Hover shadow     | `shadow-sm` → `hover:shadow-xl`                                |
+| Hover lift       | `hover:-translate-y-1`                                         |
+| Image zoom       | `group-hover:scale-105` over `700ms`                           |
+| Gradient overlay | Bottom-to-transparent, `opacity-0` → `group-hover:opacity-100` |
+
+### Floating Action Button (CatCardFooter)
+
+| State            | Appearance                                                                     |
+| ---------------- | ------------------------------------------------------------------------------ |
+| Default          | Semi-transparent white, outline heart icon                                     |
+| Hover            | White, text turns `red-500`                                                    |
+| Disabled (saved) | White background, solid filled heart (`BsFillHeartFill`), `cursor-not-allowed` |
+
+**Visibility:** Button is `opacity-0 group-hover:opacity-100` unless `disabled=true` (then always visible).
+
+### Header & Controls
+
+| Component          | Class Highlights                                                             |
+| ------------------ | ---------------------------------------------------------------------------- |
+| Header             | `sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border` |
+| Select (font)      | `rounded-full` native select with custom `BsChevronDown` overlay             |
+| IconButton (theme) | `rounded-full p-2.5 border border-border bg-card hover:bg-muted`             |
+
+### Skeleton Loaders (CLS Prevention)
+
+> **Rule:** Skeletons must mirror the **exact** structural dimensions of the content they replace.
+
+| Property       | `CatCard`              | `SkeletonCard`            |
+| -------------- | ---------------------- | ------------------------- |
+| Border radius  | `rounded-2xl`          | `rounded-2xl` ✅          |
+| Aspect ratio   | `aspect-square`        | `aspect-square` ✅        |
+| Shadow         | `shadow-sm`            | `shadow-sm` ✅            |
+| Background     | `bg-muted`             | `bg-muted` ✅             |
+| Inner elements | ID tag + action button | Placeholder rectangles ✅ |
+
+**Grid must match exactly:**
+
+- `CatList` grid: `grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6`
+- `SkeletonGrid` grid: `grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6` ✅
+
+---
+
+## 5. Animation Specs (Framer Motion)
+
+| Event              | Config                                                                                             |
+| ------------------ | -------------------------------------------------------------------------------------------------- |
+| Card enter         | `initial={{ opacity:0, scale:0.8 }}` → `animate={{ opacity:1, scale:1 }}`, stagger `index * 0.05s` |
+| Card exit          | `exit={{ opacity:0, scale:0.5 }}` over `0.2s`                                                      |
+| Grid re-layout     | `<motion.div layout>` — cards slide smoothly into new positions                                    |
+| Empty state appear | `initial={{ opacity:0 }}` → `animate={{ opacity:1 }}`                                              |
+
+**Library:** `framer-motion` v12.34.3 — `motion`, `AnimatePresence`, `layout` prop.
+
+---
+
+## 6. CSS Methodology
+
+- **Framework:** Tailwind CSS v4 — utility-first.
+- **Import:** `@import "tailwindcss"` in `src/index.css`.
+- **PostCSS:** `@tailwindcss/postcss` plugin.
+- **Rules:**
+  - Prefer semantic design tokens over raw color values.
+  - Use `group` / `group-hover` for card interaction states.
+  - No CSS-in-JS libraries.
+  - Conditional classes via template literals in JSX.

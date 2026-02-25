@@ -1,21 +1,24 @@
 /**
  * @file Individual Cat Card Component.
- * @description Renders a cat image with an entrance animation and an overlay action button.
+ * @description Renders a cat image with an entrance animation and an overlay action button in a minimal style.
  */
 
 import React, { useCallback } from "react";
 import PropTypes from "prop-types";
-import CatCardHeader from "./subcomponents/CatCardHeader";
 import CatCardFooter from "./subcomponents/CatCardFooter";
+
+/**
+ * @typedef {import('../adapters/catMapper').CatEntity} CatEntity
+ */
 
 /**
  * Renders a single cat card.
  *
  * @component
  * @param {object} props - Component properties.
- * @param {object} props.cat - The cat object to display.
- * @param {function} props.onAction - Function to execute when action button is clicked.
- * @param {string} props.actionType - Action type ("save" or "delete").
+ * @param {CatEntity} props.cat - The normalized cat domain entity to display.
+ * @param {(cat: CatEntity) => void} props.onAction - Function to execute when action button is clicked.
+ * @param {'save'|'delete'} props.actionType - Action type.
  * @param {boolean} props.disabled - If action button should be disabled.
  * @param {number} props.index - Card index, used for animation delay.
  * @returns {JSX.Element} A cat card.
@@ -36,28 +39,33 @@ const CatCard = ({ cat, onAction, actionType, disabled, index }) => {
   );
 
   return (
-    <div
-      className="flex flex-col h-full overflow-hidden bg-card border border-border rounded-card shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 animate-fade-in-scale group"
-      style={{ animationDelay: `${index * 75}ms` }}
-    >
-      <CatCardHeader id={cat.id} />
-
+    <div className="relative overflow-hidden bg-muted rounded-2xl shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group">
       {/* CARD BODY (Image) */}
-      <div className="relative overflow-hidden aspect-square bg-muted">
+      <div className="relative aspect-square w-full">
         <img
           src={cat.url}
           alt={`Cat ${cat.id}`}
           loading="lazy"
-          className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
+          className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
         />
-        <div className="absolute inset-0 transition-opacity duration-300 opacity-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none group-hover:opacity-100" />
+        <div className="absolute inset-0 transition-opacity duration-300 opacity-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none group-hover:opacity-100" />
       </div>
 
-      <CatCardFooter
-        actionType={actionType}
-        onAction={handleAction}
-        disabled={disabled}
-      />
+      {/* Floating Action Button */}
+      <div
+        className={`absolute bottom-3 right-3 z-10 transition-opacity duration-300 ${disabled ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
+      >
+        <CatCardFooter
+          actionType={actionType}
+          onAction={handleAction}
+          disabled={disabled}
+        />
+      </div>
+
+      {/* Cat ID slightly visible on hover */}
+      <div className="absolute top-3 left-3 px-2 py-1 text-[10px] font-mono font-medium tracking-wider text-white bg-black/40 backdrop-blur-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+        ID: {cat.id}
+      </div>
     </div>
   );
 };

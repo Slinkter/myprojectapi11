@@ -11,7 +11,7 @@ import CatList from "./CatList";
 /**
  * Orchestrates fetching and rendering of the favourite cat list.
  * @component
- * @returns {JSX.Element}
+ * @returns {JSX.Element} The rendered React component.
  */
 const FavouriteCatList = () => {
   const { favouriteCats, loading, loadFavouriteCats, deleteFavouriteCat } =

@@ -15,9 +15,29 @@ import {
 } from "../redux/catsSlice";
 
 /**
+ * @typedef {import('../adapters/catMapper').CatEntity} CatEntity
+ */
+
+/**
+ * @typedef {Object} UseCatsFacade
+ * @property {CatEntity[]} randomCats - Array of randomly generated cats.
+ * @property {CatEntity[]} favouriteCats - Array of user's favourite cats.
+ * @property {Object} loading - Loading states for different operations.
+ * @property {boolean} loading.random - True when loading random cats.
+ * @property {boolean} loading.favourites - True when loading favourite cats.
+ * @property {boolean} loading.saving - True when saving a favourite cat.
+ * @property {boolean} loading.deleting - True when deleting a favourite cat.
+ * @property {string|null} error - Any global error message related to cats operations.
+ * @property {function(): void} loadRandomCats - Dispatches action to fetch random cats.
+ * @property {function(): void} loadFavouriteCats - Dispatches action to fetch returning favourite cats.
+ * @property {function(CatEntity): Promise<void>} saveFavouriteCat - Saves a given cat to favourites.
+ * @property {function(CatEntity): Promise<void>} deleteFavouriteCat - Deletes a given cat from favourites.
+ */
+
+/**
  * Hook `useCats`: a facade for cat state and actions.
  *
- * @returns {object} Facade API for cat data and operations.
+ * @returns {UseCatsFacade} Facade API for cat data and operations.
  */
 export const useCats = () => {
   const dispatch = useDispatch();
@@ -52,7 +72,7 @@ export const useCats = () => {
 
   /**
    * Saves a cat to favourites.
-   * @param {object} cat - The cat entity.
+   * @param {CatEntity} cat - The cat entity to save.
    */
   const saveFavouriteCat = useCallback(
     async (cat) => {
@@ -68,7 +88,7 @@ export const useCats = () => {
 
   /**
    * Removes a cat from favourites.
-   * @param {object} cat - The cat entity.
+   * @param {CatEntity} cat - The cat entity to delete.
    */
   const deleteFavouriteCat = useCallback(
     async (cat) => {

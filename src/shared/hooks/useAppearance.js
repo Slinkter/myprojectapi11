@@ -16,7 +16,8 @@ export const useAppearance = () => {
   const themeMode = useSelector((state) => state.theme.mode);
   const fontFamily = useSelector((state) => state.font.family);
 
-  // Effect to handle theme changes and persistence.
+  // Effect 1 -
+  // to handle theme changes and persistence.
   useEffect(() => {
     const root = window.document.documentElement;
 
@@ -33,7 +34,8 @@ export const useAppearance = () => {
     }
   }, [themeMode]);
 
-  // Effect to handle font changes and persistence.
+  // Effect 2 -
+  // to handle font changes and persistence.
   useEffect(() => {
     const root = window.document.documentElement;
 
