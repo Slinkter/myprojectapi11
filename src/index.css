@@ -1,14 +1,9 @@
-/*
- * Main CSS file.
- * Uses the @tailwind directive to inject Tailwind CSS utilities.
- * Customizations and components are defined in layers (@layer) for better organization and performance.
- */
-
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: var(--font-family), ui-sans-serif, system-ui, sans-serif,
+  --font-sans:
+    var(--font-family), ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 

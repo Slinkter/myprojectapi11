@@ -4,7 +4,7 @@
  * with a simplified API to access cat data and actions.
  */
 
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import {
@@ -12,50 +12,48 @@ import {
   fetchFavouriteCats,
   saveCat,
   deleteCat,
-} from "@features/cats/redux/catsSlice";
-
-/**
- * @typedef {import('@features/cats/api/catApi').Cat} Cat
- * @typedef {import('@features/cats/redux/catsSlice').CatsState} CatsState
- * @typedef {import('@app/store').RootState} RootState
- */
+} from "../redux/catsSlice";
 
 /**
  * Hook `useCats`: a facade for cat state and actions.
  *
- * @returns {{
- *  randomCats: Cat[],
- *  favouriteCats: Cat[],
- *  loading: CatsState['loading'],
- *  error: string|null,
- *  loadRandomCats: () => void,
- *  loadFavouriteCats: () => void,
- *  saveFavouriteCat: (cat: Cat) => Promise<void>,
- *  deleteFavouriteCat: (cat: Cat) => Promise<void>
- * }}
+ * @returns {object} Facade API for cat data and operations.
  */
 export const useCats = () => {
   const dispatch = useDispatch();
 
   // Selects cat state from Redux store.
-  const { randomCats, favouriteCats, loading, error } = useSelector(
-    /** @param {RootState} state */
-    (state) => ({
-      randomCats: state.cats.random,
-      favouriteCats: state.cats.favourites,
-      loading: state.cats.loading,
-      error: state.cats.error,
-    })
+  const catsState = useSelector((state) => state.cats);
+
+  // Destructure with useMemo to ensure stable references for derived properties
+  const { randomCats, favouriteCats, loading, error } = useMemo(
+    () => ({
+      randomCats: catsState.random,
+      favouriteCats: catsState.favourites,
+      loading: catsState.loading,
+      error: catsState.error,
+    }),
+    [catsState],
   );
 
+  /**
+   * Loads a fresh list of random cats.
+   */
   const loadRandomCats = useCallback(() => {
     dispatch(fetchRandomCats());
   }, [dispatch]);
 
+  /**
+   * Loads the user's favourite cats.
+   */
   const loadFavouriteCats = useCallback(() => {
     dispatch(fetchFavouriteCats());
   }, [dispatch]);
 
+  /**
+   * Saves a cat to favourites.
+   * @param {object} cat - The cat entity.
+   */
   const saveFavouriteCat = useCallback(
     async (cat) => {
       try {
@@ -65,9 +63,13 @@ export const useCats = () => {
         toast.error(`Failed to save: ${err}`);
       }
     },
-    [dispatch]
+    [dispatch],
   );
 
+  /**
+   * Removes a cat from favourites.
+   * @param {object} cat - The cat entity.
+   */
   const deleteFavouriteCat = useCallback(
     async (cat) => {
       try {
@@ -77,7 +79,7 @@ export const useCats = () => {
         toast.error(`Failed to delete: ${err}`);
       }
     },
-    [dispatch]
+    [dispatch],
   );
 
   return {

@@ -1,10 +1,3 @@
-/**
- * @file React Application Entry Point.
- * @description Renders the root component (`App`) into the DOM.
- * Also wraps the application with necessary context providers:
- * - `Provider`: Global Redux state.
- */
-
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import store from "@app/store";
@@ -16,5 +9,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   // The Redux Provider wraps the entire application.
   <Provider store={store}>
     <App />
-  </Provider>
+  </Provider>,
 );

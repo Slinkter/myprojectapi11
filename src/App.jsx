@@ -10,15 +10,16 @@ import { Toaster } from "react-hot-toast";
 import CatListSkeleton from "@shared/components/skeletons/CatListSkeleton";
 import ThemeToggleButton from "@features/theme/components/ThemeToggleButton";
 import FontDropdown from "@features/font/components/FontDropdown";
-import CatErrorHandler from "@features/cats/components/CatErrorHandler";
+import { CatErrorHandler } from "@features/cats";
 import { useAppearance } from "@shared/hooks/useAppearance";
+import { usePageTitle } from "@shared/hooks/usePageTitle";
 
 // Lazy load container components for performance optimization.
 const RandomCatList = React.lazy(() =>
-  import("@features/cats/components/RandomCatList")
+  import("@features/cats").then((m) => ({ default: m.RandomCatList })),
 );
 const FavouriteCatList = React.lazy(() =>
-  import("@features/cats/components/FavouriteCatList")
+  import("@features/cats").then((m) => ({ default: m.FavouriteCatList })),
 );
 
 /**
@@ -27,10 +28,8 @@ const FavouriteCatList = React.lazy(() =>
  * @returns {JSX.Element} The main layout.
  */
 const App = () => {
-  // Page title can be set here or in a more specific layout component.
-  React.useEffect(() => {
-    window.document.title = "Cat Gallery - Clean Architecture";
-  }, []);
+  // Use isolated hook to manage title.
+  usePageTitle("Cat Gallery - Clean Architecture");
 
   // Hook to manage global appearance effects.
   useAppearance();
