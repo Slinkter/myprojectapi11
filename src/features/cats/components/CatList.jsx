@@ -41,14 +41,14 @@ const CatList = (props) => {
 
   return (
     <section className="w-full mb-12">
-      <h3 className="text-xl text-gray-800 dark:text-gray-200 font-semibold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">
+      <h3 className="pb-2 mb-4 text-xl font-bold border-b text-foreground border-border">
         {title}
       </h3>
 
       {loading && cats.length === 0 ? (
         <SkeletonGrid />
       ) : isEmpty && emptyStateMessage ? (
-        <div className="text-center py-10 px-4 border-2 border-dashed rounded-lg text-gray-500 dark:text-gray-400">
+        <div className="px-4 py-12 text-center border-2 border-dashed rounded-xl text-muted-foreground border-border/50 bg-muted/20">
           {emptyStateMessage}
         </div>
       ) : (

@@ -13,11 +13,11 @@ import PropTypes from "prop-types";
  * @returns {JSX.Element} The header element.
  */
 const CatCardHeader = ({ id }) => (
-  <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center bg-gray-50/50 dark:bg-gray-800/50">
-    <span className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider font-mono">
+  <div className="flex items-center justify-between px-4 py-3 bg-muted/50 border-b border-border">
+    <span className="font-mono text-xs font-medium tracking-wider text-muted-foreground uppercase">
       ID: {id}
     </span>
-    <div className="h-2 w-2 rounded-full bg-green-400"></div>
+    <div className="w-2 h-2 bg-green-400 rounded-full"></div>
   </div>
 );
 

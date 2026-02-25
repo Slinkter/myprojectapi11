@@ -37,20 +37,20 @@ const CatCard = ({ cat, onAction, actionType, disabled, index }) => {
 
   return (
     <div
-      className="group bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-gray-100 dark:border-gray-700 overflow-hidden flex flex-col h-full animate-fade-in-scale"
+      className="flex flex-col h-full overflow-hidden bg-card border border-border rounded-card shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 animate-fade-in-scale group"
       style={{ animationDelay: `${index * 75}ms` }}
     >
       <CatCardHeader id={cat.id} />
 
       {/* CARD BODY (Image) */}
-      <div className="relative aspect-square bg-gray-100 dark:bg-gray-900 overflow-hidden">
+      <div className="relative overflow-hidden aspect-square bg-muted">
         <img
           src={cat.url}
           alt={`Cat ${cat.id}`}
           loading="lazy"
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+        <div className="absolute inset-0 transition-opacity duration-300 opacity-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none group-hover:opacity-100" />
       </div>
 
       <CatCardFooter

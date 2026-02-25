@@ -35,23 +35,21 @@ const App = () => {
   useAppearance();
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background text-foreground">
       <Toaster
         position="top-center"
         reverseOrder={false}
         toastOptions={{
-          className: "dark:bg-gray-800 dark:text-white",
+          className: "bg-card text-foreground border border-border shadow-lg",
           style: {
-            borderRadius: "8px",
-            background: "#333",
-            color: "#fff",
+            borderRadius: "12px",
           },
         }}
       />
 
-      <header className="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-10">
-        <div className="container mx-auto px-4 py-2 flex justify-between items-center">
-          <h1 className="text-2xl font-bold dark:text-white text-gray-900">
+      <header className="sticky top-0 z-50 bg-background/80 border-b border-border backdrop-blur-md">
+        <div className="container flex items-center justify-between px-4 py-3 mx-auto">
+          <h1 className="text-2xl font-bold tracking-tight text-foreground">
             Cat Gallery
           </h1>
           <div className="flex items-center gap-4">

@@ -20,10 +20,10 @@ const CatCardFooter = ({ actionType, onAction, disabled }) => {
   const label = isSave ? "Add to favourites" : "Remove from favourites";
 
   return (
-    <div className="p-4 border-t border-gray-100 dark:border-gray-700 flex justify-between items-center bg-white dark:bg-gray-800">
+    <div className="flex items-center justify-between p-4 bg-card border-t border-border">
       <div className="flex flex-col">
-        <span className="text-xs text-gray-400">Status</span>
-        <span className="text-sm font-semibold text-gray-700 dark:text-gray-200">
+        <span className="text-xs text-muted-foreground">Status</span>
+        <span className="text-sm font-semibold text-foreground">
           Nice Kitty
         </span>
       </div>
@@ -32,12 +32,12 @@ const CatCardFooter = ({ actionType, onAction, disabled }) => {
         onClick={onAction}
         disabled={disabled}
         className={`
-          p-2.5 rounded-xl transition-all duration-200 flex items-center justify-center shadow-sm border
-          focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
+          flex items-center justify-center p-2.5 rounded-xl border shadow-sm transition-all duration-200 
+          focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary
           ${
             disabled
-              ? "bg-gray-100 text-gray-300 border-gray-100 cursor-not-allowed"
-              : "bg-white dark:bg-gray-700 border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 active:scale-95"
+              ? "bg-muted text-muted-foreground border-transparent cursor-not-allowed"
+              : "bg-card border-border text-foreground hover:bg-muted active:scale-95"
           }
         `}
         title={label}
@@ -46,11 +46,11 @@ const CatCardFooter = ({ actionType, onAction, disabled }) => {
         {isSave ? (
           <BsFillHeartFill
             className={`${
-              disabled ? "text-gray-300" : "text-red-500"
+              disabled ? "text-muted-foreground" : "text-red-500"
             } w-5 h-5 transition-colors`}
           />
         ) : (
-          <BsTrashFill className="text-gray-400 hover:text-red-500 w-5 h-5 transition-colors" />
+          <BsTrashFill className="w-5 h-5 text-muted-foreground transition-colors hover:text-red-500" />
         )}
       </button>
     </div>

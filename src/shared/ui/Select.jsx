@@ -25,10 +25,7 @@ const Select = ({ value, onChange, options, className = "", ariaLabel }) => {
       <select
         value={value}
         onChange={onChange}
-        className="w-full p-2.5 pr-8 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 
-                           text-gray-900 dark:text-gray-200 text-sm rounded-full 
-                           focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-500 focus:outline-none
-                           appearance-none cursor-pointer"
+        className="appearance-none block w-full px-4 py-2.5 pr-10 text-sm font-medium transition-all bg-card border border-border rounded-full text-foreground cursor-pointer focus:outline-hidden focus:ring-2 focus:ring-primary/30"
         aria-label={ariaLabel}
       >
         {options.map((opt) => (
@@ -37,8 +34,8 @@ const Select = ({ value, onChange, options, className = "", ariaLabel }) => {
           </option>
         ))}
       </select>
-      <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
-        <BsChevronDown className="w-4 h-4 text-gray-400" />
+      <div className="absolute inset-y-0 right-0 flex items-center pr-3.5 pointer-events-none">
+        <BsChevronDown className="w-4 h-4 text-muted-foreground" />
       </div>
     </div>
   );
@@ -51,7 +48,7 @@ Select.propTypes = {
     PropTypes.shape({
       value: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,
-    })
+    }),
   ).isRequired,
   className: PropTypes.string,
   ariaLabel: PropTypes.string,

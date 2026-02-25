@@ -3,7 +3,6 @@
  * @description Displays an error message and a retry button when cat data fetching fails.
  */
 
-import React from "react";
 import { MdErrorOutline } from "react-icons/md";
 import { useCats } from "@features/cats/hooks/useCats";
 
@@ -23,18 +22,18 @@ const CatErrorHandler = () => {
 
   return (
     <div
-      className="my-4 p-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 flex items-center justify-between"
+      className="flex items-center justify-between p-4 my-4 text-sm font-medium border rounded-xl bg-destructive/10 text-destructive border-destructive/20"
       role="alert"
     >
       <div className="flex items-center">
         <MdErrorOutline className="w-5 h-5 mr-2" />
         <span>
-          <span className="font-medium">Error:</span> An error occurred: {error}
+          <span className="font-bold">Error:</span> {error}
         </span>
       </div>
       <button
         onClick={handleRetry}
-        className="ml-4 px-3 py-1.5 text-xs font-medium text-white bg-red-700 hover:bg-red-800 rounded-lg focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+        className="px-4 py-2 text-xs font-bold text-white transition-all bg-red-600 rounded-lg hover:bg-red-700 active:scale-95 shadow-md shadow-red-500/20"
       >
         Retry
       </button>

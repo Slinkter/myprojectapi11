@@ -22,10 +22,7 @@ const IconButton = ({ children, onClick, className = "", ariaLabel }) => {
     <button
       type="button"
       onClick={onClick}
-      className={`p-2.5 rounded-full transition-all border focus:outline-hidden focus:ring-2 
-            bg-white hover:bg-gray-100 text-gray-700 border-gray-200 focus:ring-gray-300
-            dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:focus:ring-gray-500
-            ${className}`}
+      className={`flex items-center justify-center p-2.5 transition-all bg-card text-foreground border border-border rounded-full hover:bg-muted focus:outline-hidden focus:ring-2 focus:ring-primary/30 ${className}`}
       aria-label={ariaLabel}
     >
       {children}
