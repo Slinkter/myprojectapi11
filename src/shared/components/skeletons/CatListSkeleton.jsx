@@ -12,7 +12,7 @@ const CatListSkeleton = () => {
       <div className="h-7 w-48 bg-muted rounded-md animate-pulse mb-6"></div>
 
       {/* Skeleton for the grid using the shared layout */}
-      <SkeletonGrid count={8} />
+      <SkeletonGrid count={12} />
     </section>
   );
 };

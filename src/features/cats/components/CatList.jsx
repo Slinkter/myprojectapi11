@@ -45,7 +45,6 @@ const CatList = (props) => {
       <h3 className="pb-2 mb-4 text-xl font-bold border-b text-foreground border-border">
         {title}
       </h3>
-
       {loading && cats.length === 0 ? (
         <SkeletonGrid />
       ) : isEmpty && emptyStateMessage ? (
@@ -59,7 +58,7 @@ const CatList = (props) => {
       ) : (
         <motion.div
           layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6  gap-6"
         >
           <AnimatePresence mode="popLayout">
             {cats.map((cat, index) => (
@@ -79,8 +78,8 @@ const CatList = (props) => {
                 }}
               >
                 <CatCard
-                  cat={cat}
                   index={index}
+                  cat={cat}
                   onAction={onAction}
                   actionType={actionType}
                   disabled={isActionDisabled(cat)}

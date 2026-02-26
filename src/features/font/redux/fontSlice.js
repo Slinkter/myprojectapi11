@@ -3,7 +3,7 @@
  * @description Define el estado inicial y los reducers para la tipografía.
  */
 import { createSlice } from "@reduxjs/toolkit";
-import { fonts } from "@features/font/context/constants";
+import { fonts } from "./fontConstants"; // Updated import path
 
 /**
  * @typedef {object} Font

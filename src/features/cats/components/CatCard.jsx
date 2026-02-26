@@ -20,10 +20,9 @@ import CatCardFooter from "./subcomponents/CatCardFooter";
  * @param {(cat: CatEntity) => void} props.onAction - Function to execute when action button is clicked.
  * @param {'save'|'delete'} props.actionType - Action type.
  * @param {boolean} props.disabled - If action button should be disabled.
- * @param {number} props.index - Card index, used for animation delay.
  * @returns {JSX.Element} A cat card.
  */
-const CatCard = ({ cat, onAction, actionType, disabled, index }) => {
+const CatCard = ({ cat, onAction, actionType, disabled }) => {
   /**
    * Handle action click.
    */
@@ -48,7 +47,7 @@ const CatCard = ({ cat, onAction, actionType, disabled, index }) => {
           loading="lazy"
           className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
         />
-        <div className="absolute inset-0 transition-opacity duration-300 opacity-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none group-hover:opacity-100" />
+        <div className="absolute inset-0 transition-opacity duration-300 opacity-0  from-black/50 via-transparent to-transparent pointer-events-none group-hover:opacity-100" />
       </div>
 
       {/* Floating Action Button */}
@@ -78,7 +77,6 @@ CatCard.propTypes = {
   onAction: PropTypes.func.isRequired,
   actionType: PropTypes.oneOf(["save", "delete"]).isRequired,
   disabled: PropTypes.bool.isRequired,
-  index: PropTypes.number.isRequired,
 };
 
 export default React.memo(CatCard);

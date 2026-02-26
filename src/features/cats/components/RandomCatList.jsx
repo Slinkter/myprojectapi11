@@ -18,6 +18,7 @@ import CatList from "./CatList";
  * @returns {JSX.Element} The rendered React component.
  */
 const RandomCatList = () => {
+  // get variables
   const {
     randomCats,
     favouriteCats,

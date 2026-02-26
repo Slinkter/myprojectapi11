@@ -6,8 +6,8 @@
 import PropTypes from "prop-types";
 import SkeletonCard from "./SkeletonCard";
 
-const SkeletonGrid = ({ count = 8 }) => (
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+const SkeletonGrid = ({ count = 12 }) => (
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6  gap-6">
     {Array.from({ length: count }).map((_, index) => (
       <SkeletonCard key={index} />
     ))}
