@@ -1,172 +1,137 @@
-# UI Design System & Guidelines
+# Technical Blueprint & Architecture (Engineering Reverse)
 
-## 1. Filosofía de Diseño
-
-**"Contenido Primero. Minimalismo Pixel-Perfect."**
-
-El diseño prioriza las imágenes de gatos como el elemento visual principal. Todos los controles son:
-
--   **Contextuales**: Aparecen solo al pasar el ratón por encima (botones de acción, etiqueta de ID).
--   **Discretos**: Visibles persistentemente pero compactos (cabecera fija con menús desplegables).
+> **Role:** Lead Software Architect
+> **Metodología:** Feature-Sliced Design (FSD) + Facade Pattern
+> **Estado:** Documentación Técnica de Alta Fidelidad
 
 ---
 
-## 2. Sistema de Colores — Tokens Semánticos de Tailwind CSS v4
+## 1. Análisis de Capas Traducido a FSD
 
-> ⚠️ **Regla:** Nunca uses colores hardcodeados de Tailwind como `bg-gray-200` o `dark:bg-gray-800`. Usa siempre tokens semánticos que se adapten al tema activo.
+El proyecto sigue una estructura de **Ingeniería Basada en Características (Feature-Based Architecture)**, optimizada para escalabilidad y desacoplamiento.
 
-| Token                   | Modo Claro        | Modo Oscuro       | Uso                 |
-| :---------------------- | :---------------- | :---------------- | :------------------ |
-| `bg-background`         | Neutral claro     | Negro cercano     | Fondo de página     |
-| `bg-card` / `bg-muted`  | Blanco / blanquecino | Gris oscuro       | Superficies de tarjetas |
-| `text-foreground`       | Negro cercano     | Blanco cercano    | Texto principal     |
-| `text-muted-foreground` | Gris medio        | Gris claro oscuro | Texto secundario    |
-| `border-border`         | Gris claro        | Gris oscuro       | Bordes, divisores   |
+### Estructura de Capas (Top-Down):
 
-**Colores de Acento (no semánticos — usar con moderación):**
-
-*   `text-red-500` — Botón de corazón (estado guardado), hover de eliminación.
+1.  **App (`src/app/`)**: Inicialización de Redux Store y configuración global.
+2.  **Features (`src/features/`)**: Módulos de dominio con lógica de negocio aislada.
+3.  **Shared (`src/shared/`)**: Utilidades genéricas, componentes UI básicos y hooks de infraestructura.
 
 ---
 
-## 3. Tipografía
+## 2. Ingeniería de Features (Análisis por Módulo)
 
-*   **Familia de Fuentes Dinámica:** Controlada vía propiedad CSS custom `--font-family` en `<body>`.
-*   La lista de fuentes se gestiona en `src/features/font/context/constants.js`.
+### 🐾 A. Feature: `cats` (Gestión de Galería)
 
-| Escala         | Clase                               | Uso                    |
-| :------------- | :---------------------------------- | :--------------------- |
-| Título App     | `text-2xl font-bold tracking-tight` | `<h1>` en cabecera       |
-| Título Sección | `text-xl font-bold`                 | `<h3>` en `CatList`      |
-| Etiquetas      | `text-sm font-medium`               | Dropdown Select, botones |
-| Texto Micro    | `text-[10px] font-mono`             | Etiqueta ID gato en tarjeta |
+Es el núcleo de la aplicación. Maneja datos asíncronos de una API externa con transformaciones de dominio.
 
----
+#### Diagrama Estructural (ASCII):
 
-## 4. Especificaciones de Componentes
+```text
+[Vistas/Contenedores]
+      RandomCatList / FavouriteCatList
+             |
+[Presentacionales]
+      CatList -> CatCard -> CatCardFooter
+             |
+[Lógica de Negocio (Facade)]
+          useCats (Hook)
+             |
+[Estado/Persistencia]
+      catsSlice (Redux) <-> API (catApi) <-> Mapper (catMapper)
+```
 
-### CatCard
+#### Mapa de Dependencias:
 
-| Propiedad     | Valor                                                          |
-| :------------ | :------------------------------------------------------------- |
-| Forma         | `rounded-2xl`                                                  |
-| Relación Asp. | `aspect-square` (1:1)                                          |
-| Sombra Hover  | `shadow-sm` → `hover:shadow-xl`                                |
-| Elevación Hover| `hover:-translate-y-1`                                         |
-| Zoom Imagen   | `group-hover:scale-105` sobre `700ms`                          |
-| Gradiente     | De abajo a transparente, `opacity-0` → `group-hover:opacity-100` |
+- **`RandomCatList` / `FavouriteCatList`**: Consumen `useCats` para disparar la carga inicial y extraer el estado reactivo (`randomCats`, `favouriteCats`).
+- **`CatList` / `CatCard`**: Son componentes puros (Presentational). Reciben datos y callbacks vía `props`. No conocen a Redux.
+- **`CatCardFooter`**: Usa la utilidad `cn` para orquestar estados visuales complejos basados en las props `disabled` y `actionType`.
 
-### Floating Action Button (CatCardFooter)
+#### Lógica de Hooks (SOLID):
 
-| Estado            | Apariencia                                                                     |
-| :---------------- | :----------------------------------------------------------------------------- |
-| Por Defecto       | Blanco semitransparente, icono de corazónOutline                               |
-| Hover             | Blanco, texto se vuelve `red-500`                                              |
-| Deshabilitado (guardado) | Fondo blanco, corazón relleno sólido (`BsFillHeartFill`), `cursor-not-allowed` |
-
-**Visibilidad:** El botón es `opacity-0 group-hover:opacity-100` a menos que `disabled=true` (entonces siempre visible).
-
-### Cabecera y Controles
-
-| Componente       | Clases Destacadas                                                            |
-| :--------------- | :--------------------------------------------------------------------------- |
-| Cabecera         | `sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border` |
-| Select (fuente)  | `rounded-full` select nativo con overlay `BsChevronDown` custom              |
-| IconButton (tema)| `rounded-full p-2.5 border border-border bg-card hover:bg-muted`             |
-
-### Skeleton Loaders (Prevención de CLS)
-
-> **Regla:** Los skeletons deben replicar las **dimensiones estructurales exactas** del contenido que reemplazan.
-
-| Propiedad      | `CatCard`              | `SkeletonCard`            |
-| :------------- | :--------------------- | :------------------------ |
-| Borde Radio    | `rounded-2xl`          | `rounded-2xl` ✅          |
-| Relación Asp.  | `aspect-square`        | `aspect-square` ✅        |
-| Sombra         | `shadow-sm`            | `shadow-sm` ✅            |
-| Fondo          | `bg-muted`             | `bg-muted` ✅             |
-| Elementos Int. | Etiqueta ID + botón acción | Rectángulos placeholder ✅ |
-
-**La rejilla debe coincidir exactamente:**
-
-*   Rejilla `CatList`: `grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6`
-*   Rejilla `SkeletonGrid`: `grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6` ✅
+- **`useCats`**: Actúa como una **Facade**. Su única responsabilidad es orquestar la comunicación entre los componentes y el Store de Redux. Expone una interfaz limpia (API) ocultando la complejidad de los `dispatch`, `useSelector` y `unwrap`.
 
 ---
 
-## 5. Especificaciones de Animación (Framer Motion)
+### 🎨 B. Feature: `theme` (Gestión de Apariencia)
 
-| Evento             | Config                                                                                             |
-| :----------------- | :------------------------------------------------------------------------------------------------- |
-| Entrada Tarjeta    | `initial={{ opacity:0, scale:0.8 }}` → `animate={{ opacity:1, scale:1 }}`, stagger `index * 0.05s` |
-| Salida Tarjeta     | `exit={{ opacity:0, scale:0.5 }}` sobre `0.2s`                                                     |
-| Re-layout Rejilla  | `<motion.div layout>` — tarjetas se deslizan suavemente a nuevas posiciones                          |
-| Aparición Estado Vacío | `initial={{ opacity:0 }}` → `animate={{ opacity:1 }}`                                              |
+Maneja el estado visual global (Light/Dark).
 
-**Librería:** `framer-motion` v12.34.3 — `motion`, `AnimatePresence`, prop `layout`.
+#### Diagrama Estructural (ASCII):
 
----
+```text
+ThemeToggleButton
+      |
+  useTheme (Hook)
+      |
+ themeSlice (Redux)
+```
 
-## 6. Metodología CSS
+#### Mapa de Dependencias:
 
-*   **Framework:** Tailwind CSS v4 — utility-first.
-*   **Importación:** `@import "tailwindcss"` en `src/index.css`.
-*   **PostCSS:** Plugin `@tailwindcss/postcss`.
-*   **Reglas:**
-    *   Preferir tokens de diseño semánticos sobre valores de color crudos.
-    *   Usar `group` / `group-hover` para estados de interacción de tarjetas.
-    *   No usar librerías CSS-in-JS.
-    *   Clases condicionales mediante template literals en JSX.
+- **`ThemeToggleButton`**: Único consumidor de `useTheme`. Al ejecutarse, dispara un cambio en Redux que es escuchado globalmente.
 
 ---
 
-## 7. Hooks y Componentes Compartidos (shared/)
+### 🔡 C. Feature: `font` (Gestión Tipográfica)
 
-### A. Hooks Utilitarios
+Controla la familia de fuentes activa de forma dinámica.
 
-*   **`useAppearance`:**
-    *   **Responsabilidad:** Sincroniza el estado global de Redux (`theme.mode`, `font.family`) con el DOM (`<html>` classes, CSS variables) y `localStorage` para persistencia. Maneja efectos secundarios globales relacionados con la apariencia del usuario.
-    *   **Principios SOLID:** Cumple SRP al centrarse en la aplicación y persistencia de configuraciones de apariencia.
-    *   **Desacoplamiento:** Aísla la lógica de efectos globales del resto de la aplicación.
-*   **`usePageTitle`:**
-    *   **Responsabilidad:** Gestiona de forma segura el título del documento del navegador, estableciéndolo y restaurándolo al valor anterior al desmontarse.
-    *   **Principios SOLID:** Cumple SRP al dedicarse exclusivamente a la gestión del título.
-    *   **Desacoplamiento:** Es reutilizable y no tiene dependencias complejas.
+#### Diagrama Estructural (ASCII):
 
-### B. Componentes UI Compartidos
+```text
+FontDropdown
+      |
+  useFont (Hook)
+      |
+ fontSlice (Redux) <-> fontConstants (Config)
+```
 
-*   **`IconButton`:**
-    *   **Responsabilidad:** Un botón circular optimizado para contener iconos. Proporciona estilo consistente, manejo de eventos, `ariaLabel` para accesibilidad y estados de hover/focus.
-    *   **Estándares:** Usa `rounded-full`, `p-2.5`, `border`, `bg-card`, `hover:bg-muted`, y `focus:ring-primary/30`. Asegura tamaño de icono consistente (`w-6 h-6`).
-*   **`Select`:**
-    *   **Responsabilidad:** Un dropdown nativo estilizado usando Tailwind CSS, permitiendo una apariencia consistente.
-*   **Skeleton Loaders (`SkeletonCard`, `SkeletonGrid`, `CatListSkeleton`):**
-    *   **Responsabilidad:** Proveen placeholders visuales durante la carga de contenido para prevenir cambios de layout (CLS).
-    *   **Regla Crucial:** Replicán las dimensiones y estructura exactas del contenido que representan, asegurando una experiencia de usuario fluida y predecible.
-    *   **Estándares:** Usan Tailwind CSS para espaciado (`gap-6`) y formas (`rounded-2xl`, `aspect-square`), animaciones (`animate-pulse`), y colores semánticos (`bg-muted`).
+#### Mapa de Dependencias:
+
+- **`FontDropdown`**: Usa `useFont` para obtener la lista de fuentes disponibles y la función de cambio.
+- **`fontSlice`**: Centraliza la validación (asegurando que solo fuentes registradas en `fontConstants` sean aplicadas).
 
 ---
 
-## 8. Oportunidades de Refactorización y Desacoplamiento Adicional
+## 3. Capa Shared: Infraestructura y Efectos
 
-Si bien la arquitectura es robusta, la mejora continua es clave. Aquí hay áreas para una posible refactorización futura:
+### ⚓ Hooks de Infraestructura (Efectos Globales)
 
-### A. Estructura de la Feature `font` (`context` vs. `redux`)
+- **`useAppearance`**:
+  - **Responsabilidad:** Sincronización del DOM. Escucha cambios en `theme` y `font` de Redux para inyectar clases en `<html>` y variables CSS (`--font-family`).
+  - **SOLID:** SRP (Single Responsibility Principle) al 100%. Solo se encarga de efectos secundarios visuales raíz.
+- **`usePageTitle`**: Encapsula la gestión del `document.title` con limpieza automática (cleanup).
 
-*   **Observación:** La feature `font` incluye carpetas `redux` (`fontSlice.js`) y `context` (`constants.js`). El archivo `constants.js` contiene la lista de fuentes disponibles.
-*   **Análisis:** La carpeta `context` parece contener principalmente datos estáticos. Si `constants.js` solo sirve como fuente de datos para `fontSlice.js` y no se usa para un Context API de React, podría simplificarse.
-*   **Recomendación:** Aclarar el propósito de la carpeta `context`. Si es solo para constantes, considerar mover `constants.js` junto a `fontSlice.js` o importarlo directamente allí. Esto consolidaría la lógica de la feature y reduciría la complejidad de la estructura de carpetas si `context` no se usa para providers de runtime.
+### 🛠 Utilidades de Arquitectura
 
-### B. Granularidad de Efectos Globales (`useAppearance`)
-
-*   **Observación:** El hook `useAppearance` consolida la lógica de tema, fuente y persistencia en `localStorage`.
-*   **Análisis:** Actualmente, esta consolidación es razonable para efectos globales relacionados con la apariencia.
-*   **Recomendación:** Mantenerlo vigilado. Si se añaden más ajustes globales de apariencia o configuración del usuario, evaluar si separar la lógica en hooks más específicos (ej. `useThemePersistence`, `useFontPersistence`) podría mejorar el Principio de Única Responsabilidad (SRP), aunque la implementación actual es limpia.
-
-### C. Granularidad de los Slices de Redux
-
-*   **Observación:** Los slices actuales (`cats`, `theme`, `font`) parecen bien definidos.
-*   **Recomendación:** A medida que la aplicación crezca, evaluar continuamente si algún slice se vuelve demasiado grande y podría beneficiarse de una división.
+- **`cn` (Utility Engine):**
+  - Usa `clsx` + `tailwind-merge`.
+  - **¿Por qué?:** En una arquitectura de componentes, necesitamos que los estilos base puedan ser sobreescritos por los padres de forma segura. `cn` resuelve los conflictos de cascada de Tailwind de forma determinista.
 
 ---
 
-Este documento busca servir como un "Blueprint" técnico detallado, explicando las decisiones arquitectónicas y de diseño tomadas, y proporcionando una guía clara para el desarrollo futuro.
+## 4. Cumplimiento de Estándares (Audit)
+
+| Estándar            | Estado | Observación                                                                                                                     |
+| :------------------ | :----- | :------------------------------------------------------------------------------------------------------------------------------ |
+| **PascalCase**      | ✅     | Utilizado rigurosamente en Componentes (`CatCard.jsx`, `IconButton.jsx`).                                                       |
+| **camelCase**       | ✅     | Utilizado en Hooks (`useCats.js`) y utilidades.                                                                                 |
+| **Desacoplamiento** | 💎     | **Excelente.** Ningún componente de la carpeta `shared` depende de `features`. Las features solo se comunican vía Redux/Facade. |
+| **Clean Code**      | ✅     | Los componentes son pequeños (SFC - Stateless Functional Components) y la lógica pesada vive en Hooks.                          |
+
+---
+
+## 5. Blueprint para Desarrolladores (Quick Guide)
+
+1.  **¿Quieres crear una funcionalidad nueva?**
+    - Crea una carpeta en `src/features/tu-funcionalidad`.
+    - Define un `redux/slice` si hay estado global.
+    - Crea un `hooks/use-funcionalidad.js` como fachada.
+    - Solo entonces, crea tus componentes.
+2.  **¿Regla de Oro?**
+    - Si usas un _template literal_ complejo para clases, usa `cn()`.
+    - Si ves un componente con un `useEffect` complejo, extráelo a un Custom Hook.
+
+---
+
+> _Este documento es el 'Libro de Leyes' técnico del proyecto. Cada cambio arquitectónico debe ser reflejado aquí._

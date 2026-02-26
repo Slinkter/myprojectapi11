@@ -7,6 +7,8 @@
 import PropTypes from "prop-types";
 import { BsChevronDown } from "react-icons/bs";
 
+import { cn } from "@shared/utils/cn";
+
 /**
  * @typedef {Object} SelectOption
  * @property {string} value - The underlying value of the option.
@@ -27,7 +29,7 @@ import { BsChevronDown } from "react-icons/bs";
  */
 const Select = ({ value, onChange, options, className = "", ariaLabel }) => {
   return (
-    <div className={`relative ${className}`}>
+    <div className={cn("relative", className)}>
       <select
         value={value}
         onChange={onChange}

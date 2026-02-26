@@ -5,6 +5,7 @@
 
 import React from "react";
 import PropTypes from "prop-types";
+import { cn } from "@shared/utils/cn";
 import { BsFillHeartFill, BsHeart, BsTrash } from "react-icons/bs";
 
 /**
@@ -25,26 +26,30 @@ const CatCardFooter = ({ actionType, onAction, disabled }) => {
     <button
       onClick={onAction}
       disabled={disabled}
-      className={`
-        flex items-center justify-center p-2.5 transition-all duration-200 
-        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/30
-        ${
-          disabled
-            ? "bg-card/90 border-transparent cursor-not-allowed" // Using bg-card for disabled state background
-            : "bg-card/70 hover:bg-muted text-foreground active:scale-95" // Using semantic tokens for background and text
-        }
-      `}
+      className={cn(
+        "flex items-center justify-center p-2.5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/30",
+        disabled
+          ? "bg-card/90 border-transparent cursor-not-allowed"
+          : "bg-card/70 hover:bg-muted text-foreground active:scale-95",
+      )}
       title={label}
       aria-label={label}
     >
       {isSave ? (
         disabled ? (
-          <BsFillHeartFill className={`w-5 h-5 ${accentColor} transition-colors`} />
+          <BsFillHeartFill
+            className={cn("w-5 h-5 transition-colors", accentColor)}
+          />
         ) : (
           <BsHeart className="w-5 h-5 transition-colors" />
         )
       ) : (
-        <BsTrash className={`w-5 h-5 text-foreground transition-colors hover:${accentColor}`} />
+        <BsTrash
+          className={cn(
+            "w-5 h-5 text-foreground transition-colors",
+            `hover:${accentColor}`,
+          )}
+        />
       )}
     </button>
   );

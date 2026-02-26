@@ -46,7 +46,7 @@ Every library has a specific role. Install them one group at a time.
 ### Runtime Dependencies
 
 ```bash
-pnpm add @reduxjs/toolkit react-redux axios framer-motion react-hot-toast react-icons prop-types
+pnpm add @reduxjs/toolkit react-redux axios framer-motion react-hot-toast react-icons prop-types clsx tailwind-merge
 ```
 
 | Library            | Version  | Why We Use It                                                            |
@@ -60,6 +60,8 @@ pnpm add @reduxjs/toolkit react-redux axios framer-motion react-hot-toast react-
 | `react-hot-toast`  | ^2.6.0   | Non-intrusive toast notifications for user feedback                      |
 | `react-icons`      | ^5.5.0   | Icon library (we use `BsHeart`, `BsTrash` from Bootstrap Icons)          |
 | `prop-types`       | ^15.8.1  | Runtime prop validation (documents component contracts)                  |
+| `clsx`             | ^2.1.1   | Utility for constructing className strings conditionally                 |
+| `tailwind-merge`   | ^3.5.0   | Utility to safely merge Tailwind CSS classes without style conflicts     |
 
 ### Dev Dependencies
 

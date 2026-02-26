@@ -112,6 +112,7 @@ export const useCats = () => { ... };
 | No `useSelector`/`useDispatch` in components | Use facade hooks                                    |
 | No cross-feature imports                     | `theme` must not import from `cats`                 |
 | No hardcoded colors in Tailwind              | Use semantic tokens (`bg-muted`, not `bg-gray-200`) |
+| Avoid manual logic in `className`            | Use the `@shared/utils/cn` utility for all classes  |
 
 ---
 

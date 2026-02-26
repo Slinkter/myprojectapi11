@@ -72,5 +72,8 @@ A brief, auto-dismissing notification. This project uses `react-hot-toast` for s
 **Semantic Token**
 A Tailwind CSS v4 variable name tied to a concept rather than a specific color (e.g., `bg-muted` rather than `bg-gray-100`). Semantic tokens automatically switch value when the app theme changes.
 
+**`cn` Utility (clsx + tailwind-merge)**
+A custom shared utility function located at `src/shared/utils/cn.js`. It uses `clsx` to construct CSS class strings conditionally and `tailwind-merge` to safely resolve Tailwind CSS conflicts (e.g., ensuring `p-4` overrides `p-2` instead of both being applied). Used extensively in this project to avoid complex template literals in JSX.
+
 **Dark Mode**
 A color scheme where backgrounds are dark and text is light. Implemented by toggling the `dark` CSS class on `<html>` via `useAppearance`.

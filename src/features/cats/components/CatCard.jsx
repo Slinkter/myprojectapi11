@@ -5,6 +5,7 @@
 
 import React, { useCallback } from "react";
 import PropTypes from "prop-types";
+import { cn } from "@shared/utils/cn";
 import CatCardFooter from "./subcomponents/CatCardFooter";
 
 /**
@@ -50,20 +51,23 @@ const CatCard = ({ cat, onAction, actionType, disabled }) => {
         <div className="absolute inset-0 transition-opacity duration-300 opacity-0  from-black/50 via-transparent to-transparent pointer-events-none group-hover:opacity-100" />
       </div>
 
+      {/* Cat ID slightly visible on hover */}
+      <div className="absolute top-3 left-3 px-2 py-1 text-[12px] font-mono font-medium tracking-wider text-white bg-black/40 backdrop-blur-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+        ID: {cat.id}
+      </div>
+
       {/* Floating Action Button */}
       <div
-        className={`absolute bottom-3 right-3 z-10 transition-opacity duration-300 ${disabled ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
+        className={cn(
+          "absolute bottom-3 right-3 z-10 transition-opacity duration-300",
+          disabled ? "opacity-100" : "opacity-0 group-hover:opacity-100",
+        )}
       >
         <CatCardFooter
           actionType={actionType}
           onAction={handleAction}
           disabled={disabled}
         />
-      </div>
-
-      {/* Cat ID slightly visible on hover */}
-      <div className="absolute top-3 left-3 px-2 py-1 text-[10px] font-mono font-medium tracking-wider text-white bg-black/40 backdrop-blur-sm rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-        ID: {cat.id}
       </div>
     </div>
   );

@@ -45,6 +45,7 @@
 | API Client       | Axios                       | 1.13.2         |
 | Animations       | Framer Motion               | 12.34.3        |
 | Styling          | Tailwind CSS v4             | 4.1.18         |
+| Class Management | clsx + tailwind-merge       | 2.1.1 / 3.5.0  |
 | Notifications    | react-hot-toast             | 2.6.0          |
 | Icons            | react-icons                 | 5.5.0          |
 | Deployment       | GitHub Pages (gh-pages)     | 6.3.0          |
