@@ -34,6 +34,11 @@ jobs:
           node-version: "20"
           cache: "pnpm"
 
+      - name: Create .env file
+        run: |
+          echo "VITE_BASE_URL=https://api.thecatapi.com/v1" > .env
+          echo "VITE_API_KEY=${{ secrets.CAT_API_KEY }}" >> .env
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
@@ -49,6 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pages: write
 
     steps:
       - name: Checkout repository
@@ -64,6 +70,11 @@ jobs:
         with:
           node-version: "20"
           cache: "pnpm"
+
+      - name: Create .env file
+        run: |
+          echo "VITE_BASE_URL=https://api.thecatapi.com/v1" > .env
+          echo "VITE_API_KEY=${{ secrets.CAT_API_KEY }}" >> .env
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
