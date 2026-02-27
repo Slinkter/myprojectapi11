@@ -1,86 +1,86 @@
-# SCRUM Process & Workflow
+# Proceso y Flujo de Trabajo SCRUM
 
 ## 1. Roles
 
-| Role              | Responsibility                                                          |
+| Rol              | Responsabilidad                                                          |
 | ----------------- | ----------------------------------------------------------------------- |
-| **Product Owner** | Defines features, writes acceptance criteria (see `02-REQUIREMENTS.md`) |
-| **Scrum Master**  | Removes technical blockers (build errors, architectural blockers)       |
-| **Developer**     | Implementation, testing, JSDoc documentation                            |
+| **Product Owner** | Define funcionalidades, escribe criterios de aceptación (ver `02-REQUISITOS.md`) |
+| **Scrum Master**  | Elimina impedimentos técnicos (errores de compilación, bloqueos arquitectónicos)       |
+| **Desarrollador**     | Implementación, pruebas, documentación JSDoc                            |
 
 ---
 
-## 2. Definition of Done (DoD)
+## 2. Definición de Hecho (Definition of Done - DoD)
 
-A feature or task is only "Done" when **all** of these are true:
+Una funcionalidad o tarea solo está "Hecha" cuando **todo** lo siguiente es cierto:
 
-| #   | Criteria                                                           | Tool / Evidence |
+| #   | Criterio                                                           | Herramienta / Evidencia |
 | --- | ------------------------------------------------------------------ | --------------- |
-| 1   | Code written and formatted                                         | Prettier        |
-| 2   | ESLint passes with **0 warnings**                                  | `pnpm run lint` |
-| 3   | Feature meets all Acceptance Criteria from `02-REQUIREMENTS.md`    | Manual QA       |
-| 4   | All exported members have JSDoc with typed `@param` and `@returns` | Code review     |
-| 5   | Domain data typed via domain entity `@typedef` (e.g., `CatEntity`) | Code review     |
-| 6   | Skeleton loaders match final component dimensions                  | Visual test     |
-| 7   | Builds without error: `pnpm run build`                             | CI              |
-| 8   | Code merged to `develop` with no conflicts                         | Git             |
+| 1   | Código escrito y formateado                                         | Prettier        |
+| 2   | ESLint pasa con **0 advertencias**                                  | `pnpm run lint` |
+| 3   | La funcionalidad cumple todos los Criterios de Aceptación de `02-REQUISITOS.md`    | QA Manual       |
+| 4   | Todos los miembros exportados tienen JSDoc con `@param` y `@returns` tipados | Revisión de código     |
+| 5   | Datos de dominio tipados vía `@typedef` de entidad de dominio (ej., `CatEntity`) | Revisión de código     |
+| 6   | Los cargadores skeleton coinciden con las dimensiones finales del componente                  | Prueba visual     |
+| 7   | Compila sin errores: `pnpm run build`                             | CI              |
+| 8   | Código fusionado a `develop` sin conflictos                         | Git             |
 
 ---
 
-## 3. Event Structure
+## 3. Estructura de Eventos
 
-### Sprint Planning
+### Planificación del Sprint (Sprint Planning)
 
-- Select items from Product Backlog, estimate complexity.
-- Confirm items meet **Entry Criteria**: acceptance criteria written in `02-REQUIREMENTS.md`.
+- Seleccionar elementos del Product Backlog, estimar complejidad.
+- Confirmar que los elementos cumplen con los **Criterios de Entrada**: criterios de aceptación escritos en `02-REQUISITOS.md`.
 
-### Daily Stand-up
+### Stand-up Diaria (Daily Stand-up)
 
-1. What did I complete?
-2. What will I work on next?
-3. Any blockers?
+1. ¿Qué completé?
+2. ¿En qué trabajaré a continuación?
+3. ¿Algún impedimento?
 
-### Sprint Review & Demo
+### Revisión del Sprint y Demo (Sprint Review & Demo)
 
-- Demo working software in browser.
-- Verify Lighthouse score > 90 on demo build.
+- Demostración del software funcional en el navegador.
+- Verificar puntuación Lighthouse > 90 en la compilación de demostración.
 
-### Sprint Retrospective
+### Retrospectiva del Sprint (Sprint Retrospective)
 
-- What went well?
-- What should improve?
-- Action items assigned to next sprint.
+- ¿Qué salió bien?
+- ¿Qué debería mejorar?
+- Acciones asignadas al próximo sprint.
 
 ---
 
-## 4. Issue Labels (GitHub Issues)
+## 4. Etiquetas de Issues (GitHub Issues)
 
-| Label      | Meaning                              |
+| Etiqueta      | Significado                              |
 | ---------- | ------------------------------------ |
-| `feat`     | New functionality                    |
-| `fix`      | Bug fix                              |
-| `refactor` | Code improvement, no behavior change |
-| `docs`     | Documentation update                 |
-| `chore`    | Build config, dependencies           |
-| `blocked`  | Cannot proceed, needs external input |
+| `feat`     | Nueva funcionalidad                    |
+| `fix`      | Corrección de error                              |
+| `refactor` | Mejora de código, sin cambio de comportamiento |
+| `docs`     | Actualización de documentación                 |
+| `chore`    | Configuración de compilación, dependencias           |
+| `blocked`  | No se puede proceder, necesita entrada externa |
 
 ---
 
-## 5. Branch & PR Flow
+## 5. Flujo de Ramas y PR
 
 ```
 feature/cat-tagging
-    ↓ PR to
+    ↓ PR a
 develop
-    ↓ PR to (after review)
+    ↓ PR a (tras revisión)
 main
-    ↓ auto-deploy
+    ↓ auto-despliegue
 GitHub Pages
 ```
 
-PR checklist:
+Checklist de PR:
 
-- [ ] Linting passes.
-- [ ] JSDoc complete on changed files.
-- [ ] Docs updated if API or architecture changed.
-- [ ] CLS test: skeleton visually matches loaded content.
+- [ ] El linting pasa.
+- [ ] JSDoc completo en los archivos modificados.
+- [ ] Documentación actualizada si cambió la API o la arquitectura.
+- [ ] Prueba de CLS: el skeleton coincide visualmente con el contenido cargado.

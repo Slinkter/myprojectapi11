@@ -1,60 +1,60 @@
-# Cat Gallery — Clean Architecture ✨
+# Galería de Gatos — Arquitectura Limpia ✨
 
-[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://slinkter.github.io/myprojectapi11)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Demostración en Vivo](https://img.shields.io/badge/demo-live-brightgreen)](https://slinkter.github.io/myprojectapi11)
+[![Licencia: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![React](https://img.shields.io/badge/react-19.2.3-%2320232a.svg?style=flat&logo=react&logoColor=%2361DAFB)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/vite-7.3.0-%23646CFF.svg?style=flat&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![TailwindCSS](https://img.shields.io/badge/tailwindcss-v4.1.18-%2338B2AC.svg?style=flat&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![Redux Toolkit](https://img.shields.io/badge/redux--toolkit-2.11.2-%23593d88.svg?style=flat&logo=redux&logoColor=white)](https://redux-toolkit.js.org/)
 [![Framer Motion](https://img.shields.io/badge/framer--motion-12.34.3-black?style=flat&logo=framer)](https://www.framer.com/motion/)
 
-A modern, scalable Single Page Application (SPA) that demonstrates **Senior Frontend Architecture** using Feature-Sliced Design, strict JSDoc typing, and Pixel-Perfect UI/UX.
+Una aplicación de página única (SPA) moderna y escalable que demuestra una **Arquitectura Frontend Senior** utilizando Feature-Sliced Design (FSD), tipado estricto con JSDoc y una interfaz de usuario (UI/UX) de alta precisión.
 
 ---
 
-## 🎯 What Is This Project?
+## 🎯 ¿Qué es este proyecto?
 
-Cat Gallery lets users **browse random cat images**, **save favorites**, and customize the **color theme and typography**. It is built primarily as a **learning reference** for frontend architecture patterns used in real-world enterprise projects.
+Cat Gallery permite a los usuarios **explorar imágenes aleatorias de gatos**, **guardar favoritos** y personalizar el **tema de color y la tipografía**. Está construido principalmente como una **referencia de aprendizaje** para patrones de arquitectura frontend utilizados en proyectos empresariales del mundo real.
 
 ---
 
-## 🛠 Technology Stack
+## 🛠 Stack Tecnológico
 
-### Runtime Dependencies
+### Dependencias de Ejecución
 
-| Library            | Version  | Role                                                         |
+| Librería            | Versión  | Rol                                                         |
 | ------------------ | -------- | ------------------------------------------------------------ |
-| `react`            | ^19.2.3  | Core UI rendering framework                                  |
-| `react-dom`        | ^19.2.3  | React DOM renderer for the browser                           |
-| `@reduxjs/toolkit` | ^2.11.2  | Global state management — async thunks, slices               |
-| `react-redux`      | ^9.2.0   | Connects React component tree to the Redux store             |
-| `axios`            | ^1.13.2  | HTTP client for TheCatAPI calls                              |
-| `framer-motion`    | ^12.34.3 | Hardware-accelerated animations (entrance, exit, layout)     |
-| `react-hot-toast`  | ^2.6.0   | Toast notifications for user feedback                        |
-| `react-icons`      | ^5.5.0   | Icon components (Bootstrap Icons subset)                     |
-| `prop-types`       | ^15.8.1  | Runtime prop validation and component contract documentation |
+| `react`            | ^19.2.3  | Framework principal de renderizado de UI                     |
+| `react-dom`        | ^19.2.3  | Renderizador React DOM para el navegador                     |
+| `@reduxjs/toolkit` | ^2.11.2  | Gestión de estado global — thunks asíncronos, slices         |
+| `react-redux`      | ^9.2.0   | Conecta el árbol de componentes React al store de Redux      |
+| `axios`            | ^1.13.2  | Cliente HTTP para llamadas a TheCatAPI                       |
+| `framer-motion`    | ^12.34.3 | Animaciones aceleradas por hardware (entrada, salida, layout)|
+| `react-hot-toast`  | ^2.6.0   | Notificaciones toast para feedback del usuario               |
+| `react-icons`      | ^5.5.0   | Componentes de iconos (subconjunto de Bootstrap Icons)       |
+| `prop-types`       | ^15.8.1  | Validación de props en ejecución y contrato de componentes   |
 
-### Dev Dependencies
+### Dependencias de Desarrollo
 
-| Library                | Version | Role                                    |
+| Librería                | Versión | Rol                                    |
 | ---------------------- | ------- | --------------------------------------- |
-| `vite`                 | ^7.3.0  | Dev server and production bundler       |
-| `@vitejs/plugin-react` | ^5.1.2  | JSX support and HMR for Vite            |
-| `tailwindcss`          | ^4.1.18 | Utility-first CSS framework             |
-| `@tailwindcss/postcss` | ^4.1.18 | PostCSS integration for Tailwind v4     |
-| `eslint` + plugins     | ^8.57.1 | Static code analysis (0-warning policy) |
-| `gh-pages`             | ^6.3.0  | One-command deployment to GitHub Pages  |
+| `vite`                 | ^7.3.0  | Servidor de desarrollo y empaquetador de producción |
+| `@vitejs/plugin-react` | ^5.1.2  | Soporte JSX y HMR para Vite            |
+| `tailwindcss`          | ^4.1.18 | Framework de CSS orientado a utilidades |
+| `@tailwindcss/postcss` | ^4.1.18 | Integración PostCSS para Tailwind v4     |
+| `eslint` + plugins     | ^8.57.1 | Análisis estático de código (política de 0 advertencias) |
+| `gh-pages`             | ^6.3.0  | Despliegue en un comando a GitHub Pages |
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Inicio Rápido
 
-### Prerequisites
+### Requisitos Previos
 
 - Node.js v18+
 - pnpm v8+
 
-### 1. Clone and install
+### 1. Clonar e instalar
 
 ```bash
 git clone https://github.com/slinkter/myprojectapi11.git
@@ -62,73 +62,73 @@ cd myprojectapi11
 pnpm install
 ```
 
-### 2. Set up environment variables
+### 2. Configurar variables de entorno
 
-Create a `.env` file in the project root:
+Crea un archivo `.env` en la raíz del proyecto:
 
 ```env
 VITE_BASE_URL=https://api.thecatapi.com/v1
-VITE_API_KEY=your_api_key_here
+VITE_API_KEY=tu_api_key_aqui
 ```
 
-Get a free API key at [thecatapi.com](https://thecatapi.com).
+Obtén una clave API gratuita en [thecatapi.com](https://thecatapi.com).
 
-### 3. Run development server
+### 3. Ejecutar servidor de desarrollo
 
 ```bash
 pnpm run dev      # → http://localhost:5173
 ```
 
-### Available scripts
+### Scripts disponibles
 
 ```bash
-pnpm run dev      # Development server
-pnpm run build    # Production build → ./dist
-pnpm run preview  # Preview production build
-pnpm run lint     # ESLint (0 warnings allowed)
-pnpm run deploy   # Build + deploy to GitHub Pages
+pnpm run dev      # Servidor de desarrollo
+pnpm run build    # Construcción de producción → ./dist
+pnpm run preview  # Previsualizar construcción de producción
+pnpm run lint     # ESLint (0 advertencias permitidas)
+pnpm run deploy   # Construir + desplegar en GitHub Pages
 ```
 
 ---
 
-## 🏗 Architecture Overview
+## 🏗 Resumen de la Arquitectura
 
-This project uses **Feature-Sliced Design (FSD)**.
+Este proyecto utiliza **Feature-Sliced Design (FSD)**.
 
 ```text
 src/
-├── app/             # Redux store configuration
-├── config/          # Environment variables (env.js)
-├── docs/            # All technical documentation
+├── app/             # Configuración del store de Redux
+├── config/          # Variables de entorno (env.js)
+├── docs/            # Toda la documentación técnica
 ├── features/
-│   ├── cats/        # Core domain
-│   │   ├── adapters/    # catMapper.js — normalizes API → CatEntity
-│   │   ├── api/         # catApi.js — low-level Axios HTTP client
+│   ├── cats/        # Dominio principal (gatos)
+│   │   ├── adapters/    # catMapper.js — normaliza API → CatEntity
+│   │   ├── api/         # catApi.js — cliente HTTP Axios de bajo nivel
 │   │   ├── components/  # CatCard, CatList, RandomCatList, FavouriteCatList
-│   │   ├── hooks/       # useCats.js — facade hiding Redux from UI
-│   │   ├── redux/       # catsSlice.js — state + async thunks
-│   │   └── services/    # catService.js — orchestrates API → Mapper
-│   ├── font/        # Font family selection feature
-│   └── theme/       # Dark/Light mode toggle feature
+│   │   ├── hooks/       # useCats.js — fachada que oculta Redux de la UI
+│   │   ├── redux/       # catsSlice.js — estado + thunks asíncronos
+│   │   └── services/    # catService.js — orquestación API → Mapper
+│   ├── font/        # Funcionalidad de selección de fuentes
+│   └── theme/       # Funcionalidad de cambio de modo Oscuro/Claro
 ├── shared/
 │   ├── components/  # SkeletonCard, SkeletonGrid, CatListSkeleton
 │   ├── hooks/       # useAppearance, usePageTitle
-│   └── ui/          # IconButton, Select (reusable primitives)
-└── App.jsx          # Root layout component
+│   └── ui/          # IconButton, Select (primitivas reutilizables)
+└── App.jsx          # Componente de diseño raíz
 ```
 
-### Key Patterns Used
+### Patrones Clave Utilizados
 
-| Pattern                      | Where                            | Benefit                                        |
+| Patrón                      | Dónde                            | Beneficio                                        |
 | ---------------------------- | -------------------------------- | ---------------------------------------------- |
-| **Facade (Custom Hook)**     | `useCats`, `useTheme`, `useFont` | UI never touches Redux directly                |
-| **Adapter / Mapper**         | `catMapper.js`                   | API response shape never leaks into components |
-| **Container / Presentation** | `RandomCatList` vs `CatList`     | Separation of data and rendering               |
-| **Strict JSDoc Typing**      | All hooks, mappers, props        | Enterprise-level type safety in plain JS       |
+| **Fachada (Custom Hook)**     | `useCats`, `useTheme`, `useFont` | La UI nunca toca Redux directamente            |
+| **Adaptador / Mapper**         | `catMapper.js`                   | La forma de la API nunca se filtra a los componentes |
+| **Contenedor / Presentación** | `RandomCatList` vs `CatList`     | Separación de datos y renderizado              |
+| **Tipado estricto con JSDoc** | Todos los hooks, mappers, props  | Seguridad de tipos de nivel empresarial en JS plano |
 
-### Vite Path Aliases
+### Alias de Rutas en Vite
 
-| Alias       | Real Path       |
+| Alias       | Ruta Real       |
 | ----------- | --------------- |
 | `@features` | `src/features/` |
 | `@shared`   | `src/shared/`   |
@@ -137,23 +137,23 @@ src/
 
 ---
 
-## 📚 Documentation
+## 📚 Documentación
 
-Detailed technical documentation lives inside the project:
+La documentación técnica detallada se encuentra dentro del proyecto:
 
-| Document                                                               | Contents                                              |
+| Documento                                                               | Contenido                                              |
 | ---------------------------------------------------------------------- | ----------------------------------------------------- |
-| [`src/docs/00-SETUP-GUIDE.md`](./src/docs/00-SETUP-GUIDE.md)           | **Start here** — project from zero, all install steps |
-| [`src/docs/DOCUMENTATION.md`](./src/docs/DOCUMENTATION.md)             | Full documentation index                              |
-| [`src/docs/04-ARCHITECTURE.md`](./src/docs/04-ARCHITECTURE.md)         | FSD patterns, data flow, Redux shape                  |
-| [`src/docs/05-UI-DESIGN-SYSTEM.md`](./src/docs/05-UI-DESIGN-SYSTEM.md) | Tailwind tokens, animations, skeleton rules           |
-| [`src/docs/06-CONTRIBUTING.md`](./src/docs/06-CONTRIBUTING.md)         | Naming conventions, JSDoc standard, Git workflow      |
+| [`src/docs/00-SETUP-GUIDE.md`](./src/docs/00-SETUP-GUIDE.md)           | **Empieza aquí** — proyecto desde cero, pasos de instalación |
+| [`src/docs/DOCUMENTATION.md`](./src/docs/DOCUMENTATION.md)             | Índice completo de documentación                       |
+| [`src/docs/04-ARCHITECTURE.md`](./src/docs/04-ARCHITECTURE.md)         | Patrones FSD, flujo de datos, forma de Redux          |
+| [`src/docs/05-UI-DESIGN-SYSTEM.md`](./src/docs/05-UI-DESIGN-SYSTEM.md) | Tokens de Tailwind, animaciones, reglas de skeletons  |
+| [`src/docs/06-CONTRIBUTING.md`](./src/docs/06-CONTRIBUTING.md)         | Convenciones de nombres, estándar JSDoc, flujo de Git |
 
 ---
 
-## 🌐 Deployment
+## 🌐 Despliegue
 
-Deployed to **GitHub Pages** at: https://slinkter.github.io/myprojectapi11
+Desplegado en **GitHub Pages** en: https://slinkter.github.io/myprojectapi11
 
 ```bash
 pnpm run deploy
@@ -161,4 +161,4 @@ pnpm run deploy
 
 ---
 
-_Built with ❤️ as a reference project for Frontend Architecture_
+_Construido con ❤️ como proyecto de referencia para Arquitectura Frontend_

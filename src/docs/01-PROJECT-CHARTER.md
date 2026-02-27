@@ -1,83 +1,83 @@
-# Project Charter: Cat Gallery
+# Acta del Proyecto: Galería de Gatos
 
-## 1. Project Overview
+## 1. Resumen del Proyecto
 
-| Field            | Value                                      |
+| Campo            | Valor                                      |
 | ---------------- | ------------------------------------------ |
-| **Project Name** | Cat Gallery                                |
-| **Version**      | 0.0.0                                      |
-| **Type**         | Single Page Application (SPA)              |
-| **Architecture** | Feature-Sliced Design + Clean Architecture |
-| **Live URL**     | https://slinkter.github.io/myprojectapi11  |
-| **Repository**   | https://github.com/slinkter/myprojectapi11 |
+| **Nombre del Proyecto** | Galería de Gatos                                |
+| **Versión**      | 0.0.0                                      |
+| **Tipo**         | Aplicación de Página Única (SPA)              |
+| **Arquitectura** | Feature-Sliced Design + Arquitectura Limpia |
+| **URL en Vivo**     | https://slinkter.github.io/myprojectapi11  |
+| **Repositorio**   | https://github.com/slinkter/myprojectapi11 |
 
-**Description:** A demo SPA built with React 19, Vite 7, Redux Toolkit, and Tailwind CSS v4 that lets users explore random cat images, manage favorites, and customize theme/typography. Designed to serve as a **flagship architecture reference** for junior and mid-level developers.
+**Descripción:** Una SPA de demostración construida con React 19, Vite 7, Redux Toolkit y Tailwind CSS v4 que permite a los usuarios explorar imágenes aleatorias de gatos, gestionar favoritos y personalizar el tema/tipografía. Diseñada para servir como una **referencia de arquitectura insignia** para desarrolladores de nivel junior y medio.
 
 ---
 
-## 2. Business Objectives
+## 2. Objetivos de Negocio
 
-| Objective             | Description                                                                                                      |
+| Objetivo             | Descripción                                                                                                      |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| **Architecture Demo** | Demonstrate Feature-Sliced Design, Facade Pattern, Adapter/Mapper, and strict JSDoc typing in production-like JS |
-| **User Engagement**   | Provide a premium UI with hardware-accelerated animations (Framer Motion) and zero layout shift                  |
-| **Student Resource**  | Serve as a guided reference for developers learning modern React architecture patterns                           |
+| **Demo de Arquitectura** | Demostrar Feature-Sliced Design, Patrón Fachada, Adaptador/Mapper y tipado estricto de JSDoc en JS de producción |
+| **Compromiso del Usuario**   | Proporcionar una UI premium con animaciones aceleradas por hardware (Framer Motion) y cero saltos de diseño (CLS)                  |
+| **Recurso para Estudiantes**  | Servir como una referencia guiada para desarrolladores que aprenden patrones modernos de arquitectura en React                           |
 
 ---
 
-## 3. Stakeholders
+## 3. Partes Interesadas (Stakeholders)
 
-| Role                   | Person                                        |
+| Rol                   | Persona                                        |
 | ---------------------- | --------------------------------------------- |
-| Product Owner / Client | Developer (User)                              |
-| Lead Architect         | AI Agent                                      |
-| End Users              | Students and developers studying the codebase |
+| Product Owner / Cliente | Desarrollador (Usuario)                              |
+| Arquitecto Principal         | Agente de IA                                      |
+| Usuarios Finales              | Estudiantes y desarrolladores que estudian el código fuente |
 
 ---
 
-## 4. Tech Stack
+## 4. Stack Tecnológico
 
-| Layer            | Technology                  | Version        |
+| Capa            | Tecnología                  | Versión        |
 | ---------------- | --------------------------- | -------------- |
-| UI Framework     | React                       | 19.2.3         |
-| Build Tool       | Vite                        | 7.3.0          |
-| State Management | Redux Toolkit + react-redux | 2.11.2 / 9.2.0 |
-| API Client       | Axios                       | 1.13.2         |
-| Animations       | Framer Motion               | 12.34.3        |
-| Styling          | Tailwind CSS v4             | 4.1.18         |
-| Class Management | clsx + tailwind-merge       | 2.1.1 / 3.5.0  |
-| Notifications    | react-hot-toast             | 2.6.0          |
-| Icons            | react-icons                 | 5.5.0          |
-| Deployment       | GitHub Pages (gh-pages)     | 6.3.0          |
+| Framework de UI     | React                       | 19.2.3         |
+| Herramienta de Construcción       | Vite                        | 7.3.0          |
+| Gestión de Estado | Redux Toolkit + react-redux | 2.11.2 / 9.2.0 |
+| Cliente API       | Axios                       | 1.13.2         |
+| Animaciones       | Framer Motion               | 12.34.3        |
+| Estilos          | Tailwind CSS v4             | 4.1.18         |
+| Gestión de Clases | clsx + tailwind-merge       | 2.1.1 / 3.5.0  |
+| Notificaciones    | react-hot-toast             | 2.6.0          |
+| Iconos            | react-icons                 | 5.5.0          |
+| Despliegue       | GitHub Pages (gh-pages)     | 6.3.0          |
 
 ---
 
-## 5. Scope
+## 5. Alcance
 
-### In Scope
+### Dentro del Alcance
 
-- Random cat image fetching from TheCatAPI via Anti-Corruption Mapper layer.
-- Favorites management (Save / Remove) persisted via TheCatAPI.
-- Dark / Light theme toggle persisted in LocalStorage.
-- Dynamic typography selection persisted in LocalStorage.
-- Animated card grid with entrance, exit, and layout transitions.
-- Pixel-perfect Skeleton Loaders that prevent layout shift.
+- Obtención de imágenes aleatorias de gatos desde TheCatAPI a través de una capa de Mapeo Anti-Corrupción.
+- Gestión de favoritos (Guardar / Eliminar) persistidos a través de TheCatAPI.
+- Cambio de tema Oscuro / Claro persistido en LocalStorage.
+- Selección dinámica de tipografía persistida en LocalStorage.
+- Cuadrícula de tarjetas animada con transiciones de entrada, salida y diseño (layout).
+- Cargadores Skeleton de alta precisión que evitan saltos de diseño (layout shift).
 
-### Out of Scope
+### Fuera del Alcance
 
-- User authentication (Login / Signup).
-- Social features (sharing, comments).
-- Server-Side Rendering (SSR).
-- Backend infrastructure (depends on TheCatAPI).
+- Autenticación de usuarios (Login / Registro).
+- Funcionalidades sociales (compartir, comentarios).
+- Renderizado del lado del servidor (SSR).
+- Infraestructura de backend (depende de TheCatAPI).
 
 ---
 
-## 6. Key Success Indicators (KPIs)
+## 6. Indicadores Clave de Éxito (KPIs)
 
-| KPI                           | Target                                |
+| KPI                           | Objetivo                                |
 | ----------------------------- | ------------------------------------- |
-| Lighthouse Performance        | > 90                                  |
+| Rendimiento en Lighthouse        | > 90                                  |
 | Cumulative Layout Shift (CLS) | 0.0                                   |
-| ESLint warnings               | 0                                     |
-| JSDoc coverage                | 100% of exported members              |
-| Component coupling            | 0 direct Redux calls in UI components |
+| Advertencias de ESLint               | 0                                     |
+| Cobertura de JSDoc                | 100% de los miembros exportados              |
+| Acoplamiento de componentes            | 0 llamadas directas a Redux en componentes de UI |

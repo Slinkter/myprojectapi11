@@ -1,108 +1,108 @@
-# Use Case Specifications
+# Especificaciones de Casos de Uso
 
-This document details all interaction flows. These are the source of truth for feature acceptance testing.
+Este documento detalla todos los flujos de interacción. Estos son la fuente de verdad para las pruebas de aceptación de funcionalidades.
 
-## Actors
+## Actores
 
-- **User** — A visitor browsing the application in any browser.
-
----
-
-## UC-01: Browse Random Cats
-
-**Goal:** View fresh random cat images on load.
-**Trigger:** Application initial render.
-
-**Main Flow:**
-
-1. App renders `RandomCatList` (lazy-loaded via `React.lazy`).
-2. `useEffect` calls `loadRandomCats()` if list is empty.
-3. `SkeletonGrid` appears (8 cards, `grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4`, `gap-6`).
-4. `fetchRandomCats` thunk fires — GET `/images/search`.
-5. Response passes through `catMapper.js` → `CatEntity[]`.
-6. Redux `random` array updated.
-7. Framer Motion `AnimatePresence` renders each card with scale + fade-in animation.
-
-**Alternate Flow (API Error):**
-
-- Step 4 fails → `rejectWithValue` → `error` set in Redux slice.
-- `CatErrorHandler` component displays error message and retry button.
-- User clicks retry → returns to Step 2.
+- **Usuario** — Un visitante que explora la aplicación en cualquier navegador.
 
 ---
 
-## UC-02: Save a Cat to Favorites
+## UC-01: Explorar Gatos Aleatorios
 
-**Goal:** Persist a cat image as a personal favorite.
-**Trigger:** User clicks the Heart button on a `CatCard`.
+**Objetivo:** Ver imágenes aleatorias de gatos frescas al cargar.
+**Activador:** Renderizado inicial de la aplicación.
 
-**Precondition:** Random cat list is loaded. Cat is NOT already in `favourites[]`.
+**Flujo Principal:**
 
-**Main Flow:**
+1. La aplicación renderiza `RandomCatList` (cargado perezosamente vía `React.lazy`).
+2. `useEffect` llama a `loadRandomCats()` si la lista está vacía.
+3. Aparece `SkeletonGrid` (8 tarjetas, `grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4`, `gap-6`).
+4. Se dispara el thunk `fetchRandomCats` — GET `/images/search`.
+5. La respuesta pasa por `catMapper.js` → `CatEntity[]`.
+6. Se actualiza el array `random` en Redux.
+7. `AnimatePresence` de Framer Motion renderiza cada tarjeta con una animación de escala + desvanecimiento (fade-in).
 
-1. User hovers over `CatCard` → overlay with `CatCardFooter` appears.
-2. Heart outline button (`BsHeart`) is visible and enabled.
-3. User clicks heart button.
-4. `handleAction` in `CatCard` prevents default and calls `onAction(cat)`.
-5. `useCats.saveFavouriteCat(cat)` dispatches `saveCat` thunk.
-6. Thunk: POST `/favourites` with `{ image_id: cat.id }`.
-7. Response: `{ id: <new favouriteId>, message: "SUCCESS" }`.
-8. Redux updates: cat appended to `favourites[]`, `favouriteId` assigned.
-9. Heart button becomes filled (`BsFillHeartFill`, red, `disabled=true`).
-10. `react-hot-toast` shows "Cat saved to favourites!".
+**Flujo Alternativo (Error de API):**
 
-**Disabled State Rule:** After saving, the heart button stays disabled — it re-enables only when the user removes the cat from `FavouriteCatList`.
+- El paso 4 falla → `rejectWithValue` → se establece `error` en el slice de Redux.
+- El componente `CatErrorHandler` muestra un mensaje de error y un botón de reintento.
+- El usuario hace clic en reintentar → vuelve al paso 2.
 
 ---
 
-## UC-03: Remove a Cat from Favorites
+## UC-02: Guardar un Gato en Favoritos
 
-**Goal:** Remove a cat from the favorites list.
-**Trigger:** User clicks the Trash button on a card in `FavouriteCatList`.
+**Objetivo:** Persistir una imagen de gato como favorita personal.
+**Activador:** El usuario hace clic en el botón de Corazón en una `CatCard`.
 
-**Main Flow:**
+**Precondición:** La lista de gatos aleatorios está cargada. El gato NO está ya en `favourites[]`.
 
-1. User views the `FavouriteCatList` section.
-2. User hovers a card → Trash icon (`BsTrash`) appears.
-3. User clicks trash icon.
-4. `useCats.deleteFavouriteCat(cat)` dispatches `deleteCat` thunk.
+**Flujo Principal:**
+
+1. El usuario pasa el ratón sobre `CatCard` → aparece el overlay con `CatCardFooter`.
+2. El botón de contorno de corazón (`BsHeart`) es visible y está habilitado.
+3. El usuario hace clic en el botón de corazón.
+4. `handleAction` en `CatCard` previene el comportamiento por defecto y llama a `onAction(cat)`.
+5. `useCats.saveFavouriteCat(cat)` dispara el thunk `saveCat`.
+6. Thunk: POST `/favourites` con `{ image_id: cat.id }`.
+7. Respuesta: `{ id: <nuevo favouriteId>, message: "SUCCESS" }`.
+8. Redux se desarrolla: el gato se añade a `favourites[]`, se asigna el `favouriteId`.
+9. El botón de corazón se vuelve sólido (`BsFillHeartFill`, rojo, `disabled=true`).
+10. `react-hot-toast` muestra "Cat saved to favourites!".
+
+**Regla de Estado Deshabilitado:** Después de guardar, el botón de corazón permanece deshabilitado — solo se rehabilita cuando el usuario elimina el gato de `FavouriteCatList`.
+
+---
+
+## UC-03: Eliminar un Gato de Favoritos
+
+**Objetivo:** Eliminar un gato de la lista de favoritos.
+**Activador:** El usuario hace clic en el botón de Papelera en una tarjeta de `FavouriteCatList`.
+
+**Flujo Principal:**
+
+1. El usuario visualiza la sección `FavouriteCatList`.
+2. El usuario pasa el ratón sobre una tarjeta → aparece el icono de Papelera (`BsTrash`).
+3. El usuario hace clic en el icono de papelera.
+4. `useCats.deleteFavouriteCat(cat)` dispara el thunk `deleteCat`.
 5. Thunk: DELETE `/favourites/{cat.favouriteId}`.
-6. Redux: card removed from `favourites[]`.
-7. Framer Motion `AnimatePresence` plays exit animation (scale to 0.5 + fade out).
-8. Remaining cards flow smoothly into new positions via `layout` prop.
+6. Redux: la tarjeta se elimina de `favourites[]`.
+7. `AnimatePresence` de Framer Motion reproduce la animación de salida (escala a 0.5 + desvanecimiento).
+8. Las tarjetas restantes fluyen suavemente a sus nuevas posiciones vía la prop `layout`.
 9. Toast: "Cat removed from favourites!".
-10. If list becomes empty → animated empty state message appears.
+10. Si la lista se vacía → aparece un mensaje animado de estado vacío.
 
 ---
 
-## UC-04: Toggle Dark/Light Theme
+## UC-04: Cambiar Tema Oscuro/Claro
 
-**Goal:** Switch between dark and light color scheme.
-**Trigger:** User clicks Moon/Sun `IconButton` in the sticky header.
+**Objetivo:** Cambiar entre el esquema de colores oscuro y claro.
+**Activador:** El usuario hace clic en el `IconButton` de Luna/Sol en el encabezado fijo.
 
-**Main Flow:**
+**Flujo Principal:**
 
-1. User clicks theme toggle.
-2. `useTheme.toggleTheme()` fires.
-3. Redux toggles `theme.mode` between `"light"` and `"dark"`.
-4. `useAppearance` detects change → adds/removes `dark` CSS class on `<html>`.
-5. All Tailwind CSS v4 semantic tokens (`bg-background`, `text-foreground`, etc.) instantly reflect the new theme.
-6. Preference saved to LocalStorage key `theme`.
+1. El usuario hace clic en el interruptor de tema.
+2. Se dispara `useTheme.toggleTheme()`.
+3. Redux alterna `theme.mode` entre `"light"` y `"dark"`.
+4. `useAppearance` detecta el cambio → añade/elimina la clase CSS `dark` en `<html>`.
+5. Todos los tokens semánticos de Tailwind CSS v4 (`bg-background`, `text-foreground`, etc.) reflejan instantáneamente el nuevo tema.
+6. La preferencia se guarda en LocalStorage con la clave `theme`.
 
 ---
 
-## UC-05: Change Font Family
+## UC-05: Cambiar Familia de Fuentes
 
-**Goal:** Apply a different typography to the application.
-**Trigger:** User selects a font from the `FontDropdown` in the header.
+**Objetivo:** Aplicar una tipografía diferente a la aplicación.
+**Activador:** El usuario selecciona una fuente desde el `FontDropdown` en el encabezado.
 
-**Main Flow:**
+**Flujo Principal:**
 
-1. User opens the `Select` dropdown.
-2. Available fonts are rendered from `font.list` Redux state.
-3. User selects a font (e.g., "Roboto").
-4. `useFont.changeFont("Roboto")` fires.
-5. Redux updates `font.family`.
-6. `useAppearance` detects change → sets `document.body.style.setProperty("--font-family", "Roboto, sans-serif")`.
-7. All text in the app instantly changes typeface.
-8. Preference saved to LocalStorage key `font`.
+1. El usuario abre el desplegable `Select`.
+2. Las fuentes disponibles se renderizan desde el estado `font.list` de Redux.
+3. El usuario selecciona una fuente (ej., "Roboto").
+4. Se dispara `useFont.changeFont("Roboto")`.
+5. Redux actualiza `font.family`.
+6. `useAppearance` detecta el cambio → establece `document.body.style.setProperty("--font-family", "Roboto, sans-serif")`.
+7. Todo el texto de la aplicación cambia instantáneamente de tipografía.
+8. La preferencia se guarda en LocalStorage con la clave `font`.

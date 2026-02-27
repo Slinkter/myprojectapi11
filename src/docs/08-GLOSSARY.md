@@ -1,79 +1,79 @@
-# Technical Glossary
+# Glosario Técnico
 
-## Architecture & Patterns
+## Arquitectura y Patrones
 
 **Feature-Sliced Design (FSD)**
-An architectural methodology where code is organized by **business domain** (e.g., cats, theme, font) rather than technical role (components, reducers, actions). Each feature is self-contained with its own API client, mapper, hooks, and UI.
+Una metodología arquitectónica donde el código se organiza por **dominio de negocio** (ej., gatos, tema, fuente) en lugar de por rol técnico (componentes, reductores, acciones). Cada característica es autónoma con su propio cliente API, mapper, hooks y UI.
 
-**Facade Pattern**
-A structural design pattern providing a simplified interface over complex subsystems. In this project, `useCats()`, `useTheme()`, and `useFont()` are Facades — components call `saveFavouriteCat(cat)` without knowing anything about Redux or Axios.
+**Patrón Fachada (Facade Pattern)**
+Un patrón de diseño estructural que proporciona una interfaz simplificada sobre subsistemas complejos. En este proyecto, `useCats()`, `useTheme()` y `useFont()` son Fachadas — los componentes llaman a `saveFavouriteCat(cat)` sin saber nada sobre Redux o Axios.
 
-**Adapter / Anti-Corruption Layer**
-Code that transforms data from an external format into the application's internal format. `catMapper.js` is the Adapter: it converts `RawApiCat` and `RawFavouriteCat` from TheCatAPI into `CatEntity` used throughout the app.
+**Adaptador / Capa Anti-Corrupción (Adapter / Anti-Corruption Layer)**
+Código que transforma datos de un formato externo al formato interno de la aplicación. `catMapper.js` es el Adaptador: convierte `RawApiCat` y `RawFavouriteCat` de TheCatAPI en la `CatEntity` utilizada en toda la aplicación.
 
-**Container Component (Smart)**
-A React component responsible for data fetching and state connection. Example: `RandomCatList.jsx` — connects to `useCats`, handles `useEffect`, and passes data down.
+**Componente Contenedor (Smart Component)**
+Un componente de React responsable de la obtención de datos y la conexión del estado. Ejemplo: `RandomCatList.jsx` — se conecta a `useCats`, maneja `useEffect` y pasa los datos hacia abajo.
 
-**Presentational Component (Dumb)**
-A React component that only renders UI based on props. Example: `CatList.jsx`, `CatCard.jsx` — no Redux, no Axios, no side effects.
+**Componente Presentacional (Dumb Component)**
+Un componente de React que solo renderiza UI basado en props. Ejemplo: `CatList.jsx`, `CatCard.jsx` — sin Redux, sin Axios, sin efectos secundarios.
 
 **Thunk**
-A Redux middleware function for async logic. Created with `createAsyncThunk` from Redux Toolkit. Examples: `fetchRandomCats`, `saveCat`, `deleteCat`. They handle pending/fulfilled/rejected states automatically.
+Una función middleware de Redux para lógica asíncrona. Creada con `createAsyncThunk` de Redux Toolkit. Ejemplos: `fetchRandomCats`, `saveCat`, `deleteCat`. Manejan automáticamente los estados pending/fulfilled/rejected.
 
-**Memoization**
-Caching an expensive computation result. Used in this project via:
+**Memoización**
+Almacenamiento en caché del resultado de un cálculo costoso. Utilizado en este proyecto a través de:
 
-- `React.memo(CatCard)` — prevents re-render if props unchanged.
-- `useMemo(...)` — caches derived values (e.g., the favorite ID Set).
-- `useCallback(...)` — caches function references for stable prop passing.
+- `React.memo(CatCard)` — evita el re-renderizado si las props no cambian.
+- `useMemo(...)` — almacena en caché valores derivados (ej., el Set de IDs de favoritos).
+- `useCallback(...)` — almacena en caché referencias de funciones para un paso de props estable.
 
-**Path Alias**
-A Vite shortcut replacing long relative paths. `@features/cats/hooks/useCats` instead of `../../../../features/cats/hooks/useCats`.
+**Alias de Ruta (Path Alias)**
+Un atajo de Vite que reemplaza rutas relativas largas. `@features/cats/hooks/useCats` en lugar de `../../../../features/cats/hooks/useCats`.
 
 ---
 
-## Domain Terms
+## Términos de Dominio
 
 **CatEntity**
-The standardized internal representation of a cat. Properties:
+La representación interna estandarizada de un gato. Propiedades:
 
-- `id: string` — TheCatAPI image ID.
-- `url: string` — Direct URL to the image.
-- `favouriteId: number | null` — The remote favourite record ID, or `null` if not saved.
+- `id: string` — ID de imagen de TheCatAPI.
+- `url: string` — URL directa a la imagen.
+- `favouriteId: number | null` — El ID del registro favorito remoto, o `null` si no está guardado.
 
 **TheCatAPI**
-External REST API at `https://api.thecatapi.com/v1`. Used for fetching random images and managing favourites. Requires a free API key.
+API REST externa en `https://api.thecatapi.com/v1`. Utilizada para obtener imágenes aleatorias y gestionar favoritos. Requiere una clave API gratuita.
 
 **`VITE_BASE_URL` / `VITE_API_KEY`**
-Required environment variables stored in `.env`. The `VITE_` prefix is mandatory for Vite to expose them to browser code via `import.meta.env`.
+Variables de entorno requeridas almacenadas en `.env`. El prefijo `VITE_` es obligatorio para que Vite las exponga al código del navegador a través de `import.meta.env`.
 
-**Favourite Record**
-A server-side record in TheCatAPI linking a user to a cat image. Has its own unique `id` (`favouriteId`) separate from the image `id`. Must use `favouriteId` to delete a favourite.
+**Registro de Favorito (Favourite Record)**
+Un registro del lado del servidor en TheCatAPI que vincula a un usuario con una imagen de gato. Tiene su propio `id` único (`favouriteId`) separado del `id` de la imagen. Se debe usar el `favouriteId` para eliminar un favorito.
 
 ---
 
-## UI/UX Terms
+## Términos de UI/UX
 
-**Skeleton Screen**
-A placeholder UI that mimics the structural layout of content that is loading. Prevents layout shift (CLS) when the real content renders.
+**Pantalla Skeleton (Skeleton Screen)**
+Una interfaz de usuario de marcador de posición que imita el diseño estructural del contenido que se está cargando. Previene el salto de diseño (CLS) cuando el contenido real se renderiza.
 
 **CLS (Cumulative Layout Shift)**
-A Core Web Vitals metric measuring visual instability. A score of `0.0` means content never jumps when loaded. This project achieves `0.0` by ensuring Skeleton dimensions exactly match real card dimensions.
+Una métrica de Core Web Vitals que mide la inestabilidad visual. Una puntuación de `0.0` significa que el contenido nunca salta cuando se carga. Este proyecto logra un `0.0` asegurando que las dimensiones del Skeleton coincidan exactamente con las dimensiones reales de la tarjeta.
 
 **AnimatePresence (Framer Motion)**
-A Framer Motion component that enables exit animations. Without it, React would remove DOM elements instantly — with it, items can animate out gracefully before being removed.
+Un componente de Framer Motion que permite animaciones de salida. Sin él, React eliminaría los elementos del DOM instantáneamente — con él, los elementos pueden animarse hacia afuera elegantemente antes de ser eliminados.
 
-**`layout` prop (Framer Motion)**
-When added to a `<motion.div>`, tells Framer Motion to animate the element's position and size changes automatically. Used on the card grid so cards smoothly fill gaps after one is deleted.
+**Prop `layout` (Framer Motion)**
+Cuando se añade a un `<motion.div>`, le indica a Framer Motion que anime automáticamente los cambios de posición y tamaño del elemento. Se usa en la cuadrícula de tarjetas para que estas se deslicen suavemente y llenen los huecos después de eliminar una.
 
 **Toast**
-A brief, auto-dismissing notification. This project uses `react-hot-toast` for success and error feedback on API operations.
+Una notificación breve que se descarta automáticamente. Este proyecto utiliza `react-hot-toast` para el feedback de éxito y error en las operaciones de la API.
 
-**Semantic Token**
-A Tailwind CSS v4 variable name tied to a concept rather than a specific color (e.g., `bg-muted` rather than `bg-gray-100`). Semantic tokens automatically switch value when the app theme changes.
+**Token Semántico**
+Un nombre de variable de Tailwind CSS v4 vinculado a un concepto en lugar de a un color específico (ej., `bg-muted` en lugar de `bg-gray-100`). Los tokens semánticos cambian automáticamente su valor cuando cambia el tema de la aplicación.
 
-**`cn` Utility (clsx + tailwind-merge)**
-A custom shared utility function located at `src/shared/utils/cn.js`. It uses `clsx` to construct CSS class strings conditionally and `tailwind-merge` to safely resolve Tailwind CSS conflicts (e.g., ensuring `p-4` overrides `p-2` instead of both being applied). Used extensively in this project to avoid complex template literals in JSX.
+**Utilidad `cn` (clsx + tailwind-merge)**
+Una función de utilidad compartida personalizada ubicada en `src/shared/utils/cn.js`. Utiliza `clsx` para construir cadenas de clases CSS condicionalmente y `tailwind-merge` para resolver de forma segura los conflictos de Tailwind CSS (ej., asegurando que `p-4` anule a `p-2` en lugar de que ambos se apliquen). Se usa extensamente en este proyecto para evitar plantillas literales complejas en JSX.
 
-**Dark Mode**
-A color scheme where backgrounds are dark and text is light. Implemented by toggling the `dark` CSS class on `<html>` via `useAppearance`.
+**Modo Oscuro**
+Un esquema de colores donde los fondos son oscuros y el texto es claro. Implementado alternando la clase CSS `dark` en `<html>` a través de `useAppearance`.

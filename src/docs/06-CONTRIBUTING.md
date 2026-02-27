@@ -1,24 +1,24 @@
-# Contributing & Development Standards
+# Estándares de Contribución y Desarrollo
 
-## 1. Tech Stack (Read Before Coding)
+## 1. Stack Tecnológico (Leer Antes de Programar)
 
-| Tool            | Version | Note                       |
+| Herramienta            | Versión | Nota                       |
 | --------------- | ------- | -------------------------- |
-| Node.js         | 18+     | Required                   |
-| Package manager | pnpm    | **Not npm or yarn**        |
-| React           | 19.2.3  | Uses automatic JSX runtime |
-| Vite            | 7.3.0   | Dev server and bundler     |
-| Tailwind        | v4.1.18 | Different config than v3   |
+| Node.js         | 18+     | Requerido                   |
+| Gestor de paquetes | pnpm    | **Ni npm ni yarn**        |
+| React           | 19.2.3  | Usa runtime automático de JSX |
+| Vite            | 7.3.0   | Servidor de desarrollo y empaquetador     |
+| Tailwind        | v4.1.18 | Configuración diferente a la v3   |
 
 ---
 
-## 2. Code Style
+## 2. Estilo de Código
 
-- **Language:** JavaScript (ES6+). No TypeScript — but 100% JSDoc typing required.
-- **Formatting:** Prettier (default settings).
-- **Linting:** ESLint — **0 warnings allowed** in CI and production builds.
+- **Lenguaje:** JavaScript (ES6+). Sin TypeScript — pero se requiere 100% de tipado con JSDoc.
+- **Formateo:** Prettier (ajustes por defecto).
+- **Linting:** ESLint — **0 advertencias permitidas** en compilaciones de CI y producción.
 
-Run lint before pushing:
+Ejecuta lint antes de subir cambios:
 
 ```bash
 pnpm run lint
@@ -26,52 +26,52 @@ pnpm run lint
 
 ---
 
-## 3. Naming Conventions (Strict)
+## 3. Convenciones de Nombres (Estricto)
 
-### Files & Directories
+### Archivos y Directorios
 
-| Type             | Convention                          | Example          |
+| Tipo             | Convención                          | Ejemplo          |
 | ---------------- | ----------------------------------- | ---------------- |
-| Components       | `PascalCase.jsx`                    | `CatCard.jsx`    |
-| Hooks            | `use` prefix, `camelCase.js`        | `useCats.js`     |
-| Services         | `camelCase.js`                      | `catService.js`  |
-| Mappers/Adapters | `camelCase.js` with `Mapper` suffix | `catMapper.js`   |
-| Redux slices     | `camelCase.js` with `Slice` suffix  | `catsSlice.js`   |
-| Directories      | `camelCase`                         | `subcomponents/` |
+| Componentes       | `PascalCase.jsx`                    | `CatCard.jsx`    |
+| Hooks            | prefijo `use`, `camelCase.js`        | `useCats.js`     |
+| Servicios         | `camelCase.js`                      | `catService.js`  |
+| Mappers/Adapters | `camelCase.js` con sufijo `Mapper` | `catMapper.js`   |
+| Slices de Redux     | `camelCase.js` con sufijo `Slice`  | `catsSlice.js`   |
+| Directorios      | `camelCase`                         | `subcomponents/` |
 
-### Variables & Types
+### Variables y Tipos
 
-| Type                | Convention                     | Example                 |
+| Tipo                | Convención                     | Ejemplo                 |
 | ------------------- | ------------------------------ | ----------------------- |
 | Variables           | `camelCase`                    | `randomCats`            |
-| Booleans            | `is`, `has`, `should` prefix   | `isLoading`, `hasError` |
-| Domain entities     | `PascalCase` + `Entity` suffix | `CatEntity`             |
-| Facade return types | `PascalCase` + `Facade` suffix | `UseCatsFacade`         |
+| Booleanos            | prefijos `is`, `has`, `should`   | `isLoading`, `hasError` |
+| Entidades de dominio     | `PascalCase` + sufijo `Entity` | `CatEntity`             |
+| Tipos de retorno de Fachada | `PascalCase` + sufijo `Facade` | `UseCatsFacade`         |
 
 ---
 
-## 4. JSDoc Standard (Mandatory)
+## 4. Estándar JSDoc (Obligatorio)
 
-All exported functions, hooks, types, and component props **must** be documented.
+Todas las funciones, hooks, tipos y props de componentes exportados **deben** estar documentados.
 
-### Rule 1 — Never use generic `@param {object}` for domain data
+### Regla 1 — Nunca usar `@param {object}` genérico para datos de dominio
 
-❌ Wrong:
+❌ Incorrecto:
 
 ```jsx
 /**  @param {object} props.cat */
 ```
 
-✅ Correct:
+✅ Correcto:
 
 ```jsx
 /**
  * @typedef {import('../adapters/catMapper').CatEntity} CatEntity
  */
-/**  @param {CatEntity} props.cat - The normalized cat domain entity. */
+/**  @param {CatEntity} props.cat - La entidad de dominio de gato normalizada. */
 ```
 
-### Rule 2 — Type all Facade return values
+### Regla 2 — Tipar todos los valores de retorno de la Fachada
 
 ```javascript
 /**
@@ -88,13 +88,13 @@ All exported functions, hooks, types, and component props **must** be documented
  */
 
 /**
- * Facade hook for cat operations.
+ * Hook de fachada para operaciones de gatos.
  * @returns {UseCatsFacade}
  */
 export const useCats = () => { ... };
 ```
 
-### Rule 3 — Type React event handlers explicitly
+### Regla 3 — Tipar los manejadores de eventos de React explícitamente
 
 ```jsx
 /** @param {import('react').MouseEventHandler<HTMLButtonElement>} props.onClick */
@@ -103,52 +103,52 @@ export const useCats = () => { ... };
 
 ---
 
-## 5. Architecture Rules
+## 5. Reglas de Arquitectura
 
-| Rule                                         | Why                                                 |
+| Regla                                         | Por Qué                                                 |
 | -------------------------------------------- | --------------------------------------------------- |
-| No `fetch()` in components                   | Use `catApi.js` → `catService.js`                   |
-| No raw API data in components                | Must pass through `catMapper.js` first              |
-| No `useSelector`/`useDispatch` in components | Use facade hooks                                    |
-| No cross-feature imports                     | `theme` must not import from `cats`                 |
-| No hardcoded colors in Tailwind              | Use semantic tokens (`bg-muted`, not `bg-gray-200`) |
-| Avoid manual logic in `className`            | Use the `@shared/utils/cn` utility for all classes  |
+| Sin `fetch()` en componentes                   | Usar `catApi.js` → `catService.js`                   |
+| Sin datos crudos de API en componentes                | Deben pasar primero por `catMapper.js`              |
+| Sin `useSelector`/`useDispatch` en componentes | Usar hooks de fachada                                    |
+| Sin importaciones cruzadas entre features                     | `theme` no debe importar desde `cats`                 |
+| Sin colores fijos en Tailwind              | Usar tokens semánticos (`bg-muted`, no `bg-gray-200`) |
+| Evitar lógica manual en `className`            | Usar la utilidad `@shared/utils/cn` para todas las clases  |
 
 ---
 
-## 6. Git Workflow
+## 6. Flujo de Trabajo de Git
 
 ```bash
-# Branches
-main        ← Production-ready, never push directly
-develop     ← Integration branch
-feature/... ← New features
-fix/...     ← Bug fixes
-refactor/...← Refactoring, no new features
-docs/...    ← Documentation-only changes
+# Ramas
+main        ← Lista para producción, nunca subir cambios directamente
+develop     ← Rama de integración
+feature/... ← Nuevas funcionalidades
+fix/...     ← Corrección de errores
+refactor/...← Refactorización, sin nuevas funcionalidades
+docs/...    ← Cambios solo en documentación
 ```
 
-### Commit Message Format (Conventional Commits)
+### Formato de Mensaje de Commit (Commits Convencionales)
 
 ```
-feat: add cat tagging feature
-fix: resolve double-save bug on heart click
-refactor: extract catMapper to adapters layer
-docs: update 04-ARCHITECTURE with data flow diagram
-style: align button padding to design system
+feat: añadir funcionalidad de etiquetado de gatos
+fix: resolver error de guardado doble al hacer clic en el corazón
+refactor: extraer catMapper a la capa de adaptadores
+docs: actualizar 04-ARQUITECTURA con diagrama de flujo de datos
+style: alinear el padding de los botones al sistema de diseño
 ```
 
 ---
 
-## 7. Deployment
+## 7. Despliegue
 
 ```bash
-# Deploys to GitHub Pages
+# Despliega en GitHub Pages
 pnpm run deploy
 ```
 
-- Runs `vite build` → output in `./dist/`
-- Then uses `gh-pages -d dist` to push to `gh-pages` branch.
-- Live at: https://slinkter.github.io/myprojectapi11
+- Ejecuta `vite build` → salida en `./dist/`
+- Luego usa `gh-pages -d dist` para subir a la rama `gh-pages`.
+- En vivo en: https://slinkter.github.io/myprojectapi11
 
-**Before deploying:** Confirm `base` in `vite.config.js` matches your GitHub Pages URL.
+**Antes de desplegar:** Confirma que el `base` en `vite.config.js` coincida con tu URL de GitHub Pages.

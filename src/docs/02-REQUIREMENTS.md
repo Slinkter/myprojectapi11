@@ -1,112 +1,81 @@
-# System Requirements
+# Requisitos del Sistema
 
-## 1. Functional Requirements (FR)
+## 1. Requisitos Funcionales (FR)
 
-### FR-01: Browse Random Cats
+### FR-01: Explorar Gatos Aleatorios
 
-**Description:** Display a grid of random cat images fetched from TheCatAPI.
+**Descripción:** Mostrar una cuadrícula de imágenes aleatorias de gatos obtenidas de TheCatAPI.
 
-| Acceptance Criteria | Detail                                                                            |
+| Criterios de Aceptación | Detalle                                                                            |
 | ------------------- | --------------------------------------------------------------------------------- |
-| Show loading state  | `SkeletonGrid` must appear — same grid columns and card size as the final content |
-| Animate on arrival  | Cards enter with scale + fade via Framer Motion                                   |
-| Handle API errors   | Show `CatErrorHandler` with retry button                                          |
-| No duplicate logic  | API calls go through `catApi.js → catMapper.js → catService.js` only              |
+| Mostrar estado de carga  | Debe aparecer `SkeletonGrid` — mismas columnas y tamaño de tarjeta que el contenido final |
+| Animar al llegar  | Las tarjetas entran con escala + desvanecimiento vía Framer Motion                                   |
+| Manejar errores de API   | Mostrar `CatErrorHandler` con botón de reintento                                          |
+| Sin lógica duplicada  | Las llamadas a la API pasan solo por `catApi.js → catMapper.js → catService.js`              |
 
-### FR-02: Favorites Management
+### FR-02: Gestión de Favoritos
 
-**Description:** Users save and remove favorite cats via TheCatAPI's `/favourites` endpoint.
+**Descripción:** Los usuarios guardan y eliminan gatos favoritos a través del endpoint `/favourites` de TheCatAPI.
 
-| Acceptance Criteria  | Detail                                                                        |
+| Criterios de Aceptación  | Detalle                                                                        |
 | -------------------- | ----------------------------------------------------------------------------- |
-| Heart icon saves     | `saveCat` thunk: POST `/favourites` with `image_id`                           |
-| Trash icon removes   | `deleteCat` thunk: DELETE `/favourites/{favouriteId}`                         |
-| Duplicate prevention | Memoized `Set` lookup (`O(1)`) in `RandomCatList`                             |
-| Disabled state       | Heart button disabled (filled, red) after saving — re-enables only if removed |
-| Toast feedback       | react-hot-toast on success and failure                                        |
+| Icono de corazón guarda     | Thunk `saveCat`: POST `/favourites` con `image_id`                           |
+| Icono de papelera elimina   | Thunk `deleteCat`: DELETE `/favourites/{favouriteId}`                         |
+| Prevención de duplicados | Búsqueda en `Set` memoizada (`O(1)`) en `RandomCatList`                             |
+| Estado deshabilitado       | Botón de corazón deshabilitado (lleno, rojo) tras guardar — se rehabilita solo si se elimina |
+| Feedback con Toast       | react-hot-toast en éxito y error                                        |
 
-### FR-03: Theme Customization
+### FR-03: Personalización del Tema
 
-| Acceptance Criteria  | Detail                                        |
+| Criterios de Aceptación  | Detalle                                        |
 | -------------------- | --------------------------------------------- |
-| Toggle switch        | Sun/Moon `IconButton` in header               |
-| LocalStorage persist | `useAppearance` reads preference on mount     |
-| DOM update           | Adds/removes `dark` class on `<html>` element |
+| Interruptor de cambio        | `IconButton` de Sol/Luna en el encabezado               |
+| Persistencia en LocalStorage | `useAppearance` lee la preferencia al montar     |
+| Actualización del DOM           | Añade/elimina la clase `dark` en el elemento `<html>` |
 
-### FR-04: Typography Customization
+### FR-04: Personalización de Tipografía
 
-| Acceptance Criteria  | Detail                                                  |
+| Criterios de Aceptación  | Detalle                                                  |
 | -------------------- | ------------------------------------------------------- |
-| Font dropdown        | `Select` component in header populated from font `list` |
-| Instant apply        | Updates `--font-family` CSS variable on `<body>`        |
-| LocalStorage persist | persisted by `useAppearance`                            |
+| Desplegable de fuentes        | Componente `Select` en el encabezado poblado desde la lista (`list`) de fuentes |
+| Aplicación instantánea        | Actualiza la variable CSS `--font-family` en el `<body>`        |
+| Persistencia en LocalStorage | Persistido por `useAppearance`                            |
 
 ---
 
-## 2. Non-Functional Requirements (NFR)
+## 2. Requisitos No Funcionales (NFR)
 
-### NFR-01: Performance
+### NFR-01: Rendimiento
 
-| Metric                        | Target                                                                        |
+| Métrica                        | Objetivo                                                                        |
 | ----------------------------- | ----------------------------------------------------------------------------- |
-| FCP (First Contentful Paint)  | < 1.5s on 4G                                                                  |
-| CLS (Cumulative Layout Shift) | `0.0` — Skeletons must match final card dimensions exactly                    |
-| Code splitting                | `RandomCatList` and `FavouriteCatList` lazy-loaded via `React.lazy`           |
-| Memoization                   | `CatCard` wrapped in `React.memo`; `useCats` uses `useMemo` and `useCallback` |
+| FCP (First Contentful Paint)  | < 1.5s en 4G                                                                  |
+| CLS (Cumulative Layout Shift) | `0.0` — Los Skeletons deben coincidir exactamente con las dimensiones finales de la tarjeta                    |
+| División de código (Code splitting)                | `RandomCatList` y `FavouriteCatList` cargados perezosamente vía `React.lazy`           |
+| Memoización                   | `CatCard` envuelto en `React.memo`; `useCats` usa `useMemo` y `useCallback` |
 
-### NFR-02: Usability
+### NFR-02: Usabilidad
 
-| Requirement   | Detail                                                      |
+| Requisito   | Detalle                                                      |
 | ------------- | ----------------------------------------------------------- |
-| Responsive    | Works on 320px (mobile) through 1440px+ (desktop)           |
-| Accessibility | All interactive elements have `aria-label`                  |
-| Keyboard nav  | Buttons are focusable, visible focus ring                   |
-| Animations    | Smooth entrance + exit with Framer Motion `AnimatePresence` |
+| Responsivo    | Funciona desde 320px (móvil) hasta 1440px+ (escritorio)           |
+| Accesibilidad | Todos los elementos interactivos tienen `aria-label`                  |
+| Navegación por teclado  | Los botones son enfocables, con anillo de enfoque visible                   |
+| Animaciones    | Entrada + salida suaves con `AnimatePresence` de Framer Motion |
 
-### NFR-03: Code Architecture
+### NFR-03: Arquitectura de Código
 
-| Requirement                   | Detail                                                                 |
+| Requisito                   | Detalle                                                                 |
 | ----------------------------- | ---------------------------------------------------------------------- |
-| No direct API calls in UI     | Must go through `catService.js`                                        |
-| No raw API data in components | Must go through `catMapper.js`                                         |
-| No Redux in UI                | Must go through facade hook                                            |
-| 100% JSDoc                    | All exported functions, hooks, types must have `@typedef` and `@param` |
-| Tailwind v4 semantic tokens   | Use `bg-muted`, `text-foreground` — never hardcode `bg-gray-200`       |
+| Sin llamadas directas a API en UI     | Deben pasar por `catService.js`                                        |
+| Sin datos crudos de API en componentes | Deben pasar por `catMapper.js`                                         |
+| Sin Redux en UI                | Debe pasar por el hook de fachada (facade)                                            |
+| 100% JSDoc                    | Todas las funciones, hooks y tipos exportados deben tener `@typedef` y `@param` |
+| Tokens semánticos de Tailwind v4   | Usar `bg-muted`, `text-foreground` — nunca valores fijos como `bg-gray-200`       |
 
-### NFR-04: Environment
+### NFR-04: Entorno
 
-| Requirement               | Detail                                                           |
+| Requisito               | Detalle                                                           |
 | ------------------------- | ---------------------------------------------------------------- |
-| `.env` required variables | `VITE_BASE_URL`, `VITE_API_KEY`                                  |
-| Validation on boot        | `src/config/env.js` validates on load and logs errors if missing |
-
----
-
-## 3. Use Cases
-
-### UC-1: Save a Cat
-
-1. Random cat list is loaded (`CatEntity[]` in store).
-2. User hovers over a `CatCard` → overlay with heart button appears.
-3. User clicks heart → `useCats.saveFavouriteCat(cat)` called.
-4. `saveCat` thunk POSTs to API → receives new `favouriteId`.
-5. Redux state updated: cat added to `favourites[]`.
-6. Heart button becomes filled red and disabled in `RandomCatList`.
-7. Toast: "Cat saved to favourites!" shown.
-
-### UC-2: Remove a Favorite
-
-1. User views `FavouriteCatList`.
-2. User clicks trash icon on a card.
-3. `useCats.deleteFavouriteCat(cat)` called.
-4. `deleteCat` thunk DELETEs `/favourites/{cat.favouriteId}`.
-5. Redux: cat removed from `favourites[]` with Framer Motion exit animation.
-6. Toast: "Cat removed from favourites!" shown.
-
-### UC-3: Toggle Theme
-
-1. User clicks Moon/Sun icon.
-2. `useTheme.toggleTheme()` dispatches action.
-3. `useAppearance` effect runs → toggles `dark` class on `<html>`.
-4. All Tailwind semantic tokens instantly reflect new theme.
-5. Preference saved to LocalStorage.
+| Variables `.env` requeridas | `VITE_BASE_URL`, `VITE_API_KEY`                                  |
+| Validación al iniciar        | `src/config/env.js` valida al cargar y registra errores si faltan |
