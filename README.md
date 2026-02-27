@@ -1,6 +1,7 @@
 # Galería de Gatos — Arquitectura Limpia ✨
 
 [![Demostración en Vivo](https://img.shields.io/badge/demo-live-brightgreen)](https://slinkter.github.io/myprojectapi11)
+[![CI/CD](https://github.com/Slinkter/myprojectapi11/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/Slinkter/myprojectapi11/actions/workflows/ci-cd.yml)
 [![Licencia: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![React](https://img.shields.io/badge/react-19.2.3-%2320232a.svg?style=flat&logo=react&logoColor=%2361DAFB)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/vite-7.3.0-%23646CFF.svg?style=flat&logo=vite&logoColor=white)](https://vitejs.dev/)

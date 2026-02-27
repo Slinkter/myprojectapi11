@@ -25,9 +25,30 @@ pnpm run dev   # Start dev server at http://localhost:5173
 | `pnpm run build` | Production build to `./dist` |
 | `pnpm run preview` | Preview production build locally |
 | `pnpm run lint` | Run ESLint with 0 warnings policy |
-| `pnpm run deploy` | Build + deploy to GitHub Pages |
+| `pnpm run deploy` | ~~DEPRECATED~~ Use GitHub Actions instead |
 
 **Note:** There are currently **no tests** configured in this project. Do not add test frameworks without consulting the user first.
+
+---
+
+## GitHub Actions (CI/CD)
+
+The project uses GitHub Actions for continuous integration and deployment.
+
+### Workflow: `.github/workflows/ci-cd.yml`
+
+| Trigger | Action |
+|---------|--------|
+| Push to `main` | Run lint + build → Deploy to GitHub Pages |
+| Push to `develop` | Run lint + build (no deploy) |
+| Pull Request to `main` | Run lint + build (branch protection) |
+
+### Deployment Rules
+
+- **Only `main` branch triggers deployment**
+- **Lint must pass** before build runs
+- **Build must pass** before deployment
+- **Pull Requests** run CI but never deploy
 
 ---
 
