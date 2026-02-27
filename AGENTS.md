@@ -133,11 +133,29 @@ src/
 │       └── components/     # Feature-specific UI
 ├── shared/
 │   ├── ui/        # Reusable primitives (Button, Select)
-│   ├── hooks/     # Shared hooks (useAppearance)
-│   ├── components/# Shared components (SkeletonCard)
+│   ├── hooks/     # Shared hooks (useAppearance, usePageTitle)
+│   ├── components/# Shared components (ErrorBoundary, Skeletons)
 │   └── utils/     # Utilities (cn.js)
 └── App.jsx        # Root layout component
 ```
+
+---
+
+## Key Features Implemented
+
+### Error Handling
+- **ErrorBoundary**: Catches React errors with fallback UI and retry button
+- **CatErrorHandler**: Displays API errors with retry functionality
+
+### Performance Optimizations
+- **Data Prefetching**: `usePreloadCats` loads data before components mount
+- **Lazy Loading**: Components loaded via `React.lazy()` + `Suspense`
+- **Separate Skeletons**: `RandomCatListSkeleton` (6 items) and `FavouriteCatListSkeleton` (4 items)
+- **Memoization**: `useMemo`, `useCallback`, `React.memo` where appropriate
+
+### UI/UX Improvements
+- **Favicon**: Custom cat SVG icon (`/public/cat.svg`)
+- **Consistent Buttons**: Round black buttons with white icons for favorites
 
 ---
 
@@ -195,3 +213,16 @@ VITE_API_KEY=your_api_key_here
 - Dev server: `http://localhost:5173`
 - Production build: `./dist`
 - Deployed URL: `https://slinkter.github.io/myprojectapi11`
+
+---
+
+## Recent Changes (2026)
+
+| Date | Change |
+|------|--------|
+| Feb 2026 | Added ErrorBoundary component |
+| Feb 2026 | Implemented usePreloadCats for data prefetching |
+| Feb 2026 | Added separate skeletons for each list |
+| Feb 2026 | Updated button styles (round black buttons) |
+| Feb 2026 | Added custom cat favicon |
+| Feb 2026 | Updated all JSDoc comments with examples |

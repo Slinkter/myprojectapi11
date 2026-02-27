@@ -2,6 +2,7 @@
  * @file Hook to preload cat data on app initialization.
  * @description Fetches data immediately when the app starts,
  * before components mount, preventing layout shift.
+ * Loads random cats first, then favourites.
  */
 
 import { useEffect, useRef } from "react";
@@ -23,8 +24,10 @@ export const usePreloadCats = () => {
     useEffect(() => {
         if (!hasPreloaded.current) {
             hasPreloaded.current = true;
-            dispatch(fetchRandomCats());
-            dispatch(fetchFavouriteCats());
+            // Load random first, then favourites after random completes
+            dispatch(fetchRandomCats()).then(() => {
+                dispatch(fetchFavouriteCats());
+            });
         }
     }, [dispatch]);
 

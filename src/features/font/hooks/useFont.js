@@ -1,37 +1,50 @@
 /**
- * @file Custom Hook para gestionar el estado de la fuente.
- * @description Abstrae la interacción con el store de Redux para la fuente,
- * proveyendo la familia actual, la lista de fuentes y una función para cambiarla.
+ * @file Hook to manage application font state.
+ * @description Provides access to the current font family, list of available
+ * fonts, and a function to change the active font.
  */
+
 import { useDispatch, useSelector } from "react-redux";
 import { changeFont as changeFontAction } from "@features/font/redux/fontSlice";
 
 /**
- * @typedef {import("../redux/fontSlice").Font} Font
+ * @typedef {Object} Font
+ * @property {string} family - CSS font-family value.
+ * @property {string} name - Display name for the font.
  */
 
 /**
  * @typedef {Object} UseFontFacade
- * @property {string} font - La familia fuente activa (ej. 'inter').
- * @property {Font[]} fonts - Lista de componentes fuente disponibles.
- * @property {function(string): void} changeFont - Emite un cambion de fuente.
+ * @property {string} font - Currently active font family (e.g., 'Inter').
+ * @property {Font[]} fonts - List of all available fonts.
+ * @property {function(string): void} changeFont - Function to set a new font family.
  */
 
 /**
- * Hook `useFont` para acceder al estado de la fuente y modificarlo.
- * @returns {UseFontFacade} Fachada que controla datos fontales del DOM.
+ * Facade hook for font state management.
+ * 
+ * @returns {UseFontFacade} Object containing font state and change function.
+ * 
+ * @example
+ * const { font, fonts, changeFont } = useFont();
+ * 
+ * return (
+ *     <select value={font} onChange={(e) => changeFont(e.target.value)}>
+ *         {fonts.map(f => <option key={f.family} value={f.family}>{f.name}</option>)}
+ *     </select>
+ * );
  */
 export const useFont = () => {
-  const { family: font, list: fonts } = useSelector((state) => state.font);
-  const dispatch = useDispatch();
+    const { family: font, list: fonts } = useSelector((state) => state.font);
+    const dispatch = useDispatch();
 
-  /**
-   * Despacha la acción para cambiar la fuente.
-   * @param {string} newFontFamily La nueva familia de fuentes a aplicar.
-   */
-  const changeFont = (newFontFamily) => {
-    dispatch(changeFontAction(newFontFamily));
-  };
+    /**
+     * Dispatches action to change the active font.
+     * @param {string} newFontFamily - The new font family to apply.
+     */
+    const changeFont = (newFontFamily) => {
+        dispatch(changeFontAction(newFontFamily));
+    };
 
-  return { font, fonts, changeFont };
+    return { font, fonts, changeFont };
 };
