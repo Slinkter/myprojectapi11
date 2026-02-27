@@ -27,28 +27,34 @@ Es el núcleo de la aplicación. Maneja datos asíncronos de una API externa con
 #### Diagrama Estructural (ASCII):
 
 ```text
+[App.jsx]
+      |
+[usePreloadCats] -> Fetch data on app mount
+      |
 [Vistas/Contenedores]
       RandomCatList / FavouriteCatList
-             |
+              |
 [Presentacionales]
       CatList -> CatCard -> CatCardFooter
-             |
+              |
 [Lógica de Negocio (Facade)]
-          useCats (Hook)
-             |
+           useCats (Hook)
+              |
 [Estado/Persistencia]
       catsSlice (Redux) <-> API (catApi) <-> Mapper (catMapper)
 ```
 
 #### Mapa de Dependencias:
 
-- **`RandomCatList` / `FavouriteCatList`**: Consumen `useCats` para disparar la carga inicial y extraer el estado reactivo (`randomCats`, `favouriteCats`).
-- **`CatList` / `CatCard`**: Son componentes puros (Presentational). Reciben datos y callbacks vía `props`. No conocen a Redux.
-- **`CatCardFooter`**: Usa la utilidad `cn` para orquestar estados visuales complejos basados en las props `disabled` y `actionType`.
+- **`usePreloadCats`**: Hook centralizado que carga los datos al iniciar la app. Carga **Random Cats** primero, luego **Favourites** (orden secuencial para mejor UX).
+- **`RandomCatList` / `FavouriteCatList`**: Componentes puros que solo renderizan datos del store. No disparan cargas.
+- **`CatList` / `CatCard`**: Componentes presentacionales. Reciben datos y callbacks vía `props`. No conocen Redux.
+- **`CatCardFooter`**: Usa la utilidad `cn` para orquestar estados visuales basados en `disabled` y `actionType`.
 
 #### Lógica de Hooks (SOLID):
 
-- **`useCats`**: Actúa como una **Facade**. Su única responsabilidad es orquestar la comunicación entre los componentes y el Store de Redux. Expone una interfaz limpia (API) ocultando la complejidad de los `dispatch`, `useSelector` y `unwrap`.
+- **`useCats`**: Actúa como una **Facade**. Su única responsabilidad es orquestar la comunicación entre los componentes y el Store de Redux. Expone una interfaz limpia ocultando la complejidad de `dispatch`, `useSelector` y `unwrap`.
+- **`usePreloadCats`**: Hook de infraestructura que ejecuta el prefetching de datos. Implementa el patrón **data-on-mount** para evitar layout shift.
 
 ---
 

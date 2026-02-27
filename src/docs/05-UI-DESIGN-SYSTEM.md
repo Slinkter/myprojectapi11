@@ -60,11 +60,16 @@ El diseño prioriza las imágenes de gatos como el elemento visual principal. To
 
 | Estado            | Apariencia                                                                     |
 | :--------------- | :----------------------------------------------------------------------------- |
-| Defecto          | Blanco semitransparente, icono de contorno de corazón                                     |
-| Hover            | Blanco, el texto se vuelve `red-500`                                                    |
-| Deshabilitado (guardado) | Fondo blanco, corazón sólido relleno (`BsFillHeartFill`), `cursor-not-allowed` |
+| Defecto          | Fondo negro redondeado (`rounded-full`, `bg-black/70`), icono blanco                                   |
+| Hover            | Fondo negro (`bg-black`), escala `active:scale-95`                                      |
+| Deshabilitado (guardado) | Fondo negro semitransparente (`bg-black/50`), corazón rojo sólido, `cursor-not-allowed` |
 
 **Visibilidad:** El botón tiene `opacity-0 group-hover:opacity-100` a menos que `disabled=true` (entonces siempre visible).
+
+**Estilo consistente:** Ambos botones (save/delete) usan el mismo diseño:
+- Forma: `rounded-full` (circular)
+- Fondo: `bg-black/70` (negro semitransparente)
+- Icono: blanco, `w-5 h-5`
 
 ### Encabezado y Controles
 
@@ -77,6 +82,11 @@ El diseño prioriza las imágenes de gatos como el elemento visual principal. To
 ### Cargadores Skeleton (Prevención de CLS)
 
 > **Regla:** Los Skeletons deben reflejar las dimensiones estructurales **exactas** y el estilo del contenido que reemplazan para prevenir el Salto de Diseño Acumulado (CLS).
+
+| Skeleton              | Items | Uso                              |
+| :------------------- | :---- | :------------------------------- |
+| `RandomCatListSkeleton` | 6     | Random Kittens (lg:grid-cols-6) |
+| `FavouriteCatListSkeleton` | 4     | Favourite Kittens (lg:grid-cols-4) |
 
 | Propiedad       | `CatCard`              | `SkeletonCard`            |
 | :------------- | :--------------------- | :------------------------ |
@@ -133,13 +143,17 @@ El diseño prioriza las imágenes de gatos como el elemento visual principal. To
 
 ### B. Componentes UI Compartidos
 
+- **`ErrorBoundary`:**
+  - **Responsabilidad:** Componente de clase que captura errores de JavaScript en componentes hijos. Muestra un UI de fallback con mensaje de error y botón de retry. Soporta prop `showDetails` para ver el stack trace.
+  - **Ubicación:** `@shared/components/ErrorBoundary.jsx`
+  - **Uso:** Envuelve componentes que pueden fallar (listas de gatos).
 - **`IconButton`:**
   - **Responsabilidad:** Botón circular optimizado para iconos. Proporciona un estilo consistente (`rounded-full`, `p-2.5`, `border`, `bg-card`, `hover:bg-muted`, `focus:ring-primary/30`), manejo de eventos, `ariaLabel` para accesibilidad, y asegura un tamaño de icono consistente (`w-6 h-6`).
 - **`Select`:**
   - **Responsabilidad:** Un desplegable nativo estilizado con Tailwind CSS, ofreciendo una apariencia uniforme.
-- **Skeleton Loaders (`SkeletonCard`, `SkeletonGrid`, `CatListSkeleton`):**
+- **Skeleton Loaders (`SkeletonCard`, `SkeletonGrid`, `RandomCatListSkeleton`, `FavouriteCatListSkeleton`):**
   - **Responsabilidad:** Proporcionan marcadores de posición visuales durante la carga de contenido para prevenir cambios de diseño (CLS).
-  - **Regla Crucial:** Replican las dimensiones y estructura exactas del contenido que representan (ej. `CatCard`, la cuadrícula de `CatList`).
+  - **Regla Crucial:** Replican las dimensiones y estructura exactas del contenido que representan.
   - **Estándares:** Utilizan Tailwind CSS para espaciado (`gap-6`), formas (`rounded-2xl`, `aspect-square`), animaciones (`animate-pulse`) y colores semánticos (`bg-muted`).
 
 ---
