@@ -1,0 +1,1 @@
+import{j as e}from"./index-BDiOiX5S.js";const o=()=>e.jsxs("div",{className:"relative aspect-square bg-muted rounded-2xl overflow-hidden animate-pulse shadow-sm",children:[e.jsx("div",{className:"absolute top-3 left-3 w-16 h-5 bg-muted-foreground/20 rounded-md"}),e.jsx("div",{className:"absolute bottom-3 right-3 w-11 h-11 bg-muted-foreground/20 rounded-full"})]});export{o as S};

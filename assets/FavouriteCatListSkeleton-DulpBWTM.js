@@ -1,0 +1,1 @@
+import{j as r}from"./index-BDiOiX5S.js";import{S as t}from"./SkeletonCard-De_9aZ_R.js";const i=()=>r.jsx("div",{className:"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6",children:Array.from({length:4}).map((e,o)=>r.jsx(t,{},`favourite-skeleton-${o}`))});export{i as default};
