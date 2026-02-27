@@ -9,6 +9,7 @@ import { m, AnimatePresence, useReducedMotion } from "framer-motion";
 import SkeletonGrid from "@shared/components/skeletons/SkeletonGrid";
 import EmptyState from "@shared/components/EmptyState";
 import CatCard from "./CatCard";
+import { logStart, logState } from "@shared/utils/debugLogger";
 
 /**
  * @typedef {import('../adapters/catMapper').CatEntity} CatEntity
@@ -70,6 +71,8 @@ const gridVariants = {
  * @returns {JSX.Element} The rendered React component.
  */
 const CatList = (props) => {
+    logStart(`CatList "${props.title}"`);
+    logState("CatList", { cats: props.cats?.length || 0, loading: props.loading });
     const shouldReduceMotion = useReducedMotion();
 
     const {

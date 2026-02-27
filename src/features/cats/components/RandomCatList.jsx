@@ -8,6 +8,7 @@
 import { useMemo, useCallback } from "react";
 import { useCats } from "@features/cats/hooks/useCats";
 import CatList from "./CatList";
+import { logStart, logState } from "@shared/utils/debugLogger";
 
 /**
  * @typedef {import('../adapters/catMapper').CatEntity} CatEntity
@@ -19,7 +20,10 @@ import CatList from "./CatList";
  * @returns {JSX.Element} The rendered React component.
  */
 const RandomCatList = () => {
+  logStart("RandomCatList render");
   const { randomCats, favouriteCats, loading, saveFavouriteCat } = useCats();
+
+  logState("RandomCatList", { randomCats: randomCats.length, "loading.random": loading.random });
 
   // Optimization: Memoize favourite IDs in a Set for O(1) lookups.
   const favouriteContext = useMemo(() => {
@@ -37,6 +41,8 @@ const RandomCatList = () => {
     },
     [favouriteContext],
   );
+
+  console.log(`[${new Date().toISOString()}] 📄 RandomCatList: Renderizando CatList con ${randomCats.length} gatos`);
 
   return (
     <CatList

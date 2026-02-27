@@ -7,27 +7,25 @@
 
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    fetchRandomCats,
-    fetchFavouriteCats,
-} from "@features/cats/redux/catsSlice";
+import { fetchRandomCats, fetchFavouriteCats } from "@features/cats/redux/catsSlice";
+import { logAction } from "@shared/utils/debugLogger";
 
 /**
  * Hook to preload cat data at app startup.
  * @returns {Object} Preloading status.
  */
 export const usePreloadCats = () => {
-    const dispatch = useDispatch();
-    const hasPreloaded = useRef(false);
     const { random, favourites, loading } = useSelector((state) => state.cats);
+    const dispatch = useDispatch();
+
+    const hasPreloaded = useRef(false);
 
     useEffect(() => {
         if (!hasPreloaded.current) {
             hasPreloaded.current = true;
-            // Load random first, then favourites after random completes
-            dispatch(fetchRandomCats()).then(() => {
-                dispatch(fetchFavouriteCats());
-            });
+            logAction("🚀 INICIANDO CARGA");
+            dispatch(fetchRandomCats());
+            dispatch(fetchFavouriteCats());
         }
     }, [dispatch]);
 

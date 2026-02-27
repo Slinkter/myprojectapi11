@@ -5,6 +5,7 @@
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { catService } from "../services/catService";
+import { logAction, logEnd } from "@shared/utils/debugLogger";
 
 /**
  * @typedef {import('../adapters/catMapper').CatEntity} CatEntity
@@ -87,59 +88,71 @@ const initialState = {
 const catsSlice = createSlice({
   name: "cats",
   initialState,
-  reducers: {},
+reducers: {},
   extraReducers: (builder) => {
     builder
       // Fetch Random
       .addCase(fetchRandomCats.pending, (state) => {
+        logAction("fetchRandomCats PENDING");
         state.loading.random = true;
         state.error = null;
       })
-.addCase(fetchRandomCats.fulfilled, (state, action) => {
+      .addCase(fetchRandomCats.fulfilled, (state, action) => {
+        logEnd("fetchRandomCats DONE", `${action.payload.length} cats`);
         state.loading.random = false;
         state.random = action.payload;
       })
       .addCase(fetchRandomCats.rejected, (state, action) => {
+        logAction("fetchRandomCats ERROR");
         state.loading.random = false;
         state.error = action.payload;
       })
       // Fetch Favourites
       .addCase(fetchFavouriteCats.pending, (state) => {
+        logAction("fetchFavouriteCats PENDING");
         state.loading.favourites = true;
         state.error = null;
       })
-.addCase(fetchFavouriteCats.fulfilled, (state, action) => {
+      .addCase(fetchFavouriteCats.fulfilled, (state, action) => {
+        logEnd("fetchFavouriteCats DONE", `${action.payload.length} favourites`);
         state.loading.favourites = false;
         state.favourites = action.payload;
       })
       .addCase(fetchFavouriteCats.rejected, (state, action) => {
+        logAction("fetchFavouriteCats ERROR");
         state.loading.favourites = false;
         state.error = action.payload;
       })
       // Save
       .addCase(saveCat.pending, (state) => {
+        logAction("saveCat PENDING");
         state.loading.saving = true;
       })
       .addCase(saveCat.fulfilled, (state, action) => {
+        logEnd("saveCat DONE");
         state.loading.saving = false;
         const { cat, favouriteId } = action.payload;
         state.favourites.push({ ...cat, favouriteId });
       })
       .addCase(saveCat.rejected, (state, action) => {
+        logAction("saveCat ERROR");
         state.loading.saving = false;
         state.error = action.payload;
       })
       // Delete
       .addCase(deleteCat.pending, (state) => {
+        logAction("deleteCat PENDING");
         state.loading.deleting = true;
       })
       .addCase(deleteCat.fulfilled, (state, action) => {
+        logEnd("deleteCat DONE");
         state.loading.deleting = false;
         state.favourites = state.favourites.filter(
           (fav) => fav.favouriteId !== action.payload,
         );
       })
       .addCase(deleteCat.rejected, (state, action) => {
+        logAction("deleteCat ERROR");
         state.loading.deleting = false;
         state.error = action.payload;
       });

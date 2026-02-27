@@ -7,6 +7,7 @@
 
 import { useCats } from "@features/cats/hooks/useCats";
 import CatList from "./CatList";
+import { logStart, logState } from "@shared/utils/debugLogger";
 
 /**
  * Orchestrates rendering of the favourite cat list.
@@ -14,7 +15,12 @@ import CatList from "./CatList";
  * @returns {JSX.Element} The rendered React component.
  */
 const FavouriteCatList = () => {
+  logStart("FavouriteCatList render");
   const { favouriteCats, loading, deleteFavouriteCat } = useCats();
+
+  logState("FavouriteCatList", { favourites: favouriteCats.length, "loading.favourites": loading.favourites });
+
+  console.log(`[${new Date().toISOString()}] 📄 FavouriteCatList: Renderizando CatList con ${favouriteCats.length} favoritos`);
 
   return (
     <CatList

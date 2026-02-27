@@ -13,30 +13,7 @@ import {
   saveCat,
   deleteCat,
 } from "../redux/catsSlice";
-
-/**
- * @typedef {import('../adapters/catMapper').CatEntity} CatEntity
- */
-
-/**
- * @typedef {Object} LoadingState
- * @property {boolean} random
- * @property {boolean} favourites
- * @property {boolean} saving
- * @property {boolean} deleting
- */
-
-/**
- * @typedef {Object} UseCatsFacade
- * @property {CatEntity[]} randomCats - Array of randomly generated cats.
- * @property {CatEntity[]} favouriteCats - Array of user's favourite cats.
- * @property {LoadingState} loading - Loading states for different operations.
- * @property {string|null} error - Any global error message related to cats operations.
- * @property {function(): void} loadRandomCats - Dispatches action to fetch random cats.
- * @property {function(): void} loadFavouriteCats - Dispatches action to fetch returning favourite cats.
- * @property {function(CatEntity): Promise<void>} saveFavouriteCat - Saves a given cat to favourites.
- * @property {function(CatEntity): Promise<void>} deleteFavouriteCat - Deletes a given cat from favourites.
- */
+import { logState } from "@shared/utils/debugLogger";
 
 /**
  * Hook `useCats`: a facade for cat state and actions.
@@ -48,6 +25,12 @@ export const useCats = () => {
 
   // Selects cat state from Redux store.
   const catsState = useSelector((state) => state.cats);
+
+  logState("useCats", {
+    random: catsState.random.length,
+    favourites: catsState.favourites.length,
+    loading: catsState.loading,
+  });
 
 // Destructure with useMemo to ensure stable references for derived properties
   const { randomCats, favouriteCats, loading, error } = useMemo(
