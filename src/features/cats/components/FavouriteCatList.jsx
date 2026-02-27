@@ -34,6 +34,4 @@ const FavouriteCatList = () => {
   );
 };
 
-FavouriteCatList.propTypes = {};
-
 export default FavouriteCatList;

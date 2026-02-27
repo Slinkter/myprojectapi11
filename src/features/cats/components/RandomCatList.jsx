@@ -40,7 +40,7 @@ const RandomCatList = () => {
 
   return (
     <CatList
-      title=" Random Kittens"
+      title="Random Kittens"
       cats={randomCats}
       onAction={saveFavouriteCat}
       actionType="save"
@@ -49,7 +49,5 @@ const RandomCatList = () => {
     />
   );
 };
-
-RandomCatList.propTypes = {};
 
 export default RandomCatList;
