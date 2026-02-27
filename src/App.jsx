@@ -10,6 +10,7 @@ import { LazyMotion } from "framer-motion";
 
 import ErrorBoundary from "@shared/components/ErrorBoundary";
 import DataInitializer from "@shared/components/DataInitializer";
+import InitialLoadSkeleton from "@shared/components/InitialLoadSkeleton";
 import ThemeToggleButton from "@features/theme/components/ThemeToggleButton";
 import FontDropdown from "@features/font/components/FontDropdown";
 import { CatErrorHandler } from "@features/cats";
@@ -17,20 +18,12 @@ import { useAppearance } from "@shared/hooks/useAppearance";
 import { usePageTitle } from "@shared/hooks/usePageTitle";
 import { motionFeatures } from "@config/motionConfig";
 
-// Lazy load skeleton components
-const RandomCatListSkeleton = React.lazy(() =>
-    import("@shared/components/skeletons/RandomCatListSkeleton"),
-);
-const FavouriteCatListSkeleton = React.lazy(() =>
-    import("@shared/components/skeletons/FavouriteCatListSkeleton"),
-);
-
 // Lazy load container components for performance optimization.
-const RandomCatList = React.lazy(() =>
-    import("@features/cats/components/RandomCatList"),
+const RandomCatList = React.lazy(
+  () => import("@features/cats/components/RandomCatList"),
 );
-const FavouriteCatList = React.lazy(() =>
-    import("@features/cats/components/FavouriteCatList"),
+const FavouriteCatList = React.lazy(
+  () => import("@features/cats/components/FavouriteCatList"),
 );
 
 /**
@@ -39,54 +32,50 @@ const FavouriteCatList = React.lazy(() =>
  * @returns {JSX.Element} The main layout.
  */
 const App = () => {
-    usePageTitle("Project API 11 - Cat Gallery");
-    useAppearance();
+  usePageTitle("Project API 11 - Cat Gallery");
+  useAppearance();
 
-    return (
-        <LazyMotion features={motionFeatures}>
-            <div className="min-h-dvh ">
-            <DataInitializer />
-            {/* --- NAVBAR ---  */}
-            <header className="sticky top-0 z-50 bg-background/80 border-b border-border backdrop-blur-md">
-                <div className="container flex items-center justify-between px-4 py-3 mx-auto">
-                    <h1 className="text-2xl font-bold tracking-tight text-foreground">
-                        Cat Gallery
-                    </h1>
-                    <div className="flex items-center gap-4">
-                        <FontDropdown />
-                        <ThemeToggleButton />
-                    </div>
-                </div>
-            </header>
-            {/* --- MAIN --- */}
-            <main className="container mx-auto p-4">
-                <ErrorBoundary>
-                    <Suspense fallback={<RandomCatListSkeleton />}>
-                        <RandomCatList />
-                    </Suspense>
-                </ErrorBoundary>
-                <ErrorBoundary>
-                    <Suspense fallback={<FavouriteCatListSkeleton />}>
-                        <FavouriteCatList />
-                    </Suspense>
-                </ErrorBoundary>
-                <CatErrorHandler />
-            </main>
-            {/* --- TOASTER --- */}
-            <Toaster
-                position="top-center"
-                reverseOrder={false}
-                toastOptions={{
-                    className:
-                        "bg-card text-foreground border border-border shadow-lg",
-                    style: {
-                        borderRadius: "12px",
-                    },
-                }}
-            />
+  return (
+    <LazyMotion features={motionFeatures}>
+      <div className="min-h-dvh">
+        <DataInitializer />
+        {/* --- NAVBAR --- */}
+        <header className="sticky top-0 z-50 bg-background/80 border-b border-border backdrop-blur-md">
+          <div className="container flex items-center justify-between px-4 py-3 mx-auto">
+            <h1 className="text-2xl font-bold tracking-tight text-foreground">
+              Cat Gallery
+            </h1>
+            <div className="flex items-center gap-4">
+              <FontDropdown />
+              <ThemeToggleButton />
             </div>
-        </LazyMotion>
-    );
+          </div>
+        </header>
+        {/* --- MAIN --- */}
+        <main className="container mx-auto p-4">
+          <ErrorBoundary>
+            <Suspense fallback={<InitialLoadSkeleton />}>
+              <RandomCatList />
+              <FavouriteCatList />
+            </Suspense>
+          </ErrorBoundary>
+          <CatErrorHandler />
+        </main>
+        {/* --- TOASTER --- */}
+        <Toaster
+          position="top-center"
+          reverseOrder={false}
+          toastOptions={{
+            className:
+              "bg-card text-foreground border border-border shadow-lg",
+            style: {
+              borderRadius: "12px",
+            },
+          }}
+        />
+      </div>
+    </LazyMotion>
+  );
 };
 
 export default App;

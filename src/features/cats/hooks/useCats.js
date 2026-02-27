@@ -49,7 +49,7 @@ export const useCats = () => {
   // Selects cat state from Redux store.
   const catsState = useSelector((state) => state.cats);
 
-  // Destructure with useMemo to ensure stable references for derived properties
+// Destructure with useMemo to ensure stable references for derived properties
   const { randomCats, favouriteCats, loading, error } = useMemo(
     () => ({
       randomCats: catsState.random,
@@ -106,7 +106,7 @@ export const useCats = () => {
     [dispatch],
   );
 
-  return {
+return {
     randomCats,
     favouriteCats,
     loading,

@@ -6,6 +6,8 @@
 
 import React from "react";
 import PropTypes from "prop-types";
+import { m } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
 import { cn } from "@shared/utils/cn";
 
 /**
@@ -15,6 +17,15 @@ import { cn } from "@shared/utils/cn";
  * @property {string} [className] - Additional CSS classes.
  * @property {string} ariaLabel - Accessibility label (required).
  */
+
+/**
+ * Button variants for micro-interactions.
+ * @constant {Object}
+ */
+const buttonVariants = {
+    hover: { scale: 1.1 },
+    tap: { scale: 0.95 },
+};
 
 /**
  * A circular button component designed for icon-only actions.
@@ -29,8 +40,10 @@ import { cn } from "@shared/utils/cn";
  * </IconButton>
  */
 const IconButton = ({ children, onClick, className = "", ariaLabel }) => {
+    const shouldReduceMotion = useReducedMotion();
+
     return (
-        <button
+        <m.button
             type="button"
             onClick={onClick}
             className={cn(
@@ -38,11 +51,14 @@ const IconButton = ({ children, onClick, className = "", ariaLabel }) => {
                 className,
             )}
             aria-label={ariaLabel}
+            whileHover={!shouldReduceMotion ? buttonVariants.hover : undefined}
+            whileTap={!shouldReduceMotion ? buttonVariants.tap : undefined}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
         >
             {React.cloneElement(children, {
                 className: cn("w-6 h-6", children.props.className),
             })}
-        </button>
+        </m.button>
     );
 };
 

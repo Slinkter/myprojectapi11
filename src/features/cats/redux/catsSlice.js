@@ -95,7 +95,7 @@ const catsSlice = createSlice({
         state.loading.random = true;
         state.error = null;
       })
-      .addCase(fetchRandomCats.fulfilled, (state, action) => {
+.addCase(fetchRandomCats.fulfilled, (state, action) => {
         state.loading.random = false;
         state.random = action.payload;
       })
@@ -108,7 +108,7 @@ const catsSlice = createSlice({
         state.loading.favourites = true;
         state.error = null;
       })
-      .addCase(fetchFavouriteCats.fulfilled, (state, action) => {
+.addCase(fetchFavouriteCats.fulfilled, (state, action) => {
         state.loading.favourites = false;
         state.favourites = action.payload;
       })
