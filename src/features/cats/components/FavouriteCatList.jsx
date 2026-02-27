@@ -1,28 +1,24 @@
 /**
  * @file Container for the favourite cat list.
- * @description This component handles logic for fetching and displaying
+ * @description This component handles logic for displaying
  * the user's favourite cats, using the `CatList` presentation component.
+ * Data is preloaded at app level.
  */
 
-import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useCats } from "@features/cats/hooks/useCats";
 import CatList from "./CatList";
 
 /**
- * Orchestrates fetching and rendering of the favourite cat list.
+ * Orchestrates rendering of the favourite cat list.
  * @component
  * @returns {JSX.Element} The rendered React component.
  */
 const FavouriteCatList = () => {
-  const { favouriteCats, loading, loadFavouriteCats, deleteFavouriteCat } =
-    useCats();
+  const favouriteCats = useSelector((state) => state.cats.favourites);
+  const loading = useSelector((state) => state.cats.loading);
 
-  // Loads favourite cats on component mount.
-  useEffect(() => {
-    if (favouriteCats.length === 0 && !loading.favourites) {
-      loadFavouriteCats();
-    }
-  }, [loadFavouriteCats, favouriteCats.length, loading.favourites]);
+  const { deleteFavouriteCat } = useCats();
 
   return (
     <CatList
@@ -30,7 +26,7 @@ const FavouriteCatList = () => {
       cats={favouriteCats}
       onAction={deleteFavouriteCat}
       actionType="delete"
-      isActionDisabled={() => false} // Delete button is never disabled.
+      isActionDisabled={() => false}
       loading={loading.favourites}
       emptyStateMessage={
         <span>
@@ -41,5 +37,7 @@ const FavouriteCatList = () => {
     />
   );
 };
+
+FavouriteCatList.propTypes = {};
 
 export default FavouriteCatList;

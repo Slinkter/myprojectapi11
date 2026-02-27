@@ -1,10 +1,12 @@
 /**
  * @file Container for the random cat list.
- * @description This component handles logic for fetching and displaying
+ * @description This component handles logic for displaying
  * random cats, using the `CatList` presentation component.
+ * Data is preloaded at app level via usePreloadCats.
  */
 
-import { useEffect, useMemo, useCallback } from "react";
+import { useMemo, useCallback } from "react";
+import { useSelector } from "react-redux";
 import { useCats } from "@features/cats/hooks/useCats";
 import CatList from "./CatList";
 
@@ -13,56 +15,46 @@ import CatList from "./CatList";
  */
 
 /**
- * Orchestrates fetching and rendering of the random cat list.
+ * Orchestrates rendering of the random cat list.
  * @component
  * @returns {JSX.Element} The rendered React component.
  */
 const RandomCatList = () => {
-  // get variables
-  const {
-    randomCats,
-    favouriteCats,
-    loading,
-    loadRandomCats,
-    saveFavouriteCat,
-  } = useCats();
+    const randomCats = useSelector((state) => state.cats.random);
+    const favouriteCats = useSelector((state) => state.cats.favourites);
+    const loading = useSelector((state) => state.cats.loading);
 
-  // Loads random cats on component mount.
-  useEffect(() => {
-    // Only load if there are no cats and not currently loading.
-    if (randomCats.length === 0 && !loading.random) {
-      loadRandomCats();
-    }
-  }, [loadRandomCats, randomCats.length, loading.random]);
+    const { saveFavouriteCat } = useCats();
 
-  // Optimization: Memoize favourite IDs in a Set for O(1) lookups.
-  // This avoids iterating over the favourites array for every cat in the random list.
-  const favouriteContext = useMemo(() => {
-    return new Set(favouriteCats.map((cat) => cat.id));
-  }, [favouriteCats]);
+    // Optimization: Memoize favourite IDs in a Set for O(1) lookups.
+    const favouriteContext = useMemo(() => {
+        return new Set(favouriteCats.map((cat) => cat.id));
+    }, [favouriteCats]);
 
-  /**
-   * Checks if a cat from the random list is already in favourites.
-   * @param {CatEntity} cat - The cat to check.
-   * @returns {boolean} - `true` if the cat is a favourite.
-   */
-  const isCatInFavourites = useCallback(
-    (cat) => {
-      return favouriteContext.has(cat.id);
-    },
-    [favouriteContext],
-  );
+    /**
+     * Checks if a cat from the random list is already in favourites.
+     * @param {CatEntity} cat - The cat to check.
+     * @returns {boolean} - `true` if the cat is a favourite.
+     */
+    const isCatInFavourites = useCallback(
+        (cat) => {
+            return favouriteContext.has(cat.id);
+        },
+        [favouriteContext],
+    );
 
-  return (
-    <CatList
-      title="Random Kittens"
-      cats={randomCats}
-      onAction={saveFavouriteCat}
-      actionType="save"
-      isActionDisabled={isCatInFavourites}
-      loading={loading.random}
-    />
-  );
+    return (
+        <CatList
+            title="Random Kittens"
+            cats={randomCats}
+            onAction={saveFavouriteCat}
+            actionType="save"
+            isActionDisabled={isCatInFavourites}
+            loading={loading.random}
+        />
+    );
 };
+
+RandomCatList.propTypes = {};
 
 export default RandomCatList;
