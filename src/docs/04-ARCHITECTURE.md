@@ -29,13 +29,16 @@ Es el núcleo de la aplicación. Maneja datos asíncronos de una API externa con
 ```text
 [App.jsx]
       |
-[usePreloadCats] -> Fetch data on app mount
+[DataInitializer] -> usePreloadCats (data-on-mount)
       |
 [Vistas/Contenedores]
       RandomCatList / FavouriteCatList
               |
 [Presentacionales]
       CatList -> CatCard -> CatCardFooter
+              |
+[Componentes Shared]
+      EmptyState, SkeletonGrid, ErrorBoundary
               |
 [Lógica de Negocio (Facade)]
            useCats (Hook)
@@ -46,15 +49,19 @@ Es el núcleo de la aplicación. Maneja datos asíncronos de una API externa con
 
 #### Mapa de Dependencias:
 
+- **`DataInitializer`**: Componente dedicado que ejecuta `usePreloadCats` al montar la app. Separa la lógica de datos del componente raíz `App.jsx`.
 - **`usePreloadCats`**: Hook centralizado que carga los datos al iniciar la app. Carga **Random Cats** primero, luego **Favourites** (orden secuencial para mejor UX).
 - **`RandomCatList` / `FavouriteCatList`**: Componentes puros que solo renderizan datos del store. No disparan cargas.
 - **`CatList` / `CatCard`**: Componentes presentacionales. Reciben datos y callbacks vía `props`. No conocen Redux.
 - **`CatCardFooter`**: Usa la utilidad `cn` para orquestar estados visuales basados en `disabled` y `actionType`.
+- **`EmptyState`**: Componente reutilizable para mostrar mensajes cuando no hay contenido.
+- **`LazyMotion`**: Configuración de framer-motion con `domAnimation` para reducir bundle size.
 
 #### Lógica de Hooks (SOLID):
 
 - **`useCats`**: Actúa como una **Facade**. Su única responsabilidad es orquestar la comunicación entre los componentes y el Store de Redux. Expone una interfaz limpia ocultando la complejidad de `dispatch`, `useSelector` y `unwrap`.
 - **`usePreloadCats`**: Hook de infraestructura que ejecuta el prefetching de datos. Implementa el patrón **data-on-mount** para evitar layout shift.
+- **`useCallback`**: Utilizado en `useTheme` para mantener referencias estables de funciones.
 
 ---
 

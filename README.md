@@ -97,22 +97,23 @@ pnpm run dev      # → http://localhost:5173
 ```
 src/
 ├── app/             # Configuración del store de Redux
-├── config/          # Variables de entorno (env.js)
+├── config/          # Variables de entorno (env.js), motionConfig.js
 ├── docs/            # Documentación técnica
 ├── features/
 │   ├── cats/        # Dominio principal (gatos)
 │   │   ├── adapters/    # catMapper.js — normaliza API → CatEntity
 │   │   ├── api/         # catApi.js — cliente HTTP Axios
 │   │   ├── components/  # CatCard, CatList, RandomCatList, FavouriteCatList
+│   │   │   └── subcomponents/ # CatCardHeader, CatCardFooter
 │   │   ├── hooks/       # useCats.js, usePreloadCats.js
 │   │   ├── redux/       # catsSlice.js — estado + thunks
 │   │   └── services/   # catService.js — orquestación API
 │   ├── font/        # Selección de fuentes
 │   └── theme/       # Modo Oscuro/Claro
 ├── shared/
-│   ├── components/  # ErrorBoundary, Skeletons
+│   ├── components/  # ErrorBoundary, Skeletons, EmptyState, DataInitializer
 │   ├── hooks/       # useAppearance, usePageTitle
-│   └── ui/          # IconButton, Select
+│   └── ui/         # IconButton, Select
 └── App.jsx          # Componente raíz
 ```
 
@@ -123,9 +124,12 @@ src/
 | **Fachada (Hook)**        | `useCats`, `useTheme`, `useFont`   | UI no accede a Redux directamente       |
 | **Adaptador / Mapper**    | `catMapper.js`                      | API no se filtra a componentes         |
 | **Error Boundary**        | `ErrorBoundary.jsx`                 | Captura errores de React con retry    |
-| **Prefetching**           | `usePreloadCats.js`                 | Carga datos antes de montar componentes|
+| **Prefetching**           | `usePreloadCats.js` + `DataInitializer` | Carga datos antes de montar componentes|
 | **Lazy Loading**          | `React.lazy()` + `Suspense`         | Code splitting automático              |
+| **LazyMotion**            | `motionConfig.js` + `domAnimation` | Bundle size reducido (~30kb)          |
+| **Reduced Motion**        | `useReducedMotion()` en CatCard    | Accesibilidad para animaciones        |
 | **Tipado con JSDoc**      | Todos los hooks, mappers, props     | Seguridad de tipos en JS plano        |
+| **Container/Presentational** | `RandomCatList` → `CatList` → `CatCard` | Separación de lógica y presentación |
 
 ---
 
@@ -133,6 +137,12 @@ src/
 
 | Feature                      | Descripción                                          |
 | ---------------------------- | ---------------------------------------------------- |
+| **Score 100/100 react-doctor** | Validación completa de código React                |
+| **LazyMotion + domAnimation** | Bundle optimizado (~30kb ahorro en framer-motion)  |
+| **prefers-reduced-motion**   | Accesibilidad para usuarios sensibles a animaciones |
+| **DataInitializer**          | Componente separado para carga inicial de datos     |
+| **EmptyState**               | Componente reutilizable para estados vacíos         |
+| **useCallback en useTheme**  | Optimización de referencias en toggles             |
 | **Error Boundary**           | Captura errores de React con UI de fallback y retry |
 | **usePreloadCats**           | Carga datos al iniciar la app (evita layout shift) |
 | **Skeletons separados**     | `RandomCatListSkeleton` (6 items) vs `FavouriteCatListSkeleton` (4 items) |
@@ -172,6 +182,178 @@ pnpm run deploy
 | `@shared`  | `src/shared/`       |
 | `@app`     | `src/app/`          |
 | `@config`  | `src/config/`       |
+
+---
+
+## 📖 Resumen de Estudio
+
+### Conceptos Clave del Proyecto
+
+#### 1. Feature-Sliced Design (FSD)
+```
+features/          → Módulos de negocio independientes
+  ├── cats/        → Dominio principal (gatos)
+  ├── theme/       → Funcionalidad de tema
+  └── font/        → Funcionalidad de fuentes
+
+shared/            → Código reutilizable (sin dependencias de features)
+  ├── components/  → Componentes UI genéricos
+  ├── hooks/       → Hooks utilitarios
+  └── ui/          → Primitivas de UI
+```
+
+**Regla de oro:** `shared` NO puede importar de `features`.
+
+---
+
+#### 2. Flujo de Datos (Top-Down)
+
+```
+API Externa (TheCatAPI)
+    ↓
+catApi.js (cliente HTTP con Axios)
+    ↓
+catService.js (orquestación de llamadas)
+    ↓
+catsSlice.js (Redux thunk + estado)
+    ↓
+useCats.js (Hook FACADE - conecta componentes al store)
+    ↓
+Componentes (RandomCatList, CatList, CatCard)
+```
+
+**Punto clave:** Los componentes NUNCA acceden a Redux directamente. Usan el hook `useCats()`.
+
+---
+
+#### 3. Patrón Fachada (Facade Pattern)
+
+```javascript
+// ❌ NO hagas esto en componentes
+const dispatch = useDispatch();
+const cats = useSelector(state => state.cats.random);
+
+// ✅ USA el hook fachada
+const { randomCats, saveFavouriteCat } = useCats();
+```
+
+El hook fachada:
+- Oculta la complejidad de Redux
+- Proporciona una API limpia
+- Mantiene los componentes simples
+
+---
+
+#### 4. Separación Container / Presentational
+
+```
+RandomCatList (CONTAINER)     → Lógica, usa useCats, calcula estados
+    ↓ props
+CatList (PRESENTATIONAL)      → Solo renderiza, recibe datos por props
+    ↓ props
+CatCard (PRESENTATIONAL)      → Solo renderiza la tarjeta individual
+```
+
+**Beneficio:** El componente presentacional puede reutilizarse en cualquier contexto.
+
+---
+
+#### 5. Mapper / Adaptador
+
+```javascript
+// API externa devuelve: { id: "abc", image: { id: "abc", url: "..." } }
+// Nosotros convertimos a: { id: "abc", url: "...", favouriteId: 123 }
+
+export const mapToCatEntity = (rawCat) => {
+  if (rawCat.image) {
+    return {
+      id: rawCat.image.id,
+      url: rawCat.image.url,
+      favouriteId: rawCat.id,
+    };
+  }
+  return { id: rawCat.id, url: rawCat.url, favouriteId: null };
+};
+```
+
+**Beneficio:** Si la API cambia, solo modificas el mapper, no los componentes.
+
+---
+
+#### 6. Optimizaciones de Performance
+
+| Técnica | Implementación | Beneficio |
+|---------|---------------|-----------|
+| **Lazy Loading** | `React.lazy()` + `Suspense` | Code splitting automático |
+| **Prefetching** | `usePreloadCats` | Carga datos antes de mostrar UI |
+| **Skeleton** | `SkeletonGrid` | Evita CLS (layout shift) |
+| **LazyMotion** | `domAnimation` | Bundle ~30kb menor |
+| **useCallback** | `toggleTheme` | Evita re-renderizados |
+| **React.memo** | `CatCard` | Evita re-render innecesarios |
+
+---
+
+#### 7. Accesibilidad
+
+```javascript
+// Detecta preferencia del usuario
+const shouldReduceMotion = useReducedMotion();
+
+// Aplica clases condicionalmente
+const imageClasses = shouldReduceMotion
+  ? "object-cover w-full h-full"
+  : "object-cover w-full h-full transition-transform...";
+```
+
+---
+
+#### 8. Estructura de un Feature
+
+```
+features/cats/
+├── api/           → cliente HTTP bajo nivel (Axios)
+├── adapters/       → transformadores (API → Domain)
+├── services/       → orquestación de API
+├── redux/          → slices + thunks
+├── hooks/          → facades (useCats, usePreloadCats)
+└── components/     → UI del feature
+```
+
+---
+
+#### 9. JSDoc en JavaScript
+
+```javascript
+/** @typedef {import('../adapters/catMapper').CatEntity} CatEntity */
+
+/**
+ * Hook fachada para gestionar gatos.
+ * @returns {Object} Facade con cats y acciones
+ * @property {CatEntity[]} randomCats
+ * @property {function(CatEntity): Promise<void>} saveFavouriteCat
+ */
+export const useCats = () => { ... };
+```
+
+---
+
+#### 10. Errores y Estados
+
+- **ErrorBoundary:** Captura errores de React (crashes)
+- **CatErrorHandler:** Muestra errores de API con retry
+- **EmptyState:** Mensaje cuando no hay contenido
+- **Skeleton:** Loading state visual
+
+---
+
+### Comandos Importantes
+
+```bash
+pnpm run dev        # Desarrollo
+pnpm run build      # Producción
+pnpm run lint       # Verificar código (0 warnings)
+pnpm run preview    # Probar build local
+```
 
 ---
 

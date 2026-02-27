@@ -5,7 +5,6 @@
  * Data is preloaded at app level.
  */
 
-import { useSelector } from "react-redux";
 import { useCats } from "@features/cats/hooks/useCats";
 import CatList from "./CatList";
 
@@ -15,10 +14,7 @@ import CatList from "./CatList";
  * @returns {JSX.Element} The rendered React component.
  */
 const FavouriteCatList = () => {
-  const favouriteCats = useSelector((state) => state.cats.favourites);
-  const loading = useSelector((state) => state.cats.loading);
-
-  const { deleteFavouriteCat } = useCats();
+  const { favouriteCats, loading, deleteFavouriteCat } = useCats();
 
   return (
     <CatList

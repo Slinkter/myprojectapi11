@@ -4,6 +4,7 @@
  * and a function to toggle between them.
  */
 
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme as toggleThemeAction } from "@features/theme/redux/themeSlice";
 
@@ -35,9 +36,9 @@ export const useTheme = () => {
     const dispatch = useDispatch();
     const theme = useSelector((state) => state.theme.mode);
 
-    const toggleTheme = () => {
+const toggleTheme = useCallback(() => {
         dispatch(toggleThemeAction());
-    };
+    }, [dispatch]);
 
     return { theme, toggleTheme };
 };

@@ -19,14 +19,18 @@ import {
  */
 
 /**
+ * @typedef {Object} LoadingState
+ * @property {boolean} random
+ * @property {boolean} favourites
+ * @property {boolean} saving
+ * @property {boolean} deleting
+ */
+
+/**
  * @typedef {Object} UseCatsFacade
  * @property {CatEntity[]} randomCats - Array of randomly generated cats.
  * @property {CatEntity[]} favouriteCats - Array of user's favourite cats.
- * @property {Object} loading - Loading states for different operations.
- * @property {boolean} loading.random - True when loading random cats.
- * @property {boolean} loading.favourites - True when loading favourite cats.
- * @property {boolean} loading.saving - True when saving a favourite cat.
- * @property {boolean} loading.deleting - True when deleting a favourite cat.
+ * @property {LoadingState} loading - Loading states for different operations.
  * @property {string|null} error - Any global error message related to cats operations.
  * @property {function(): void} loadRandomCats - Dispatches action to fetch random cats.
  * @property {function(): void} loadFavouriteCats - Dispatches action to fetch returning favourite cats.

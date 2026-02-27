@@ -5,9 +5,10 @@
  */
 
 import PropTypes from "prop-types";
+import { m, AnimatePresence } from "framer-motion";
 import SkeletonGrid from "@shared/components/skeletons/SkeletonGrid";
+import EmptyState from "@shared/components/EmptyState";
 import CatCard from "./CatCard";
-import { motion, AnimatePresence } from "framer-motion";
 
 /**
  * @typedef {import('../adapters/catMapper').CatEntity} CatEntity
@@ -45,24 +46,18 @@ const CatList = (props) => {
       <h3 className="pb-2 mb-4 text-xl font-bold border-b text-foreground border-border">
         {title}
       </h3>
-      {loading && cats.length === 0 ? (
+{loading && cats.length === 0 ? (
         <SkeletonGrid />
       ) : isEmpty && emptyStateMessage ? (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="px-4 py-12 text-center border-2 border-dashed rounded-xl text-muted-foreground border-border/50 bg-muted/20"
-        >
-          {emptyStateMessage}
-        </motion.div>
+<EmptyState message={emptyStateMessage} />
       ) : (
-        <motion.div
+        <m.div
           layout
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6  gap-6"
         >
           <AnimatePresence mode="popLayout">
             {cats.map((cat, index) => (
-              <motion.div
+              <m.div
                 key={cat.id}
                 layout
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -84,10 +79,10 @@ const CatList = (props) => {
                   actionType={actionType}
                   disabled={isActionDisabled(cat)}
                 />
-              </motion.div>
+              </m.div>
             ))}
           </AnimatePresence>
-        </motion.div>
+        </m.div>
       )}
     </section>
   );

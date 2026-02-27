@@ -112,6 +112,11 @@ El diseño prioriza las imágenes de gatos como el elemento visual principal. To
 | Re-layout de cuadrícula     | `<motion.div layout>` — las tarjetas se deslizan suavemente a sus nuevas posiciones                                    |
 | Aparición de estado vacío | `initial={{ opacity:0 }}` → `animate={{ opacity:1 }}`                                              |
 
+### Optimizaciones de Animación
+
+- **LazyMotion + domAnimation:** Utiliza `import { LazyMotion, m } from "framer-motion"` con `domAnimation` en lugar del import completo. Esto reduce el bundle de ~30kb.
+- **prefers-reduced-motion:** Utiliza `useReducedMotion()` de framer-motion para detectar si el usuario prefiere animaciones reducidas. En `CatCard`, las animaciones de hover se deshabilitan cuando `shouldReduceMotion` es `true`.
+
 **Librería:** `framer-motion` v12.34.3 — Utilizada para `motion`, `AnimatePresence`, y la prop `layout`.
 
 ---
@@ -147,6 +152,14 @@ El diseño prioriza las imágenes de gatos como el elemento visual principal. To
   - **Responsabilidad:** Componente de clase que captura errores de JavaScript en componentes hijos. Muestra un UI de fallback con mensaje de error y botón de retry. Soporta prop `showDetails` para ver el stack trace.
   - **Ubicación:** `@shared/components/ErrorBoundary.jsx`
   - **Uso:** Envuelve componentes que pueden fallar (listas de gatos).
+- **`EmptyState`:**
+  - **Responsabilidad:** Componente reutilizable para mostrar mensajes cuando no hay contenido. Usa animaciones de framer-motion.
+  - **Ubicación:** `@shared/components/EmptyState.jsx`
+  - **Uso:** Lists vacías, resultados de búsqueda sin resultados.
+- **`DataInitializer`:**
+  - **Responsabilidad:** Componente dedicado que ejecuta `usePreloadCats` al montar la app. Separa la lógica de datos del componente raíz.
+  - **Ubicación:** `@shared/components/DataInitializer.jsx`
+  - **Uso:** Incluido en App.jsx para carga inicial de datos.
 - **`IconButton`:**
   - **Responsabilidad:** Botón circular optimizado para iconos. Proporciona un estilo consistente (`rounded-full`, `p-2.5`, `border`, `bg-card`, `hover:bg-muted`, `focus:ring-primary/30`), manejo de eventos, `ariaLabel` para accesibilidad, y asegura un tamaño de icono consistente (`w-6 h-6`).
 - **`Select`:**

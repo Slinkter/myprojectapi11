@@ -6,7 +6,6 @@
  */
 
 import { useMemo, useCallback } from "react";
-import { useSelector } from "react-redux";
 import { useCats } from "@features/cats/hooks/useCats";
 import CatList from "./CatList";
 
@@ -20,11 +19,7 @@ import CatList from "./CatList";
  * @returns {JSX.Element} The rendered React component.
  */
 const RandomCatList = () => {
-    const randomCats = useSelector((state) => state.cats.random);
-    const favouriteCats = useSelector((state) => state.cats.favourites);
-    const loading = useSelector((state) => state.cats.loading);
-
-    const { saveFavouriteCat } = useCats();
+    const { randomCats, favouriteCats, loading, saveFavouriteCat } = useCats();
 
     // Optimization: Memoize favourite IDs in a Set for O(1) lookups.
     const favouriteContext = useMemo(() => {

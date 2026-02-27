@@ -6,14 +6,16 @@
 
 import React, { Suspense } from "react";
 import { Toaster } from "react-hot-toast";
+import { LazyMotion } from "framer-motion";
 
 import ErrorBoundary from "@shared/components/ErrorBoundary";
+import DataInitializer from "@shared/components/DataInitializer";
 import ThemeToggleButton from "@features/theme/components/ThemeToggleButton";
 import FontDropdown from "@features/font/components/FontDropdown";
 import { CatErrorHandler } from "@features/cats";
 import { useAppearance } from "@shared/hooks/useAppearance";
 import { usePageTitle } from "@shared/hooks/usePageTitle";
-import { usePreloadCats } from "@features/cats/hooks/usePreloadCats";
+import { motionFeatures } from "@config/motionConfig";
 
 // Lazy load skeleton components
 const RandomCatListSkeleton = React.lazy(() =>
@@ -37,17 +39,13 @@ const FavouriteCatList = React.lazy(() =>
  * @returns {JSX.Element} The main layout.
  */
 const App = () => {
-    // Use isolated hook to manage title.
     usePageTitle("Project API 11 - Cat Gallery");
-
-    // Hook to manage global appearance effects.
     useAppearance();
 
-    // Preload cat data on app initialization.
-    usePreloadCats();
-
     return (
-        <div className="min-h-dvh ">
+        <LazyMotion features={motionFeatures}>
+            <div className="min-h-dvh ">
+            <DataInitializer />
             {/* --- NAVBAR ---  */}
             <header className="sticky top-0 z-50 bg-background/80 border-b border-border backdrop-blur-md">
                 <div className="container flex items-center justify-between px-4 py-3 mx-auto">
@@ -86,7 +84,8 @@ const App = () => {
                     },
                 }}
             />
-        </div>
+            </div>
+        </LazyMotion>
     );
 };
 
