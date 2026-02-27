@@ -32,9 +32,11 @@ pnpm run dev    # Start dev server at http://localhost:5173
 
 ## GitHub Actions (CI/CD)
 
-- Push to `main` → Run lint + build → Deploy to GitHub Pages
+- Push to `main` → Run lint + build → Deploy to GitHub Pages (requires `CAT_API_KEY` secret)
 - Push to `develop` → Run lint + build (no deploy)
 - Pull Request to `main` → Run lint + build (branch protection)
+
+**Setup required:** Add `CAT_API_KEY` secret in GitHub Settings → Actions secrets
 
 ---
 
@@ -109,13 +111,24 @@ export const useCats = () => { ... };
 | No cross-feature imports | `theme` must not import from `cats` |
 | No hardcoded Tailwind colors | Use semantic tokens (`bg-muted`, not `bg-gray-200`) |
 | Use `cn()` utility for className merging | Always use `@shared/utils/cn` |
+| Use LazyMotion for animations | Use `@config/motionConfig.js` with `domAnimation` |
+| Support reduced motion | Use `useReducedMotion()` from framer-motion |
+
+### Shared Components
+
+| Component | Purpose |
+|-----------|---------|
+| `EmptyState.jsx` | Reusable empty state message |
+| `DataInitializer.jsx` | Separates data loading logic from App.jsx |
+| `ErrorBoundary.jsx` | Catches React errors with retry |
+| `SkeletonGrid.jsx` | Loading placeholder grid |
 
 ### Directory Structure
 
 ```
 src/
 ├── app/              # Redux store configuration
-├── config/           # Environment variables (env.js)
+├── config/           # Environment variables (env.js), motionConfig.js
 ├── features/         # Feature modules (cats, theme, font)
 │   └── [feature]/
 │       ├── api/           # Low-level HTTP client (axios)
@@ -127,7 +140,7 @@ src/
 ├── shared/
 │   ├── ui/           # Reusable primitives (Button, Select)
 │   ├── hooks/        # Shared hooks
-│   ├── components/   # Shared (ErrorBoundary, Skeletons)
+│   ├── components/   # Shared (ErrorBoundary, EmptyState, DataInitializer, Skeletons)
 │   └── utils/        # Utilities (cn.js)
 └── App.jsx           # Root layout
 ```

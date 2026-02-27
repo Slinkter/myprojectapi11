@@ -23,28 +23,28 @@ Cat Gallery permite a los usuarios **explorar imágenes aleatorias de gatos**, *
 
 ### Dependencias de Ejecución
 
-| Librería            | Versión  | Rol                                                         |
-| ------------------ | -------- | ------------------------------------------------------------ |
-| `react`            | ^19.2.3  | Framework principal de renderizado de UI                     |
-| `react-dom`        | ^19.2.3  | Renderizador React DOM para el navegador                     |
-| `@reduxjs/toolkit` | ^2.11.2  | Gestión de estado global — thunks asíncronos, slices         |
-| `react-redux`      | ^9.2.0   | Conecta el árbol de componentes React al store de Redux     |
+| Librería           | Versión  | Rol                                                           |
+| ------------------ | -------- | ------------------------------------------------------------- |
+| `react`            | ^19.2.3  | Framework principal de renderizado de UI                      |
+| `react-dom`        | ^19.2.3  | Renderizador React DOM para el navegador                      |
+| `@reduxjs/toolkit` | ^2.11.2  | Gestión de estado global — thunks asíncronos, slices          |
+| `react-redux`      | ^9.2.0   | Conecta el árbol de componentes React al store de Redux       |
 | `axios`            | ^1.13.2  | Cliente HTTP para llamadas a TheCatAPI                        |
 | `framer-motion`    | ^12.34.3 | Animaciones aceleradas por hardware (entrada, salida, layout) |
-| `react-hot-toast`  | ^2.6.0   | Notificaciones toast para feedback del usuario              |
-| `react-icons`      | ^5.5.0   | Componentes de iconos (subconjunto de Bootstrap Icons)      |
-| `prop-types`       | ^15.8.1  | Validación de props en ejecución y contrato de componentes   |
+| `react-hot-toast`  | ^2.6.0   | Notificaciones toast para feedback del usuario                |
+| `react-icons`      | ^5.5.0   | Componentes de iconos (subconjunto de Bootstrap Icons)        |
+| `prop-types`       | ^15.8.1  | Validación de props en ejecución y contrato de componentes    |
 
 ### Dependencias de Desarrollo
 
-| Librería                | Versión | Rol                                      |
-| ---------------------- | ------- | ---------------------------------------- |
-| `vite`                 | ^7.3.0  | Servidor de desarrollo y empaquetador    |
-| `@vitejs/plugin-react` | ^5.1.2  | Soporte JSX y HMR para Vite              |
-| `tailwindcss`          | ^4.1.18 | Framework de CSS orientado a utilidades  |
-| `@tailwindcss/postcss` | ^4.1.18 | Integración PostCSS para Tailwind v4     |
-| `eslint` + plugins     | ^8.57.1 | Análisis estático (0 advertencias)       |
-| `gh-pages`             | ^6.3.0  | Despliegue a GitHub Pages                |
+| Librería               | Versión | Rol                                     |
+| ---------------------- | ------- | --------------------------------------- |
+| `vite`                 | ^7.3.0  | Servidor de desarrollo y empaquetador   |
+| `@vitejs/plugin-react` | ^5.1.2  | Soporte JSX y HMR para Vite             |
+| `tailwindcss`          | ^4.1.18 | Framework de CSS orientado a utilidades |
+| `@tailwindcss/postcss` | ^4.1.18 | Integración PostCSS para Tailwind v4    |
+| `eslint` + plugins     | ^8.57.1 | Análisis estático (0 advertencias)      |
+| `gh-pages`             | ^6.3.0  | Despliegue a GitHub Pages               |
 
 ---
 
@@ -82,13 +82,13 @@ pnpm run dev      # → http://localhost:5173
 
 ### Scripts disponibles
 
-| Comando           | Descripción                              |
-| ----------------- | ---------------------------------------- |
-| `pnpm run dev`   | Servidor de desarrollo                   |
-| `pnpm run build` | Construcción de producción → `./dist`   |
-| `pnpm run preview` | Previsualizar build local              |
-| `pnpm run lint`  | ESLint (0 advertencias permitidas)       |
-| `pnpm run deploy` | Construir + desplegar a GitHub Pages   |
+| Comando            | Descripción                           |
+| ------------------ | ------------------------------------- |
+| `pnpm run dev`     | Servidor de desarrollo                |
+| `pnpm run build`   | Construcción de producción → `./dist` |
+| `pnpm run preview` | Previsualizar build local             |
+| `pnpm run lint`    | ESLint (0 advertencias permitidas)    |
+| `pnpm run deploy`  | Construir + desplegar a GitHub Pages  |
 
 ---
 
@@ -119,48 +119,48 @@ src/
 
 ### Patrones Implementados
 
-| Patrón                    | Dónde                              | Beneficio                              |
-| ------------------------- | ---------------------------------- | -------------------------------------- |
-| **Fachada (Hook)**        | `useCats`, `useTheme`, `useFont`   | UI no accede a Redux directamente       |
-| **Adaptador / Mapper**    | `catMapper.js`                      | API no se filtra a componentes         |
-| **Error Boundary**        | `ErrorBoundary.jsx`                 | Captura errores de React con retry    |
-| **Prefetching**           | `usePreloadCats.js` + `DataInitializer` | Carga datos antes de montar componentes|
-| **Lazy Loading**          | `React.lazy()` + `Suspense`         | Code splitting automático              |
-| **LazyMotion**            | `motionConfig.js` + `domAnimation` | Bundle size reducido (~30kb)          |
-| **Reduced Motion**        | `useReducedMotion()` en CatCard    | Accesibilidad para animaciones        |
-| **Tipado con JSDoc**      | Todos los hooks, mappers, props     | Seguridad de tipos en JS plano        |
-| **Container/Presentational** | `RandomCatList` → `CatList` → `CatCard` | Separación de lógica y presentación |
+| Patrón                       | Dónde                                   | Beneficio                               |
+| ---------------------------- | --------------------------------------- | --------------------------------------- |
+| **Fachada (Hook)**           | `useCats`, `useTheme`, `useFont`        | UI no accede a Redux directamente       |
+| **Adaptador / Mapper**       | `catMapper.js`                          | API no se filtra a componentes          |
+| **Error Boundary**           | `ErrorBoundary.jsx`                     | Captura errores de React con retry      |
+| **Prefetching**              | `usePreloadCats.js` + `DataInitializer` | Carga datos antes de montar componentes |
+| **Lazy Loading**             | `React.lazy()` + `Suspense`             | Code splitting automático               |
+| **LazyMotion**               | `motionConfig.js` + `domAnimation`      | Bundle size reducido (~30kb)            |
+| **Reduced Motion**           | `useReducedMotion()` en CatCard         | Accesibilidad para animaciones          |
+| **Tipado con JSDoc**         | Todos los hooks, mappers, props         | Seguridad de tipos en JS plano          |
+| **Container/Presentational** | `RandomCatList` → `CatList` → `CatCard` | Separación de lógica y presentación     |
 
 ---
 
 ## ✨ Mejoras Recientes
 
-| Feature                      | Descripción                                          |
-| ---------------------------- | ---------------------------------------------------- |
-| **Score 100/100 react-doctor** | Validación completa de código React                |
-| **LazyMotion + domAnimation** | Bundle optimizado (~30kb ahorro en framer-motion)  |
-| **prefers-reduced-motion**   | Accesibilidad para usuarios sensibles a animaciones |
-| **DataInitializer**          | Componente separado para carga inicial de datos     |
-| **EmptyState**               | Componente reutilizable para estados vacíos         |
-| **useCallback en useTheme**  | Optimización de referencias en toggles             |
-| **Error Boundary**           | Captura errores de React con UI de fallback y retry |
-| **usePreloadCats**           | Carga datos al iniciar la app (evita layout shift) |
-| **Skeletons separados**     | `RandomCatListSkeleton` (6 items) vs `FavouriteCatListSkeleton` (4 items) |
-| **Botones consistentes**    | Fondo negro redondeado con ícono blanco              |
-| **Favicon personalizado**    | Ícono de gato en `/public/cat.svg`                  |
-| **JSDoc mejorado**           | Tipados completos con ejemplos en todos los hooks   |
+| Feature                        | Descripción                                                               |
+| ------------------------------ | ------------------------------------------------------------------------- |
+| **Score 100/100 react-doctor** | Validación completa de código React                                       |
+| **LazyMotion + domAnimation**  | Bundle optimizado (~30kb ahorro en framer-motion)                         |
+| **prefers-reduced-motion**     | Accesibilidad para usuarios sensibles a animaciones                       |
+| **DataInitializer**            | Componente separado para carga inicial de datos                           |
+| **EmptyState**                 | Componente reutilizable para estados vacíos                               |
+| **useCallback en useTheme**    | Optimización de referencias en toggles                                    |
+| **Error Boundary**             | Captura errores de React con UI de fallback y retry                       |
+| **usePreloadCats**             | Carga datos al iniciar la app (evita layout shift)                        |
+| **Skeletons separados**        | `RandomCatListSkeleton` (6 items) vs `FavouriteCatListSkeleton` (4 items) |
+| **Botones consistentes**       | Fondo negro redondeado con ícono blanco                                   |
+| **Favicon personalizado**      | Ícono de gato en `/public/cat.svg`                                        |
+| **JSDoc mejorado**             | Tipados completos con ejemplos en todos los hooks                         |
 
 ---
 
 ## 📚 Documentación
 
-| Documento                                                           | Contenido                                     |
-| ------------------------------------------------------------------ | -------------------------------------------- |
-| [`AGENTS.md`](./AGENTS.md)                                        | Guía para agentes IA (build, lint, arquitectura) |
-| [`src/docs/00-SETUP-GUIDE.md`](./src/docs/00-SETUP-GUIDE.md)     | Instalación desde cero                        |
-| [`src/docs/04-ARCHITECTURE.md`](./src/docs/04-ARCHITECTURE.md)   | Patrones FSD, flujo de datos                 |
-| [`src/docs/05-UI-DESIGN-SYSTEM.md`](./src/docs/05-UI-DESIGN-SYSTEM.md) | Tokens de Tailwind, animaciones        |
-| [`src/docs/06-CONTRIBUTING.md`](./src/docs/06-CONTRIBUTING.md)   | Convenciones, JSDoc, flujo Git               |
+| Documento                                                              | Contenido                                        |
+| ---------------------------------------------------------------------- | ------------------------------------------------ |
+| [`AGENTS.md`](./AGENTS.md)                                             | Guía para agentes IA (build, lint, arquitectura) |
+| [`src/docs/00-SETUP-GUIDE.md`](./src/docs/00-SETUP-GUIDE.md)           | Instalación desde cero                           |
+| [`src/docs/04-ARCHITECTURE.md`](./src/docs/04-ARCHITECTURE.md)         | Patrones FSD, flujo de datos                     |
+| [`src/docs/05-UI-DESIGN-SYSTEM.md`](./src/docs/05-UI-DESIGN-SYSTEM.md) | Tokens de Tailwind, animaciones                  |
+| [`src/docs/06-CONTRIBUTING.md`](./src/docs/06-CONTRIBUTING.md)         | Convenciones, JSDoc, flujo Git                   |
 
 ---
 
@@ -176,12 +176,12 @@ pnpm run deploy
 
 ## 🔧 Alias de Rutas
 
-| Alias      | Ruta Real           |
-| ---------- | ------------------- |
-| `@features` | `src/features/`     |
-| `@shared`  | `src/shared/`       |
-| `@app`     | `src/app/`          |
-| `@config`  | `src/config/`       |
+| Alias       | Ruta Real       |
+| ----------- | --------------- |
+| `@features` | `src/features/` |
+| `@shared`   | `src/shared/`   |
+| `@app`      | `src/app/`      |
+| `@config`   | `src/config/`   |
 
 ---
 
@@ -190,6 +190,7 @@ pnpm run deploy
 ### Conceptos Clave del Proyecto
 
 #### 1. Feature-Sliced Design (FSD)
+
 ```
 features/          → Módulos de negocio independientes
   ├── cats/        → Dominio principal (gatos)
@@ -231,13 +232,14 @@ Componentes (RandomCatList, CatList, CatCard)
 ```javascript
 // ❌ NO hagas esto en componentes
 const dispatch = useDispatch();
-const cats = useSelector(state => state.cats.random);
+const cats = useSelector((state) => state.cats.random);
 
 // ✅ USA el hook fachada
 const { randomCats, saveFavouriteCat } = useCats();
 ```
 
 El hook fachada:
+
 - Oculta la complejidad de Redux
 - Proporciona una API limpia
 - Mantiene los componentes simples
@@ -282,14 +284,14 @@ export const mapToCatEntity = (rawCat) => {
 
 #### 6. Optimizaciones de Performance
 
-| Técnica | Implementación | Beneficio |
-|---------|---------------|-----------|
-| **Lazy Loading** | `React.lazy()` + `Suspense` | Code splitting automático |
-| **Prefetching** | `usePreloadCats` | Carga datos antes de mostrar UI |
-| **Skeleton** | `SkeletonGrid` | Evita CLS (layout shift) |
-| **LazyMotion** | `domAnimation` | Bundle ~30kb menor |
-| **useCallback** | `toggleTheme` | Evita re-renderizados |
-| **React.memo** | `CatCard` | Evita re-render innecesarios |
+| Técnica          | Implementación              | Beneficio                       |
+| ---------------- | --------------------------- | ------------------------------- |
+| **Lazy Loading** | `React.lazy()` + `Suspense` | Code splitting automático       |
+| **Prefetching**  | `usePreloadCats`            | Carga datos antes de mostrar UI |
+| **Skeleton**     | `SkeletonGrid`              | Evita CLS (layout shift)        |
+| **LazyMotion**   | `domAnimation`              | Bundle ~30kb menor              |
+| **useCallback**  | `toggleTheme`               | Evita re-renderizados           |
+| **React.memo**   | `CatCard`                   | Evita re-render innecesarios    |
 
 ---
 
@@ -354,7 +356,3 @@ pnpm run build      # Producción
 pnpm run lint       # Verificar código (0 warnings)
 pnpm run preview    # Probar build local
 ```
-
----
-
-_Construido con ❤️ como proyecto de referencia para Arquitectura Frontend_
