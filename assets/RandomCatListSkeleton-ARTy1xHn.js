@@ -1,1 +1,0 @@
-import{j as r}from"./index-IHyKcpI3.js";import{S as s}from"./SkeletonCard-BY8XfO88.js";const d=()=>r.jsx("div",{className:"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6",children:Array.from({length:6}).map((t,o)=>r.jsx(s,{},`random-skeleton-${o}`))});export{d as default};
