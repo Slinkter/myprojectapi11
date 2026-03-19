@@ -8,7 +8,7 @@
 import { useMemo, useCallback } from "react";
 import { useCats } from "@features/cats/hooks/useCats";
 import CatList from "./CatList";
-import { logStart, logState } from "@shared/utils/debugLogger";
+import { logStart, logState } from "@shared/lib/debugLogger";
 
 /**
  * @typedef {import('../adapters/catMapper').CatEntity} CatEntity

@@ -4,12 +4,14 @@
  * and renders UI based on received props.
  */
 
+import React from "react";
 import PropTypes from "prop-types";
 import { m, AnimatePresence, useReducedMotion } from "framer-motion";
 import SkeletonGrid from "@shared/components/skeletons/SkeletonGrid";
 import EmptyState from "@shared/components/EmptyState";
 import CatCard from "./CatCard";
-import { logStart, logState } from "@shared/utils/debugLogger";
+import { classNames } from "@shared/lib/classNames";
+import { logStart, logState } from "@shared/lib/debugLogger";
 
 /**
  * @typedef {import('../adapters/catMapper').CatEntity} CatEntity
@@ -86,7 +88,7 @@ const CatList = (props) => {
     } = props;
 
     // Show skeleton immediately when no cats (avoids empty flash)
-    const showSkeleton = cats.length === 0;
+    const showSkeleton = cats.length === 0 && loading;
     const isEmpty = !loading && cats.length === 0;
 
     const containerVariants = shouldReduceMotion
@@ -126,25 +128,47 @@ const CatList = (props) => {
                     animate="visible"
                 >
                     <AnimatePresence mode="popLayout">
-                        {cats.map((cat, index) => (
-                            <m.div
-                                key={cat.id}
-                                layout
-                                custom={index}
-                                variants={itemVariants}
-                                initial="hidden"
-                                animate="visible"
-                                exit="exit"
-                            >
-                                <CatCard
-                                    index={index}
-                                    cat={cat}
-                                    onAction={onAction}
-                                    actionType={actionType}
-                                    disabled={isActionDisabled(cat)}
-                                />
-                            </m.div>
-                        ))}
+                        {cats.map((cat, index) => {
+                            const disabled = isActionDisabled(cat);
+                            return (
+                                <m.div
+                                    key={cat.id}
+                                    layout
+                                    custom={index}
+                                    variants={itemVariants}
+                                    initial="hidden"
+                                    animate="visible"
+                                    exit="exit"
+                                >
+                                    <CatCard>
+                                        <CatCard.Body url={cat.url} id={cat.id} />
+                                        
+                                        {/* Floating Badge (Original design had it) */}
+                                        <div className={classNames(
+                                            "absolute top-3 left-3 px-2 py-1 text-[12px] font-mono font-medium tracking-wider text-white bg-black/40 backdrop-blur-sm rounded-md pointer-events-none",
+                                            !shouldReduceMotion && "opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                        )}>
+                                            ID: {cat.id}
+                                        </div>
+
+                                        <div className={classNames(
+                                            "absolute bottom-3 right-3 z-10",
+                                            !disabled && !shouldReduceMotion && "opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                        )}>
+                                            <CatCard.Footer
+                                                actionType={actionType}
+                                                onAction={(e) => {
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
+                                                    if (!disabled) onAction(cat);
+                                                }}
+                                                disabled={disabled}
+                                            />
+                                        </div>
+                                    </CatCard>
+                                </m.div>
+                            );
+                        })}
                     </AnimatePresence>
                 </m.div>
             )}
@@ -162,4 +186,4 @@ CatList.propTypes = {
     emptyStateMessage: PropTypes.node,
 };
 
-export default CatList;
+export default React.memo(CatList);

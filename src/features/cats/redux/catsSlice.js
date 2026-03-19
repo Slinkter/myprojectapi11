@@ -5,7 +5,7 @@
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { catService } from "../services/catService";
-import { logAction, logEnd } from "@shared/utils/debugLogger";
+import { logAction, logEnd } from "@shared/lib/debugLogger";
 
 /**
  * @typedef {import('../adapters/catMapper').CatEntity} CatEntity

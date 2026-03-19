@@ -7,7 +7,7 @@
 import PropTypes from "prop-types";
 import { BsChevronDown } from "react-icons/bs";
 
-import { classNames } from "@shared/utils/classNames";
+import { classNames } from "@shared/lib/classNames";
 
 /**
  * @typedef {Object} SelectOption

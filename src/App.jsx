@@ -19,7 +19,7 @@ import FavouriteCatList from "@features/cats/components/FavouriteCatList";
 import { useAppearance } from "@shared/hooks/useAppearance";
 import { usePageTitle } from "@shared/hooks/usePageTitle";
 import { motionFeatures } from "@config/motionConfig";
-import { logStart } from "@shared/utils/debugLogger";
+import { logStart } from "@shared/lib/debugLogger";
 
 /**
  * Root Application Component.

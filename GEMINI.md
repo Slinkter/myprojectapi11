@@ -67,7 +67,7 @@ export const CatCard = ({ cat }) => { ... };
 
 ### 2. UI & Styling
 - **Tailwind CSS v4:** Use semantic tokens. Do not hardcode hex colors.
-- **Class Merging:** Always use the `@shared/utils/cn` utility.
+- **Class Merging:** Always use the `@shared/lib/cn` utility.
 - **Animations:** Use `Framer Motion`'s `LazyMotion` with `domAnimation` to minimize bundle size.
 - **Reduced Motion:** Always support accessibility via `useReducedMotion()`.
 

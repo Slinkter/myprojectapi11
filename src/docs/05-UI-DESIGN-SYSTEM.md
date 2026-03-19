@@ -130,7 +130,7 @@ El diseño prioriza las imágenes de gatos como el elemento visual principal. To
   - Preferir tokens de diseño semánticos (ej. `bg-card`, `text-foreground`) sobre valores de color crudos para consistencia temática.
   - Usar clases `group` y `group-hover` para gestionar estados de interacción de componentes anidados (ej. `CatCard` y su `CatCardFooter`).
   - No se utilizan librerías CSS-in-JS.
-  - Las clases condicionales se gestionan utilizando la utilidad `@shared/utils/cn` (impulsada por `clsx` y `tailwind-merge`) para una lógica limpia y resolución de conflictos de estilo.
+  - Las clases condicionales se gestionan utilizando la utilidad `@shared/lib/cn` (impulsada por `clsx` y `tailwind-merge`) para una lógica limpia y resolución de conflictos de estilo.
 
 ---
 

@@ -13,7 +13,7 @@ import {
   saveCat,
   deleteCat,
 } from "../redux/catsSlice";
-import { logState } from "@shared/utils/debugLogger";
+import { logState } from "@shared/lib/debugLogger";
 
 /**
  * Hook `useCats`: a facade for cat state and actions.

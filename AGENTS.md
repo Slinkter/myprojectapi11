@@ -110,7 +110,7 @@ export const useCats = () => { ... };
 | No `useSelector`/`useDispatch` in components | Use facade hooks only |
 | No cross-feature imports | `theme` must not import from `cats` |
 | No hardcoded Tailwind colors | Use semantic tokens (`bg-muted`, not `bg-gray-200`) |
-| Use `cn()` utility for className merging | Always use `@shared/utils/cn` |
+| Use `cn()` utility for className merging | Always use `@shared/lib/cn` |
 | Use LazyMotion for animations | Use `@config/motionConfig.js` with `domAnimation` |
 | Support reduced motion | Use `useReducedMotion()` from framer-motion |
 

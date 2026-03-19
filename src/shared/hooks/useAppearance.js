@@ -8,7 +8,8 @@
  */
 
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useTheme } from "@features/theme/hooks/useTheme";
+import { useFont } from "@features/font/hooks/useFont";
 
 /**
  * @typedef {Object} UseAppearanceReturn
@@ -16,7 +17,7 @@ import { useSelector } from "react-redux";
  */
 
 /**
- * Synchronizes Redux theme and font state with the DOM and localStorage.
+ * Synchronizes theme and font state with the DOM and localStorage.
  * 
  * @returns {UseAppearanceReturn} This hook does not return a value.
  * 
@@ -27,8 +28,8 @@ import { useSelector } from "react-redux";
  * };
  */
 export const useAppearance = () => {
-    const themeMode = useSelector((state) => state.theme.mode);
-    const fontFamily = useSelector((state) => state.font.family);
+    const { theme: themeMode } = useTheme();
+    const { font: fontFamily } = useFont();
 
     /**
      * Effect: Apply theme class to document root and persist to localStorage.

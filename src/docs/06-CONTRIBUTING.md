@@ -112,7 +112,7 @@ export const useCats = () => { ... };
 | Sin `useSelector`/`useDispatch` en componentes | Usar hooks de fachada                                    |
 | Sin importaciones cruzadas entre features                     | `theme` no debe importar desde `cats`                 |
 | Sin colores fijos en Tailwind              | Usar tokens semánticos (`bg-muted`, no `bg-gray-200`) |
-| Evitar lógica manual en `className`            | Usar la utilidad `@shared/utils/cn` para todas las clases  |
+| Evitar lógica manual en `className`            | Usar la utilidad `@shared/lib/cn` para todas las clases  |
 
 ---
 

@@ -5,7 +5,7 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import { classNames } from "@shared/utils/classNames";
+import { classNames } from "@shared/lib/classNames";
 import { BsFillHeartFill, BsHeart, BsTrash } from "react-icons/bs";
 
 /**

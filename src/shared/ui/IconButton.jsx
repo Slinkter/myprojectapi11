@@ -8,7 +8,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { m } from "framer-motion";
 import { useReducedMotion } from "framer-motion";
-import { classNames } from "@shared/utils/classNames";
+import { classNames } from "@shared/lib/classNames";
 
 /**
  * @typedef {Object} IconButtonProps
