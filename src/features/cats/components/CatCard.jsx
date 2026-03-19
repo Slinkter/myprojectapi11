@@ -6,7 +6,7 @@
 import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 import { useReducedMotion } from "framer-motion";
-import { cn } from "@shared/utils/cn";
+import { classNames } from "@shared/utils/classNames";
 import CatCardFooter from "./subcomponents/CatCardFooter";
 
 /**
@@ -64,7 +64,7 @@ const CatCard = ({ cat, onAction, actionType, disabled }) => {
       : "absolute bottom-3 right-3 z-10 transition-opacity duration-300 opacity-0 group-hover:opacity-100";
 
   return (
-    <div className={cn("relative overflow-hidden bg-muted rounded-2xl shadow-sm group", hoverClasses)}>
+    <div className={classNames("relative overflow-hidden bg-muted rounded-2xl shadow-sm group", hoverClasses)}>
 {/* CARD BODY (Image) */}
       <div className="relative aspect-square w-full">
         <img
@@ -82,7 +82,7 @@ const CatCard = ({ cat, onAction, actionType, disabled }) => {
       </div>
 
       {/* Floating Action Button */}
-      <div className={cn(buttonClasses, "transition-opacity duration-300")}>
+      <div className={classNames(buttonClasses, "transition-opacity duration-300")}>
         <CatCardFooter
           actionType={actionType}
           onAction={handleAction}

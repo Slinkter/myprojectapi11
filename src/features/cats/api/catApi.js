@@ -19,8 +19,8 @@ import { logApi } from "@shared/utils/debugLogger";
  * @typedef {Object} RawFavouriteCat
  * @property {number} id - The unique identifier of the favourite record.
  * @property {string} user_id - The user ID associated with the favourite.
- * @property {string} image_id - The ID of the image that was favorited.
- * @property {string} sub_id - Optional sub-ID for filtering over TheCatApi.
+ * @property {string} imageId - The ID of the image that was favorited.
+ * @property {string} subId - Optional sub-ID for filtering over TheCatApi.
  * @property {string} created_at - Timestamp of when the favourite was created.
  * @property {Pick<RawApiCat, "id" | "url">} image - The nested image object.
  */
@@ -48,9 +48,9 @@ export const catApiService = {
     return data;
   },
 
-  postFavourite: async (image_id) => {
+  postFavourite: async (imageId) => {
     logApi("API: POST /favourites");
-    const { data } = await api.post("/favourites", { image_id });
+    const { data } = await api.post("/favourites", { image_id: imageId });
     return data;
   },
 

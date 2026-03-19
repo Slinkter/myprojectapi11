@@ -57,23 +57,11 @@ const CatEntitySchema = z.object({
  * @returns {CatEntity} Normalized cat entity.
  */
 export const mapToCatEntity = (rawCat) => {
-    let normalized;
+    const { image, id, url } = rawCat;
 
-    // If it comes from 'favourites' endpoint, it has image nested
-    if (rawCat.image) {
-        normalized = {
-            id: rawCat.image.id,
-            url: rawCat.image.url,
-            favouriteId: rawCat.id,
-        };
-    } else {
-        // Standard image search response
-        normalized = {
-            id: rawCat.id,
-            url: rawCat.url,
-            favouriteId: null,
-        };
-    }
+    const normalized = image
+        ? { id: image.id, url: image.url, favouriteId: id }
+        : { id, url, favouriteId: null };
 
     // Validate with Zod
     return CatEntitySchema.parse(normalized);

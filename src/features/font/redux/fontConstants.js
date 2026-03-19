@@ -14,7 +14,7 @@
  * Matches the Google Fonts imports in index.html.
  * @type {Font[]}
  */
-export const fonts = [
+export const AVAILABLE_FONTS = [
   { name: "Inter", family: "'Inter', sans-serif" },
   { name: "Lato", family: "'Lato', sans-serif" },
   { name: "Lora", family: "'Lora', serif" },

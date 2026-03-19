@@ -3,7 +3,7 @@
  * @description Define el estado inicial y los reducers para la tipografía.
  */
 import { createSlice } from "@reduxjs/toolkit";
-import { fonts } from "./fontConstants"; // Updated import path
+import { AVAILABLE_FONTS } from "./fontConstants"; // Updated import path
 
 /**
  * @typedef {object} Font
@@ -18,10 +18,10 @@ import { fonts } from "./fontConstants"; // Updated import path
 const getInitialFontFamily = () => {
   const savedFont = localStorage.getItem("font");
   // Validar que la fuente guardada siga existiendo en nuestras constantes.
-  if (savedFont && fonts.some((f) => f.family === savedFont)) {
+  if (savedFont && AVAILABLE_FONTS.some((f) => f.family === savedFont)) {
     return savedFont;
   }
-  return fonts[0].family; // Devuelve la familia de la primera fuente por defecto.
+  return AVAILABLE_FONTS[0].family; // Devuelve la familia de la primera fuente por defecto.
 };
 
 const fontSlice = createSlice({
@@ -30,7 +30,7 @@ const fontSlice = createSlice({
     /** @type {string} */
     family: getInitialFontFamily(),
     /** @type {Font[]} */
-    list: fonts,
+    list: AVAILABLE_FONTS,
   },
   reducers: {
     /**

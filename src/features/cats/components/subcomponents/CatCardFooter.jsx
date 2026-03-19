@@ -5,7 +5,7 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import { cn } from "@shared/utils/cn";
+import { classNames } from "@shared/utils/classNames";
 import { BsFillHeartFill, BsHeart, BsTrash } from "react-icons/bs";
 
 /**
@@ -24,7 +24,7 @@ const CatCardFooter = ({ actionType, onAction, disabled }) => {
     <button
       onClick={onAction}
       disabled={disabled}
-      className={cn(
+      className={classNames(
         "flex items-center justify-center w-9 h-9 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/30",
         disabled
           ? "bg-black/50 cursor-not-allowed"
