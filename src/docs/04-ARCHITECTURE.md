@@ -140,10 +140,10 @@ FontDropdown
     - Crea una carpeta en `src/features/tu-funcionalidad`.
     - Define un `redux/slice` si hay estado global.
     - Crea un `hooks/use-funcionalidad.js` como fachada.
-    - Solo entonces, crea tus componentes.
+    - Solo entonces, crea tus componentes. Mira la **[Guía de Componentes](./guides/COMPONENT_GUIDE.md)**.
 2.  **¿Regla de Oro?**
     - Si usas un _template literal_ complejo para clases, usa `cn()`.
-    - Si ves un componente con un `useEffect` complejo, extráelo a un Custom Hook.
+    - Si ves un componente con un `useEffect` complejo, extráelo a un Custom Hook. Entiende el flujo en la **[Guía de Datos](./guides/DATA_FLOW.md)**.
 
 ---
 

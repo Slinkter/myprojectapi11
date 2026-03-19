@@ -1,6 +1,8 @@
 # 00 — Guía de Configuración: Construyendo Cat Gallery desde Cero
 
-> Esta guía es para estudiantes y desarrolladores que quieren entender **cómo se construyó este proyecto desde cero**. Sigue cada paso en orden.
+> **Nota:** Antes de ensuciarte las manos con el código, te recomendamos leer la **[Introducción Pedagógica](./00-INTRODUCCION.md)** para entender el "por qué" de esta estructura.
+
+Esta guía es para estudiantes y desarrolladores que quieren entender **cómo se construyó este proyecto desde cero**. Sigue cada paso en orden.
 
 ---
 
