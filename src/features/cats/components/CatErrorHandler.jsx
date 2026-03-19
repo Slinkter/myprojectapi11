@@ -5,6 +5,7 @@
 
 import { MdErrorOutline } from "react-icons/md";
 import { useCats } from "@features/cats/hooks/useCats";
+import Button from "@shared/ui/Button";
 
 /**
  * Component to handle and display API errors.
@@ -31,13 +32,15 @@ const CatErrorHandler = () => {
           <span className="font-bold">Error:</span> {error}
         </span>
       </div>
-      <button
+      <Button
         onClick={handleRetry}
-        aria-label="Retry loading cats"
-        className="px-4 py-2 text-xs font-bold text-white transition-all bg-red-600 rounded-lg hover:bg-red-700 active:scale-95 shadow-md shadow-red-500/20"
+        ariaLabel="Retry loading cats"
+        variant="destructive"
+        size="sm"
+        className="font-bold text-xs"
       >
         Retry
-      </button>
+      </Button>
     </div>
   );
 };

@@ -5,8 +5,8 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import { classNames } from "@shared/lib/classNames";
 import { BsFillHeartFill, BsHeart, BsTrash } from "react-icons/bs";
+import IconButton from "@shared/ui/IconButton";
 
 /**
  * CatCardFooter component.
@@ -21,28 +21,26 @@ const CatCardFooter = ({ actionType, onAction, disabled }) => {
   const label = isSave ? "Add to favourites" : "Remove from favourites";
 
   return (
-    <button
+    <IconButton
       onClick={onAction}
       disabled={disabled}
-      className={classNames(
-        "flex items-center justify-center w-9 h-9 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/30",
-        disabled
-          ? "bg-black/50 cursor-not-allowed"
-          : "bg-black/70 hover:bg-black text-white active:scale-95",
-      )}
-      title={label}
-      aria-label={label}
+      ariaLabel={label}
+      className={
+        disabled && isSave
+          ? "bg-black/50 cursor-not-allowed border-none"
+          : "bg-black/70 hover:bg-black text-white border-none active:scale-95"
+      }
     >
       {isSave ? (
         disabled ? (
-          <BsFillHeartFill className="w-5 h-5 text-red-500" />
+          <BsFillHeartFill className="text-red-500" />
         ) : (
-          <BsHeart className="w-5 h-5" />
+          <BsHeart />
         )
       ) : (
-        <BsTrash className="w-5 h-5 hover:text-red-500 transition-colors" />
+        <BsTrash className="hover:text-red-500 transition-colors" />
       )}
-    </button>
+    </IconButton>
   );
 };
 

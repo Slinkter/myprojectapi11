@@ -8,16 +8,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useReducedMotion } from "framer-motion";
 import { classNames } from "@shared/lib/classNames";
+import Card from "@shared/ui/Card";
 import CatCardHeader from "./subcomponents/CatCardHeader";
 import CatCardBody from "./subcomponents/CatCardBody";
 import CatCardFooter from "./subcomponents/CatCardFooter";
 
 /**
- * Renders a single cat card container.
+ * Individual Cat Card Component.
+ * @description Renders a cat card container using the generic Card atom.
  *
  * @component
  * @param {object} props - Component properties.
- * @param {import('react').ReactNode} props.children - Child components (Header, Body, Footer).
+ * @param {import('react').ReactNode} props.children - Child components.
  * @param {string} [props.className] - Optional CSS classes.
  * @returns {JSX.Element} A cat card container.
  */
@@ -29,13 +31,13 @@ const CatCard = ({ children, className }) => {
     : "transition-all duration-300 hover:shadow-xl hover:-translate-y-1";
 
   return (
-    <div className={classNames(
-      "relative overflow-hidden bg-muted rounded-2xl shadow-sm group", 
+    <Card className={classNames(
+      "relative group border-none", 
       hoverClasses,
       className
     )}>
       {children}
-    </div>
+    </Card>
   );
 };
 
@@ -44,7 +46,7 @@ CatCard.propTypes = {
   className: PropTypes.string,
 };
 
-// Expose subcomponents as part of CatCard
+// Expose subcomponents as part of CatCard for easier discovery
 CatCard.Header = CatCardHeader;
 CatCard.Body = CatCardBody;
 CatCard.Footer = CatCardFooter;

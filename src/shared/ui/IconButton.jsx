@@ -14,6 +14,7 @@ import { classNames } from "@shared/lib/classNames";
  * @typedef {Object} IconButtonProps
  * @property {React.ReactNode} children - Icon element (should be ~24x24px).
  * @property {React.MouseEventHandler<HTMLButtonElement>} onClick - Click handler.
+ * @property {boolean} [disabled=false] - Disabled state.
  * @property {string} [className] - Additional CSS classes.
  * @property {string} ariaLabel - Accessibility label (required).
  */
@@ -39,25 +40,26 @@ const buttonVariants = {
  *     <BsXCircle />
  * </IconButton>
  */
-const IconButton = ({ children, onClick, className = "", ariaLabel }) => {
+const IconButton = ({ children, onClick, disabled = false, className = "", ariaLabel }) => {
     const shouldReduceMotion = useReducedMotion();
 
     return (
         <m.button
             type="button"
             onClick={onClick}
+            disabled={disabled}
             className={classNames(
-                "flex items-center justify-center p-2.5 transition-all bg-card text-foreground border border-border rounded-full hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary/30",
+                "flex items-center justify-center p-2.5 transition-all bg-card text-foreground border border-border rounded-full hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary/30 disabled:opacity-50 disabled:cursor-not-allowed",
                 className,
             )}
             aria-label={ariaLabel}
-            whileHover={!shouldReduceMotion ? buttonVariants.hover : undefined}
-            whileTap={!shouldReduceMotion ? buttonVariants.tap : undefined}
+            whileHover={!disabled && !shouldReduceMotion ? buttonVariants.hover : undefined}
+            whileTap={!disabled && !shouldReduceMotion ? buttonVariants.tap : undefined}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
         >
-            {React.cloneElement(children, {
+            {React.isValidElement(children) ? React.cloneElement(children, {
                 className: classNames("w-6 h-6", children.props.className),
-            })}
+            }) : children}
         </m.button>
     );
 };
@@ -65,6 +67,7 @@ const IconButton = ({ children, onClick, className = "", ariaLabel }) => {
 IconButton.propTypes = {
     children: PropTypes.node.isRequired,
     onClick: PropTypes.func.isRequired,
+    disabled: PropTypes.bool,
     className: PropTypes.string,
     ariaLabel: PropTypes.string.isRequired,
 };
