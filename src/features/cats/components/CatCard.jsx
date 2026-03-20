@@ -46,9 +46,11 @@ CatCard.propTypes = {
   className: PropTypes.string,
 };
 
-// Expose subcomponents as part of CatCard for easier discovery
-CatCard.Header = CatCardHeader;
-CatCard.Body = CatCardBody;
-CatCard.Footer = CatCardFooter;
+const MemoizedCatCard = React.memo(CatCard);
 
-export default React.memo(CatCard);
+// Expose subcomponents as part of CatCard for easier discovery
+MemoizedCatCard.Header = CatCardHeader;
+MemoizedCatCard.Body = CatCardBody;
+MemoizedCatCard.Footer = CatCardFooter;
+
+export default MemoizedCatCard;
