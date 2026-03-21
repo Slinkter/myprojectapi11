@@ -4,26 +4,39 @@
  * scattered `import.meta.env` calls throughout the codebase.
  */
 
+import { z } from "zod";
+
 /**
- * Validates that critical environment variables are present.
- * Throws an error in development if missing.
+ * Environment variable schema definition.
+ * @constant {z.ZodType<Object>}
+ */
+const EnvSchema = z.object({
+    VITE_BASE_URL: z.url("VITE_BASE_URL must be a valid URL"),
+    VITE_API_KEY: z.string().min(1, "VITE_API_KEY is required"),
+});
+
+/**
+ * Validates critical environment variables.
+ * In development, missing or invalid variables result in an early crash for better DX.
  */
 const validateEnv = () => {
-  const required = ["VITE_BASE_URL", "VITE_API_KEY"];
+    const result = EnvSchema.safeParse({
+        VITE_BASE_URL: import.meta.env.VITE_BASE_URL,
+        VITE_API_KEY: import.meta.env.VITE_API_KEY,
+    });
 
-  const missing = required.filter((key) => !import.meta.env[key]);
-
-  if (missing.length > 0) {
-    const message = `[App Config] Missing required environment variables: ${missing.join(
-      ", "
-    )}`;
-    console.error(message);
-    // In strictly typed environments or strict mode, we might want to throw.
-    // throw new Error(message);
-  }
+    if (!result.success) {
+        const errors = result.error.errors.map((e) => e.message).join(", ");
+        const message = `[App Config] Invalid environment variables: ${errors}`;
+        console.error(message);
+        // Crash in development if environment is malformed.
+        if (import.meta.env.DEV) {
+            throw new Error(message);
+        }
+    }
 };
 
-// Run validation
+// Run validation immediately
 validateEnv();
 
 /**
@@ -33,8 +46,8 @@ validateEnv();
  * @property {string} api.apiKey - The authentication key for the API.
  */
 export const config = {
-  api: {
-    baseUrl: import.meta.env.VITE_BASE_URL,
-    apiKey: import.meta.env.VITE_API_KEY,
-  },
+    api: {
+        baseUrl: import.meta.env.VITE_BASE_URL,
+        apiKey: import.meta.env.VITE_API_KEY,
+    },
 };

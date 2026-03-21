@@ -6,6 +6,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { BsFillHeartFill, BsHeart, BsTrash } from "react-icons/bs";
+import { cn } from "@shared/lib/cn";
 import IconButton from "@shared/ui/IconButton";
 
 /**
@@ -25,12 +26,14 @@ const CatCardFooter = ({ actionType, onAction, disabled }) => {
       onClick={onAction}
       disabled={disabled}
       ariaLabel={label}
-      className={
-        disabled && isSave
-          ? "bg-black/50 cursor-not-allowed border-none"
-          : "bg-black/70 hover:bg-black text-white border-none active:scale-95"
-      }
+      className={cn(
+        "border-none active:scale-95",
+        isSave 
+          ? (disabled ? "bg-black/50 cursor-not-allowed" : "bg-black/70 hover:bg-black text-white")
+          : "bg-black/70 hover:bg-black text-white"
+      )}
     >
+
       {isSave ? (
         disabled ? (
           <BsFillHeartFill className="text-red-500" />

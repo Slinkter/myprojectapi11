@@ -123,18 +123,34 @@ FontDropdown
 
 ---
 
-## 4. Cumplimiento de Estándares (Audit)
-
-| Estándar            | Estado | Observación                                                                                                                     |
-| :------------------ | :----- | :------------------------------------------------------------------------------------------------------------------------------ |
-| **PascalCase**      | ✅     | Utilizado rigurosamente en Componentes (`CatCard.jsx`, `IconButton.jsx`).                                                       |
-| **camelCase**       | ✅     | Utilizado en Hooks (`useCats.js`) y utilidades.                                                                                 |
-| **Desacoplamiento** | 💎     | **Excelente.** Ningún componente de la carpeta `shared` depende de `features`. Las features solo se comunican vía Redux/Facade. |
-| **Clean Code**      | ✅     | Los componentes son pequeños (SFC - Stateless Functional Components) y la lógica pesada vive en Hooks.                          |
-
+## 5. Integridad de Datos con Zod 4
+ 
+El proyecto utiliza **Zod 4** como motor de validación de esquemas en ejecución, proporcionando una capa de seguridad que JSDoc no puede ofrecer por sí solo.
+ 
+### Casos de Uso:
+- **Validación de Entorno (`src/config/env.js`)**: Garantiza que el `.env` esté correctamente configurado antes de que la aplicación empiece a renderizar.
+- **Mapeo de Datos (`src/features/cats/adapters/catMapper.js`)**: Valida las respuestas de la API externa contra esquemas estrictos antes de convertirlas en `CatEntity`.
+ 
+### ¿Por qué Zod 4?
+1. **Rendimiento**: Hasta 10 veces más rápido que Zod 3 en operaciones comunes.
+2. **Bundle Size**: Más ligero y modular, ideal para SPAs.
+3. **Sintaxis Moderna**: Uso de `z.url()` y validaciones de cadena optimizadas.
+ 
 ---
-
-## 5. Blueprint para Desarrolladores (Quick Guide)
+ 
+## 6. Cumplimiento de Estándares (Audit)
+ 
+| Estándar              | Estado | Observación                                                                                                                     |
+| :-------------------- | :----- | :------------------------------------------------------------------------------------------------------------------------------ |
+| **PascalCase**        | ✅     | Utilizado rigurosamente en Componentes (`CatCard.jsx`, `IconButton.jsx`).                                                       |
+| **camelCase**         | ✅     | Utilizado en Hooks (`useCats.js`) y utilidades.                                                                                 |
+| **Validación Zod**    | 🛡️     | **Implementado.** Env y Mappers protegidos contra datos corruptos.                                                                |
+| **Desacoplamiento**   | 💎     | **Excelente.** Ningún componente de la carpeta `shared` depende de `features`. Las features solo se comunican vía Redux/Facade. |
+| **Clean Code**        | ✅     | Los componentes son pequeños (SFC - Stateless Functional Components) y la lógica pesada vive en Hooks.                          |
+ 
+---
+ 
+## 7. Blueprint para Desarrolladores (Quick Guide)
 
 1.  **¿Quieres crear una funcionalidad nueva?**
     - Crea una carpeta en `src/features/tu-funcionalidad`.

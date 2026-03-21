@@ -6,7 +6,7 @@
 import PropTypes from "prop-types";
 import { m } from "framer-motion";
 import { useReducedMotion } from "framer-motion";
-import { classNames } from "@shared/lib/classNames";
+import { cn } from "@shared/lib/cn";
 
 /**
  * Button variants for framer-motion interactions.
@@ -65,7 +65,7 @@ const Button = ({
       aria-label={ariaLabel}
       whileHover={!disabled && !shouldReduceMotion ? buttonVariants.hover : undefined}
       whileTap={!disabled && !shouldReduceMotion ? buttonVariants.tap : undefined}
-      className={classNames(
+      className={cn(
         "inline-flex items-center justify-center rounded-lg font-bold transition-all focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none",
         variants[variant],
         sizes[size],

@@ -48,7 +48,7 @@ Cada librería tiene un rol específico. Instálalas grupo por grupo.
 ### Dependencias de Ejecución (Runtime)
 
 ```bash
-pnpm add @reduxjs/toolkit react-redux axios framer-motion react-hot-toast react-icons prop-types clsx tailwind-merge
+pnpm add @reduxjs/toolkit react-redux axios framer-motion react-hot-toast react-icons prop-types clsx tailwind-merge zod
 ```
 
 | Librería            | Versión  | Por Qué la Usamos                                                            |
@@ -64,6 +64,8 @@ pnpm add @reduxjs/toolkit react-redux axios framer-motion react-hot-toast react-
 | `prop-types`       | ^15.8.1  | Validación de props en ejecución (documenta los contratos de componentes)                  |
 | `clsx`             | ^2.1.1   | Utilidad para construir cadenas de className condicionalmente                 |
 | `tailwind-merge`   | ^3.5.0   | Utilidad para fusionar clases de Tailwind CSS de forma segura sin conflictos     |
+| `zod`              | ^4.3.6   | Validación de esquemas en ejecución y tipado (Zod 4)          |
+
 
 ### Dependencias de Desarrollo (Dev)
 
@@ -103,6 +105,19 @@ Asegúrate también de que `.env` esté en `.gitignore`:
 ```gitignore
 .env
 .env.local
+```
+
+### Paso 3.1 — Validación de Entorno (Zod)
+
+Para evitar que la aplicación falle en lugares extraños, validamos las variables de entorno en `src/config/env.js` usando **Zod**.
+
+Si olvidas una variable, el proyecto lanzará un error descriptivo al iniciar:
+```javascript
+// src/config/env.js
+const EnvSchema = z.object({
+    VITE_BASE_URL: z.url(),
+    VITE_API_KEY: z.string().min(1),
+});
 ```
 
 ---

@@ -7,7 +7,8 @@
 import PropTypes from "prop-types";
 import { BsChevronDown } from "react-icons/bs";
 
-import { classNames } from "@shared/lib/classNames";
+import { cn } from "@shared/lib/cn";
+
 
 /**
  * @typedef {Object} SelectOption
@@ -29,7 +30,8 @@ import { classNames } from "@shared/lib/classNames";
  */
 const Select = ({ value, onChange, options, className = "", ariaLabel }) => {
   return (
-    <div className={classNames("relative", className)}>
+    <div className={cn("relative", className)}>
+
       <select
         value={value}
         onChange={onChange}

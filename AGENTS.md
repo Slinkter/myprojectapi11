@@ -184,6 +184,24 @@ refactor: extract catMapper to adapter layer
 
 ---
 
+## 🤖 Sub-Agent Delegation Strategy
+
+To maintain optimal performance and context efficiency, agents should leverage specialized sub-agents for complex or high-volume tasks.
+
+| Sub-Agent | Best Used For | Description |
+|-----------|---------------|-------------|
+| `codebase_investigator` | Architecture & Dependencies | Deep analysis of FSD layers, mapping Redux facades, or planning cross-feature changes. |
+| `generalist` | Batch Tasks & Research | Repetitive refactoring across multiple files, running verbose build/lint commands, or broad documentation research. |
+| `cli_help` | Tooling & Config | Clarifying Gemini CLI features, command usage, or current runtime configuration. |
+
+### When to Delegate
+- **Complex Mapping:** Understanding deep dependency chains or data flows between `features/` and `shared/`.
+- **Repetitive Tasks:** Modifying >3 files with similar changes (e.g., adding JSDoc to all hooks).
+- **High-Volume Output:** Commands expected to return massive data (e.g., full project linting).
+- **Speculative Research:** Tasks requiring multiple exploration steps before a clear path is found.
+
+---
+
 ## Environment Variables
 
 Create `.env` in root (see `.env.example`):

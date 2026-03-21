@@ -7,7 +7,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useReducedMotion } from "framer-motion";
-import { classNames } from "@shared/lib/classNames";
+import { cn } from "@shared/lib/cn";
 import Card from "@shared/ui/Card";
 import CatCardHeader from "./subcomponents/CatCardHeader";
 import CatCardBody from "./subcomponents/CatCardBody";
@@ -31,7 +31,7 @@ const CatCard = ({ children, className }) => {
     : "transition-all duration-300 hover:shadow-xl hover:-translate-y-1";
 
   return (
-    <Card className={classNames(
+    <Card className={cn(
       "relative group border-none", 
       hoverClasses,
       className
@@ -40,6 +40,7 @@ const CatCard = ({ children, className }) => {
     </Card>
   );
 };
+
 
 CatCard.propTypes = {
   children: PropTypes.node.isRequired,

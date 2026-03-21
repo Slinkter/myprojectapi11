@@ -8,7 +8,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { m } from "framer-motion";
 import { useReducedMotion } from "framer-motion";
-import { classNames } from "@shared/lib/classNames";
+import { cn } from "@shared/lib/cn";
 
 /**
  * @typedef {Object} IconButtonProps
@@ -48,7 +48,7 @@ const IconButton = ({ children, onClick, disabled = false, className = "", ariaL
             type="button"
             onClick={onClick}
             disabled={disabled}
-            className={classNames(
+            className={cn(
                 "flex items-center justify-center p-2.5 transition-all bg-card text-foreground border border-border rounded-full hover:bg-muted focus:outline-none focus:ring-2 focus:ring-primary/30 disabled:opacity-50 disabled:cursor-not-allowed",
                 className,
             )}
@@ -58,7 +58,7 @@ const IconButton = ({ children, onClick, disabled = false, className = "", ariaL
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
         >
             {React.isValidElement(children) ? React.cloneElement(children, {
-                className: classNames("w-6 h-6", children.props.className),
+                className: cn("w-6 h-6", children.props.className),
             }) : children}
         </m.button>
     );

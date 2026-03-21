@@ -34,6 +34,8 @@ Cat Gallery permite a los usuarios **explorar imágenes aleatorias de gatos**, *
 | `react-hot-toast`  | ^2.6.0   | Notificaciones toast para feedback del usuario                |
 | `react-icons`      | ^5.5.0   | Componentes de iconos (subconjunto de Bootstrap Icons)        |
 | `prop-types`       | ^15.8.1  | Validación de props en ejecución y contrato de componentes    |
+| `zod`              | ^4.3.6   | Validación de esquemas en ejecución y tipado (Zod 4)          |
+
 
 ### Dependencias de Desarrollo
 
@@ -122,6 +124,7 @@ src/
 | Patrón                       | Dónde                                   | Beneficio                               |
 | ---------------------------- | --------------------------------------- | --------------------------------------- |
 | **Fachada (Hook)**           | `useCats`, `useTheme`, `useFont`        | UI no accede a Redux directamente       |
+| **Zod Validation**           | `catMapper.js` + `env.js`               | Validación de esquemas en ejecución (Zod 4)  |
 | **Adaptador / Mapper**       | `catMapper.js`                          | API no se filtra a componentes          |
 | **Error Boundary**           | `ErrorBoundary.jsx`                     | Captura errores de React con retry      |
 | **Prefetching**              | `usePreloadCats.js` + `DataInitializer` | Carga datos antes de montar componentes |
@@ -130,6 +133,7 @@ src/
 | **Reduced Motion**           | `useReducedMotion()` en CatCard         | Accesibilidad para animaciones          |
 | **Tipado con JSDoc**         | Todos los hooks, mappers, props         | Seguridad de tipos en JS plano          |
 | **Container/Presentational** | `RandomCatList` → `CatList` → `CatCard` | Separación de lógica y presentación     |
+
 
 ---
 
@@ -148,7 +152,10 @@ src/
 | **Skeletons separados**        | `RandomCatListSkeleton` (6 items) vs `FavouriteCatListSkeleton` (4 items) |
 | **Botones consistentes**       | Fondo negro redondeado con ícono blanco                                   |
 | **Favicon personalizado**      | Ícono de gato en `/public/cat.svg`                                        |
+| **Zod 4 Integration**          | Validación de esquemas ultra rápida y liviana en adapters/api             |
+| **Env Validation**             | Validación declarativa en `src/config/env.js` para asegurar .env correcto   |
 | **JSDoc mejorado**             | Tipados completos con ejemplos en todos los hooks                         |
+
 
 ---
 

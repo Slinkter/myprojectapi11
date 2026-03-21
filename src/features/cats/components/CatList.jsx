@@ -10,7 +10,7 @@ import { m, AnimatePresence, useReducedMotion } from "framer-motion";
 import SkeletonGrid from "@shared/components/skeletons/SkeletonGrid";
 import EmptyState from "@shared/components/EmptyState";
 import CatCard from "./CatCard";
-import { classNames } from "@shared/lib/classNames";
+import { cn } from "@shared/lib/cn";
 import { logStart, logState } from "@shared/lib/debugLogger";
 
 /**
@@ -144,14 +144,14 @@ const CatList = (props) => {
                                         <CatCard.Body url={cat.url} id={cat.id} />
                                         
                                         {/* Floating Badge (Original design had it) */}
-                                        <div className={classNames(
+                                        <div className={cn(
                                             "absolute top-3 left-3 px-2 py-1 text-[12px] font-mono font-medium tracking-wider text-white bg-black/40 backdrop-blur-sm rounded-md pointer-events-none",
                                             !shouldReduceMotion && "opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                                         )}>
                                             ID: {cat.id}
                                         </div>
 
-                                        <div className={classNames(
+                                        <div className={cn(
                                             "absolute bottom-3 right-3 z-10",
                                             !disabled && !shouldReduceMotion && "opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                                         )}>

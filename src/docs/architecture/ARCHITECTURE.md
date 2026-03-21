@@ -44,8 +44,9 @@ Each feature follows a strict internal structure:
 ### 3. Shared (`src/shared//`)
 Reusable logic and UI without business dependencies.
 - `components/`: Generic UI (Buttons, Selects, Skeletons).
-- `lib/`: Core utilities (`classNames`, `debugLogger`).
-- `hooks/`: Generic hooks (`useAppearance`).
+- `lib/`: Core utilities like `cn` (Tailwind Merge + Clsx) and `debugLogger`.
+- `hooks/`: Generic hooks like `useAppearance`.
+
 
 ## Dependency Rule
 Dependencies must always point **downwards**:

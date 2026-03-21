@@ -17,28 +17,28 @@ import { logApi } from "@shared/lib/debugLogger";
  * @namespace
  */
 export const catService = {
-  getRandomCats: async (limit) => {
-    logApi("catService.getRandomCats");
-    const rawData = await catApiService.fetchImages(limit);
-    const result = mapToCatEntities(rawData);
-    return result;
-  },
+    getRandomCats: async (limit) => {
+        logApi("catService.getRandomCats");
+        const rawData = await catApiService.fetchImages(limit);
+        const result = mapToCatEntities(rawData);
+        return result;
+    },
 
-  getFavouriteCats: async () => {
-    logApi("catService.getFavouriteCats");
-    const rawData = await catApiService.fetchFavourites();
-    const result = mapToCatEntities(rawData);
-    return result;
-  },
+    getFavouriteCats: async () => {
+        logApi("catService.getFavouriteCats");
+        const rawData = await catApiService.fetchFavourites();
+        const result = mapToCatEntities(rawData);
+        return result;
+    },
 
-  saveFavourite: async (imageId) => {
-    logApi("catService.saveFavourite");
-    const response = await catApiService.postFavourite(imageId);
-    return response.id;
-  },
+    saveFavourite: async (imageId) => {
+        logApi("catService.saveFavourite");
+        const response = await catApiService.postFavourite(imageId);
+        return response.id;
+    },
 
-  deleteFavourite: async (favouriteId) => {
-    logApi("catService.deleteFavourite");
-    await catApiService.deleteFavourite(favouriteId);
-  },
+    deleteFavourite: async (favouriteId) => {
+        logApi("catService.deleteFavourite");
+        await catApiService.deleteFavourite(favouriteId);
+    },
 };

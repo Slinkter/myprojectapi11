@@ -26,9 +26,9 @@ import { logApi } from "@shared/lib/debugLogger";
  */
 
 const api = axios.create({
-  baseURL: config.api.baseUrl,
-  headers: { "x-api-key": config.api.apiKey },
-  timeout: 5000,
+    baseURL: config.api.baseUrl,
+    headers: { "x-api-key": config.api.apiKey },
+    timeout: 5000,
 });
 
 /**
@@ -36,27 +36,27 @@ const api = axios.create({
  * @namespace
  */
 export const catApiService = {
-  fetchImages: async (limit = 12) => {
-    logApi("API: GET /images/search");
-    const { data } = await api.get("/images/search", { params: { limit } });
-    return data;
-  },
+    fetchImages: async (limit = 12) => {
+        logApi("API: GET /images/search");
+        const { data } = await api.get("/images/search", { params: { limit } });
+        return data;
+    },
 
-  fetchFavourites: async () => {
-    logApi("API: GET /favourites");
-    const { data } = await api.get("/favourites");
-    return data;
-  },
+    fetchFavourites: async () => {
+        logApi("API: GET /favourites");
+        const { data } = await api.get("/favourites");
+        return data;
+    },
 
-  postFavourite: async (imageId) => {
-    logApi("API: POST /favourites");
-    const { data } = await api.post("/favourites", { image_id: imageId });
-    return data;
-  },
+    postFavourite: async (imageId) => {
+        logApi("API: POST /favourites");
+        const { data } = await api.post("/favourites", { image_id: imageId });
+        return data;
+    },
 
-  deleteFavourite: async (favouriteId) => {
-    logApi("API: DELETE /favourites");
-    const { data } = await api.delete(`/favourites/${favouriteId}`);
-    return data;
-  },
+    deleteFavourite: async (favouriteId) => {
+        logApi("API: DELETE /favourites");
+        const { data } = await api.delete(`/favourites/${favouriteId}`);
+        return data;
+    },
 };

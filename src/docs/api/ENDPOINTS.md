@@ -70,3 +70,15 @@ Como no tenemos un sistema de login complejo, usamos un `sub_id` único para cad
 | `order` | `DESC` | Orden de los datos (más nuevos primero). |
 | `include_breeds` | `1` | (Opcional) Incluye datos de la raza del gato. |
 | `size` | `med` | Tamaño de imagen optimizado para la web. |
+ 
+ ---
+ 
+## 6. Seguridad y Validación (Zod)
+ 
+Cada respuesta de estos endpoints es purificada y validada antes de entrar en nuestro flujo de datos.
+- **Esquema:** Definido en `src/features/cats/adapters/catMapper.js` usando **Zod 4**.
+- **Beneficio:** Si TheCatAPI cambia el formato de sus datos, nuestra aplicación fallará de forma controlada y segura en lugar de propagar errores de `undefined` por toda la interfaz.
+ 
+---
+ 
+> _Nota para desarrolladores: Siempre que añadas un nuevo endpoint, asegúrate de crear su correspondiente validación Zod en la capa de `adapters`._

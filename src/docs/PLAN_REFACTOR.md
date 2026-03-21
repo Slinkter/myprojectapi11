@@ -83,13 +83,19 @@ graph TD
 - [ ] Asegurar consistencia de espaciado usando tokens de Tailwind.
 
 ### FASE 4: Documentación Pedagógica (Agente D)
-- [ ] Crear `src/docs/architecture/ARCHITECTURE.md` con diagramas Mermaid.
-- [ ] Crear guías de flujo de datos (`DATA_FLOW.md`).
-- [ ] Crear `COMPONENT_GUIDE.md` para estandarizar la creación de nuevos componentes.
-
+- [x] Crear `src/docs/architecture/ARCHITECTURE.md` con diagramas Mermaid.
+- [x] Crear guías de flujo de datos (`DATA_FLOW.md`).
+- [x] Crear `COMPONENT_GUIDE.md` para estandarizar la creación de nuevos componentes.
+ 
+### FASE 5: Robustez & Validación (Zod 4) (Agente E)
+- [x] **Migración a Zod 4**: Actualización de dependencias y optimización de esquemas.
+- [x] **Validación de Configuración**: Implementación de `EnvSchema` en `src/config/env.js`.
+- [x] **Tipado en Ejecución**: Refuerzo de validaciones en `catMapper.js` para proteger la UI de datos externos corruptos.
+ 
 ---
-
+ 
 ## ✅ CRITERIOS DE ÉXITO
+
 1. `pnpm lint` -> 0 errores/warnings.
 2. `pnpm build` -> Éxito.
 3. Cobertura completa de JSDoc.

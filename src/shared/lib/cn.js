@@ -1,6 +1,7 @@
 /**
  * @file Utility for merging Tailwind CSS classes.
  * @description Combines clsx and tailwind-merge to handle conditional classes and resolve conflicts.
+ * Uses the industry standard 'cn' naming convention.
  */
 
 import { clsx } from "clsx";
@@ -13,8 +14,9 @@ import { twMerge } from "tailwind-merge";
  * @returns {string} The merged and resolved class string.
  * 
  * @example
- * classNames("px-2 py-1", isError && "bg-red-500", customClass);
+ * cn("px-2 py-1", isError && "bg-red-500", customClass);
  */
-export function classNames(...inputs) {
+export function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
+

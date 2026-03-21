@@ -4,7 +4,7 @@
  */
 
 import PropTypes from "prop-types";
-import { classNames } from "@shared/lib/classNames";
+import { cn } from "@shared/lib/cn";
 
 /**
  * A basic card component.
@@ -17,7 +17,7 @@ import { classNames } from "@shared/lib/classNames";
  */
 const Card = ({ children, className = "" }) => {
   return (
-    <div className={classNames(
+    <div className={cn(
       "bg-card text-card-foreground rounded-2xl shadow-sm border border-border overflow-hidden",
       className
     )}>
@@ -35,7 +35,7 @@ Card.propTypes = {
  * Card Header subcomponent.
  */
 Card.Header = ({ children, className = "" }) => (
-  <div className={classNames("px-4 py-3 border-b border-border bg-muted/50", className)}>
+  <div className={cn("px-4 py-3 border-b border-border bg-muted/50", className)}>
     {children}
   </div>
 );
@@ -50,7 +50,7 @@ Card.Header.propTypes = {
  * Card Body subcomponent.
  */
 Card.Body = ({ children, className = "" }) => (
-  <div className={classNames("p-4", className)}>
+  <div className={cn("p-4", className)}>
     {children}
   </div>
 );
@@ -65,7 +65,7 @@ Card.Body.propTypes = {
  * Card Footer subcomponent.
  */
 Card.Footer = ({ children, className = "" }) => (
-  <div className={classNames("px-4 py-3 border-t border-border bg-muted/50", className)}>
+  <div className={cn("px-4 py-3 border-t border-border bg-muted/50", className)}>
     {children}
   </div>
 );

@@ -27,68 +27,66 @@ import { logStart } from "@shared/lib/debugLogger";
  * @returns {JSX.Element} The main layout.
  */
 const App = () => {
-  logStart("App render");
-  usePageTitle("Project API 11 - Cat Gallery");
-  useAppearance();
+    logStart("App render");
+    usePageTitle("Project API 11 - Cat Gallery");
+    useAppearance();
 
-  return (
-    <LazyMotion features={motionFeatures}>
-      <div className="min-h-dvh">
-        <DataInitializer />
-
-        <Navbar />
-
-        <Main />
-
-        <Alert />
-      </div>
-    </LazyMotion>
-  );
+    return (
+        <LazyMotion features={motionFeatures}>
+            <div className="min-h-dvh">
+                <DataInitializer />
+                <Navbar />
+                <Main />
+                <Alert />
+            </div>
+        </LazyMotion>
+    );
 };
 
 export default App;
 
 const Navbar = () => {
-  return (
-    <header className="sticky top-0 z-50 bg-background/80 border-b border-border backdrop-blur-md">
-      <div className="container flex items-center justify-between px-4 py-3 mx-auto">
-        <h1 className="text-2xl font-bold tracking-tight text-foreground">
-          Cat Gallery
-        </h1>
-        <div className="flex items-center gap-4">
-          <FontDropdown />
-          <ThemeToggleButton />
-        </div>
-      </div>
-    </header>
-  );
+    return (
+        <header className="sticky top-0 z-50 bg-background/80 border-b border-border backdrop-blur-md">
+            <div className="container flex items-center justify-between px-4 py-3 mx-auto">
+                <h1 className="text-2xl font-bold tracking-tight text-foreground">
+                    Cat Gallery
+                </h1>
+                <div className="flex items-center gap-4">
+                    <FontDropdown />
+                    <ThemeToggleButton />
+                </div>
+            </div>
+        </header>
+    );
 };
 
 const Main = () => {
-  return (
-    <main className="container mx-auto p-4">
-      <ErrorBoundary>
-        <Suspense fallback={<InitialLoadSkeleton />}>
-          <RandomCatList />
-          <FavouriteCatList />
-        </Suspense>
-      </ErrorBoundary>
-      <CatErrorHandler />
-    </main>
-  );
+    return (
+        <main className="container mx-auto p-4">
+            <ErrorBoundary>
+                <Suspense fallback={<InitialLoadSkeleton />}>
+                    <RandomCatList />
+                    <FavouriteCatList />
+                </Suspense>
+            </ErrorBoundary>
+            <CatErrorHandler />
+        </main>
+    );
 };
 
 const Alert = () => {
-  return (
-    <Toaster
-      position="top-center"
-      reverseOrder={false}
-      toastOptions={{
-        className: "bg-card text-foreground border border-border shadow-lg",
-        style: {
-          borderRadius: "12px",
-        },
-      }}
-    />
-  );
+    return (
+        <Toaster
+            position="top-center"
+            reverseOrder={false}
+            toastOptions={{
+                className:
+                    "bg-card text-foreground border border-border shadow-lg",
+                style: {
+                    borderRadius: "12px",
+                },
+            }}
+        />
+    );
 };

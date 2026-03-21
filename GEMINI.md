@@ -83,6 +83,9 @@ Always use the configured path aliases:
 - `@app/*` -> `src/app/*`
 - `@config/*` -> `src/config/*`
 
+### 5. AI Agent Performance (Sub-Agents)
+To maintain context efficiency and high-signal output, agents **MUST** proactively delegate complex analysis, architectural mapping, or high-volume batch tasks to specialized sub-agents (`codebase_investigator`, `generalist`). Refer to `AGENTS.md` for specific delegation guidelines.
+
 ## 📝 Git Workflow
 - **Commit Messages:** Follow Conventional Commits (`feat:`, `fix:`, `refactor:`, `docs:`).
 - **Linting Policy:** The `pnpm run lint` command must pass with **0 warnings** before any change is considered complete.
