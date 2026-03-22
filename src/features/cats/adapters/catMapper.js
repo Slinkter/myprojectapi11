@@ -10,7 +10,7 @@ import { z } from "zod";
  * Zod schema for raw API response from /images/search.
  * @constant {z.ZodType<Object>}
  */
-const RawSearchCatSchema = z.object({
+const RAW_SEARCH_CAT_SCHEMA = z.object({
     id: z.string(),
     url: z.string().url(),
     width: z.number().optional(),
@@ -21,7 +21,7 @@ const RawSearchCatSchema = z.object({
  * Zod schema for raw API response from /favourites.
  * @constant {z.ZodType<Object>}
  */
-const RawFavouriteCatSchema = z.object({
+const RAW_FAVOURITE_CAT_SCHEMA = z.object({
     id: z.number(),
     user_id: z.string(),
     image_id: z.string(),
@@ -37,7 +37,7 @@ const RawFavouriteCatSchema = z.object({
  * Schema for our normalized CatEntity.
  * @constant {z.ZodType<Object>}
  */
-const CatEntitySchema = z.object({
+const CAT_ENTITY_SCHEMA = z.object({
     id: z.string(),
     url: z.string().url(),
     favouriteId: z.number().nullable(),
@@ -76,7 +76,7 @@ export const mapToCatEntity = (rawCat) => {
     }
 
     // Validate with Zod
-    return CatEntitySchema.parse(normalized);
+    return CAT_ENTITY_SCHEMA.parse(normalized);
 };
 
 /**
@@ -85,7 +85,7 @@ export const mapToCatEntity = (rawCat) => {
  * @returns {{success: boolean, data?: RawFavouriteCatSchema, error?: z.ZodError}}
  */
 export const validateRawFavourite = (data) => {
-    return RawFavouriteCatSchema.safeParse(data);
+    return RAW_FAVOURITE_CAT_SCHEMA.safeParse(data);
 };
 
 /**
@@ -94,7 +94,7 @@ export const validateRawFavourite = (data) => {
  * @returns {{success: boolean, data?: RawSearchCatSchema, error?: z.ZodError}}
  */
 export const validateRawSearch = (data) => {
-    return RawSearchCatSchema.safeParse(data);
+    return RAW_SEARCH_CAT_SCHEMA.safeParse(data);
 };
 
 /**
@@ -113,5 +113,5 @@ export const mapToCatEntities = (rawCats) => {
  * @returns {{success: boolean, data?: CatEntity, error?: z.ZodError}}
  */
 export const validateCatEntity = (data) => {
-    return CatEntitySchema.safeParse(data);
+    return CAT_ENTITY_SCHEMA.safeParse(data);
 };

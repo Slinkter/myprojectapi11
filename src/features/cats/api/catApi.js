@@ -6,6 +6,7 @@
 import axios from "axios";
 import { config } from "@config/env";
 import { logApi } from "@shared/utils/debugLogger";
+import { API_TIMEOUT, DEFAULT_CAT_LIMIT } from "@config/apiConstants";
 
 /**
  * @typedef {Object} RawApiCat
@@ -28,7 +29,7 @@ import { logApi } from "@shared/utils/debugLogger";
 const api = axios.create({
   baseURL: config.api.baseUrl,
   headers: { "x-api-key": config.api.apiKey },
-  timeout: 5000,
+  timeout: API_TIMEOUT,
 });
 
 /**
@@ -36,7 +37,7 @@ const api = axios.create({
  * @namespace
  */
 export const catApiService = {
-  fetchImages: async (limit = 12) => {
+  fetchImages: async (limit = DEFAULT_CAT_LIMIT) => {
     logApi("API: GET /images/search");
     const { data } = await api.get("/images/search", { params: { limit } });
     return data;

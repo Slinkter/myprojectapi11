@@ -1,21 +1,28 @@
-/**
- * @file Componente de esqueleto para una rejilla de tarjetas.
- * @description Muestra una rejilla de tarjetas esqueléticas para simular la carga de contenido con el espaciado exacto del componente principal.
- */
-
+import React from "react";
 import PropTypes from "prop-types";
 import SkeletonCard from "./SkeletonCard";
 
-const SkeletonGrid = ({ count = 12 }) => (
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6  gap-6">
-    {Array.from({ length: count }).map((_, index) => (
-      <SkeletonCard key={index} />
-    ))}
-  </div>
-);
+const GRID_COLS = "grid-cols-1 md:grid-cols-2 lg:grid-cols-6";
+
+/**
+ * Skeleton grid component.
+ * @component
+ * @param {object} props - Component properties.
+ * @param {number} [props.count=12] - Number of skeleton cards.
+ * @returns {JSX.Element}
+ */
+const SkeletonGrid = React.memo(({ count = 12 }) => (
+    <div className={`grid ${GRID_COLS} gap-6`}>
+        {Array.from({ length: count }).map((_, index) => (
+            <SkeletonCard key={index} />
+        ))}
+    </div>
+));
 
 SkeletonGrid.propTypes = {
-  count: PropTypes.number,
+    count: PropTypes.number,
 };
+
+SkeletonGrid.displayName = "SkeletonGrid";
 
 export default SkeletonGrid;

@@ -5,13 +5,14 @@
  * componente de nivel superior que escuche los cambios de este estado.
  */
 import { createSlice } from "@reduxjs/toolkit";
+import { STORAGE_KEY_THEME } from "@config/storageKeys";
 
 /**
  * Obtiene el tema inicial, priorizando localStorage sobre la preferencia del sistema.
  * @returns {"dark" | "light"}
  */
 const getInitialTheme = () => {
-    const savedTheme = localStorage.getItem("theme");
+    const savedTheme = localStorage.getItem(STORAGE_KEY_THEME);
     if (savedTheme) {
         return savedTheme;
     }

@@ -1,24 +1,15 @@
-/**
- * @file Presentational component to render a list of cat cards.
- * @description Displays a title and a grid of cats. It is agnostic to business logic
- * and renders UI based on received props.
- */
-
+import React from "react";
 import PropTypes from "prop-types";
 import { m, AnimatePresence, useReducedMotion } from "framer-motion";
 import SkeletonGrid from "@shared/components/skeletons/SkeletonGrid";
 import EmptyState from "@shared/components/EmptyState";
+import SectionHeader from "@shared/components/SectionHeader";
 import CatCard from "./CatCard";
-import { logStart, logState } from "@shared/utils/debugLogger";
 
 /**
  * @typedef {import('../adapters/catMapper').CatEntity} CatEntity
  */
 
-/**
- * Animation variants for staggered list entrance.
- * @constant {Object}
- */
 const listItemVariants = {
     hidden: (i) => ({
         opacity: 0,
@@ -44,10 +35,6 @@ const listItemVariants = {
     },
 };
 
-/**
- * Grid container animation variants.
- * @constant {Object}
- */
 const gridVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -70,11 +57,8 @@ const gridVariants = {
  * @param {import('react').ReactNode} [props.emptyStateMessage] - Message to display if list is empty.
  * @returns {JSX.Element} The rendered React component.
  */
-const CatList = (props) => {
-    logStart(`CatList "${props.title}"`);
-    logState("CatList", { cats: props.cats?.length || 0, loading: props.loading });
+const CatList = React.memo((props) => {
     const shouldReduceMotion = useReducedMotion();
-
     const {
         title,
         cats,
@@ -85,7 +69,6 @@ const CatList = (props) => {
         emptyStateMessage,
     } = props;
 
-    // Show skeleton immediately when no cats (avoids empty flash)
     const showSkeleton = cats.length === 0;
     const isEmpty = !loading && cats.length === 0;
 
@@ -94,25 +77,12 @@ const CatList = (props) => {
         : gridVariants;
 
     const itemVariants = shouldReduceMotion
-        ? {
-              hidden: { opacity: 1, scale: 1 },
-              visible: { opacity: 1, scale: 1 },
-              exit: { opacity: 0 },
-          }
+        ? { hidden: { opacity: 1, scale: 1 }, visible: { opacity: 1, scale: 1 }, exit: { opacity: 0 } }
         : listItemVariants;
 
     return (
         <section className="w-full mb-12">
-            {title && (
-                <m.h3
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="pb-2 mb-4 text-xl font-bold border-b text-foreground border-border"
-                >
-                    {title}
-                </m.h3>
-            )}
+            {title && <SectionHeader title={title} />}
             {showSkeleton ? (
                 <SkeletonGrid />
             ) : isEmpty && emptyStateMessage ? (
@@ -137,7 +107,6 @@ const CatList = (props) => {
                                 exit="exit"
                             >
                                 <CatCard
-                                    index={index}
                                     cat={cat}
                                     onAction={onAction}
                                     actionType={actionType}
@@ -150,7 +119,9 @@ const CatList = (props) => {
             )}
         </section>
     );
-};
+});
+
+CatList.displayName = "CatList";
 
 CatList.propTypes = {
     title: PropTypes.string,

@@ -15,7 +15,7 @@ import ThemeToggleButton from "@features/theme/components/ThemeToggleButton";
 import FontDropdown from "@features/font/components/FontDropdown";
 import { CatErrorHandler } from "@features/cats";
 import RandomCatList from "@features/cats/components/RandomCatList";
-import FavouriteCatList from "@features/cats/components/FavouriteCatList";
+import FavoriteCatList from "@features/cats/components/FavoriteCatList";
 import { useAppearance } from "@shared/hooks/useAppearance";
 import { usePageTitle } from "@shared/hooks/usePageTitle";
 import { motionFeatures } from "@config/motionConfig";
@@ -70,7 +70,7 @@ const Main = () => {
       <ErrorBoundary>
         <Suspense fallback={<InitialLoadSkeleton />}>
           <RandomCatList />
-          <FavouriteCatList />
+          <FavoriteCatList />
         </Suspense>
       </ErrorBoundary>
       <CatErrorHandler />

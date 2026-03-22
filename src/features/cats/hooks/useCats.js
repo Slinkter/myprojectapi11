@@ -14,6 +14,7 @@ import {
   deleteCat,
 } from "../redux/catsSlice";
 import { logState } from "@shared/utils/debugLogger";
+import { TOAST_MESSAGES } from "@config/toastMessages";
 
 /**
  * Hook `useCats`: a facade for cat state and actions.
@@ -65,9 +66,9 @@ export const useCats = () => {
     async (cat) => {
       try {
         await dispatch(saveCat(cat)).unwrap();
-        toast.success("Cat saved to favourites!");
+        toast.success(TOAST_MESSAGES.SAVE_SUCCESS);
       } catch (err) {
-        toast.error(`Failed to save: ${err}`);
+        toast.error(TOAST_MESSAGES.SAVE_ERROR(err));
       }
     },
     [dispatch],
@@ -81,9 +82,9 @@ export const useCats = () => {
     async (cat) => {
       try {
         await dispatch(deleteCat(cat)).unwrap();
-        toast.success("Cat removed from favourites!");
+        toast.success(TOAST_MESSAGES.DELETE_SUCCESS);
       } catch (err) {
-        toast.error(`Failed to delete: ${err}`);
+        toast.error(TOAST_MESSAGES.DELETE_ERROR(err));
       }
     },
     [dispatch],

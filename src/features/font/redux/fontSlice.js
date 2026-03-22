@@ -3,7 +3,8 @@
  * @description Define el estado inicial y los reducers para la tipografía.
  */
 import { createSlice } from "@reduxjs/toolkit";
-import { fonts } from "./fontConstants"; // Updated import path
+import { fonts } from "./fontConstants";
+import { STORAGE_KEY_FONT } from "@config/storageKeys";
 
 /**
  * @typedef {object} Font
@@ -16,12 +17,11 @@ import { fonts } from "./fontConstants"; // Updated import path
  * @returns {string} La familia de fuentes.
  */
 const getInitialFontFamily = () => {
-  const savedFont = localStorage.getItem("font");
-  // Validar que la fuente guardada siga existiendo en nuestras constantes.
+  const savedFont = localStorage.getItem(STORAGE_KEY_FONT);
   if (savedFont && fonts.some((f) => f.family === savedFont)) {
     return savedFont;
   }
-  return fonts[0].family; // Devuelve la familia de la primera fuente por defecto.
+  return fonts[0].family;
 };
 
 const fontSlice = createSlice({

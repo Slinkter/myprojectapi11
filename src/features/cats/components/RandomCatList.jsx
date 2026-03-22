@@ -1,14 +1,7 @@
-/**
- * @file Container for the random cat list.
- * @description This component handles logic for displaying
- * random cats, using the `CatList` presentation component.
- * Data is preloaded at app level via usePreloadCats.
- */
-
 import { useMemo, useCallback } from "react";
 import { useCats } from "@features/cats/hooks/useCats";
 import CatList from "./CatList";
-import { logStart, logState } from "@shared/utils/debugLogger";
+import { SECTION_TITLES } from "@config/uiText";
 
 /**
  * @typedef {import('../adapters/catMapper').CatEntity} CatEntity
@@ -20,40 +13,25 @@ import { logStart, logState } from "@shared/utils/debugLogger";
  * @returns {JSX.Element} The rendered React component.
  */
 const RandomCatList = () => {
-  logStart("RandomCatList render");
-  const { randomCats, favouriteCats, loading, saveFavouriteCat } = useCats();
+    const { randomCats, favouriteCats, loading, saveFavouriteCat } = useCats();
 
-  logState("RandomCatList", { randomCats: randomCats.length, "loading.random": loading.random });
+    const favouriteContext = useMemo(() => new Set(favouriteCats.map((cat) => cat.id)), [favouriteCats]);
 
-  // Optimization: Memoize favourite IDs in a Set for O(1) lookups.
-  const favouriteContext = useMemo(() => {
-    return new Set(favouriteCats.map((cat) => cat.id));
-  }, [favouriteCats]);
+    const isCatInFavourites = useCallback(
+        (cat) => favouriteContext.has(cat.id),
+        [favouriteContext],
+    );
 
-  /**
-   * Checks if a cat from the random list is already in favourites.
-   * @param {CatEntity} cat - The cat to check.
-   * @returns {boolean} - `true` if the cat is a favourite.
-   */
-  const isCatInFavourites = useCallback(
-    (cat) => {
-      return favouriteContext.has(cat.id);
-    },
-    [favouriteContext],
-  );
-
-  console.log(`[${new Date().toISOString()}] 📄 RandomCatList: Renderizando CatList con ${randomCats.length} gatos`);
-
-  return (
-    <CatList
-      title="Random Kittens"
-      cats={randomCats}
-      onAction={saveFavouriteCat}
-      actionType="save"
-      isActionDisabled={isCatInFavourites}
-      loading={loading.random}
-    />
-  );
+    return (
+        <CatList
+            title={SECTION_TITLES.RANDOM_CATS}
+            cats={randomCats}
+            onAction={saveFavouriteCat}
+            actionType="save"
+            isActionDisabled={isCatInFavourites}
+            loading={loading.random}
+        />
+    );
 };
 
 export default RandomCatList;
