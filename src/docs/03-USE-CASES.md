@@ -15,7 +15,7 @@ Este documento detalla todos los flujos de interacción. Estos son la fuente de 
 
 **Flujo Principal:**
 
-1. La aplicación renderiza `RandomCatList` (cargado perezosamente vía `React.lazy`).
+1. La aplicación renderiza `MainContent` con `RandomCatList` y `FavoriteCatList` (cargados perezosamente vía `React.lazy`).
 2. `useEffect` llama a `loadRandomCats()` si la lista está vacía.
 3. Aparece `SkeletonGrid` (8 tarjetas, `grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4`, `gap-6`).
 4. Se dispara el thunk `fetchRandomCats` — GET `/images/search`.
@@ -51,18 +51,18 @@ Este documento detalla todos los flujos de interacción. Estos son la fuente de 
 9. El botón de corazón se vuelve sólido (`BsFillHeartFill`, rojo, `disabled=true`).
 10. `react-hot-toast` muestra "Cat saved to favourites!".
 
-**Regla de Estado Deshabilitado:** Después de guardar, el botón de corazón permanece deshabilitado — solo se rehabilita cuando el usuario elimina el gato de `FavouriteCatList`.
+**Regla de Estado Deshabilitado:** Después de guardar, el botón de corazón permanece deshabilitado — solo se rehabilita cuando el usuario elimina el gato de `FavoriteCatList`.
 
 ---
 
 ## UC-03: Eliminar un Gato de Favoritos
 
 **Objetivo:** Eliminar un gato de la lista de favoritos.
-**Activador:** El usuario hace clic en el botón de Papelera en una tarjeta de `FavouriteCatList`.
+**Activador:** El usuario hace clic en el botón de Papelera en una tarjeta de `FavoriteCatList`.
 
 **Flujo Principal:**
 
-1. El usuario visualiza la sección `FavouriteCatList`.
+1. El usuario visualiza la sección `FavoriteCatList`.
 2. El usuario pasa el ratón sobre una tarjeta → aparece el icono de Papelera (`BsTrash`).
 3. El usuario hace clic en el icono de papelera.
 4. `useCats.deleteFavouriteCat(cat)` dispara el thunk `deleteCat`.

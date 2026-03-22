@@ -77,3 +77,28 @@ Una función de utilidad compartida personalizada ubicada en `src/shared/utils/c
 
 **Modo Oscuro**
 Un esquema de colores donde los fondos son oscuros y el texto es claro. Implementado alternando la clase CSS `dark` en `<html>` a través de `useAppearance`.
+
+---
+
+## Nuevos Componentes y Archivos
+
+**AppLogger (antes debugLogger.js)**
+Utilidad de logging ubicada en `src/shared/utils/appLogger.js`. Proporciona funciones con timestamps: `logStart`, `logEnd`, `logState`, `logAction`, `logApi`.
+
+**apiConstants.js**
+Archivo de configuración en `src/config/apiConstants.js` que centraliza constantes de API como `API_TIMEOUT` y `DEFAULT_CAT_LIMIT`.
+
+**storageKeys.js**
+Archivo de configuración en `src/config/storageKeys.js` que centraliza claves de localStorage (`STORAGE_KEY_THEME`, `STORAGE_KEY_FONT`) para evitar typos y hardcoded strings.
+
+**toastMessages.js / uiText.jsx**
+Archivos de configuración en `src/config/` que centralizan mensajes de toast y textos de UI.
+
+**SectionHeader.jsx**
+Componente compartido en `src/shared/components/SectionHeader.jsx` para títulos de sección con animaciones de entrada.
+
+**skeletonVariants.js**
+Archivo en `src/shared/components/skeletons/skeletonVariants.js` que define variantes de skeletons reutilizables para consistencia visual.
+
+**Composición de Layout**
+Patrón donde `App.jsx` se descompone en componentes de layout: `Navbar.jsx`, `MainContent.jsx`, `ToastContainer.jsx`.

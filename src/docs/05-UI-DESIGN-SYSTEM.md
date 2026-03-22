@@ -160,14 +160,37 @@ El diseño prioriza las imágenes de gatos como el elemento visual principal. To
   - **Responsabilidad:** Componente dedicado que ejecuta `usePreloadCats` al montar la app. Separa la lógica de datos del componente raíz.
   - **Ubicación:** `@shared/components/DataInitializer.jsx`
   - **Uso:** Incluido en App.jsx para carga inicial de datos.
+- **`SectionHeader`:**
+  - **Responsabilidad:** Títulos de sección con animaciones de entrada. Componente compartido para consistencia en encabezados de listas.
+  - **Ubicación:** `@shared/components/SectionHeader.jsx`
+  - **Uso:** Encabezados de `RandomCatList` y `FavoriteCatList`.
+- **`LoadingSpinner`:**
+  - **Responsabilidad:** Indicador visual de carga.
+  - **Ubicación:** `@shared/components/LoadingSpinner.jsx`
+  - **Uso:** Estados de carga inline.
 - **`IconButton`:**
   - **Responsabilidad:** Botón circular optimizado para iconos. Proporciona un estilo consistente (`rounded-full`, `p-2.5`, `border`, `bg-card`, `hover:bg-muted`, `focus:ring-primary/30`), manejo de eventos, `ariaLabel` para accesibilidad, y asegura un tamaño de icono consistente (`w-6 h-6`).
 - **`Select`:**
   - **Responsabilidad:** Un desplegable nativo estilizado con Tailwind CSS, ofreciendo una apariencia uniforme.
-- **Skeleton Loaders (`SkeletonCard`, `SkeletonGrid`, `RandomCatListSkeleton`, `FavouriteCatListSkeleton`):**
+- **Skeleton Loaders (`SkeletonCard`, `SkeletonGrid`, `InitialLoadSkeleton`, `skeletonVariants`):**
   - **Responsabilidad:** Proporcionan marcadores de posición visuales durante la carga de contenido para prevenir cambios de diseño (CLS).
+  - **`skeletonVariants.js`**: Define variantes de esqueletos reutilizables para consistencia.
+  - **`InitialLoadSkeleton`**: Skeleton compuesto para carga inicial de la app.
   - **Regla Crucial:** Replican las dimensiones y estructura exactas del contenido que representan.
   - **Estándares:** Utilizan Tailwind CSS para espaciado (`gap-6`), formas (`rounded-2xl`, `aspect-square`), animaciones (`animate-pulse`) y colores semánticos (`bg-muted`).
+
+### C. Componentes de Layout (`src/app/components/`)
+
+- **`Navbar`:**
+  - **Responsabilidad:** Header sticky con branding "Cat Gallery", `FontDropdown` y `ThemeToggleButton`.
+  - **Ubicación:** `@app/components/Navbar.jsx`
+  - **Clases:** `sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border`
+- **`MainContent`:**
+  - **Responsabilidad:** Área principal que renderiza `RandomCatList` y `FavoriteCatList` dentro de `ErrorBoundary` y `Suspense`.
+  - **Ubicación:** `@app/components/MainContent.jsx`
+- **`ToastContainer`:**
+  - **Responsabilidad:** Contenedor de notificaciones toast para feedback de usuario.
+  - **Ubicación:** `@app/components/ToastContainer.jsx`
 
 ---
 

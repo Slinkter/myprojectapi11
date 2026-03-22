@@ -62,34 +62,37 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 );
 ```
 
-### 2.2 App.jsx - Componente Raíz
+### 2.2 App.jsx - Componente Raíz (Composición de Layout)
 
 ```javascript
 // src/App.jsx
-import { Suspense, LazyMotion } from "framer-motion";
+import { LazyMotion } from "framer-motion";
+import Navbar from "@app/components/Navbar";
+import MainContent from "@app/components/MainContent";
+import ToastContainer from "@app/components/ToastContainer";
 import { motionFeatures } from "@config/motionConfig";
 
 const App = () => {
-  usePageTitle("Cat Gallery");
+  usePageTitle("Project API 11 - Cat Gallery");
   useAppearance();
 
   return (
     <LazyMotion features={motionFeatures}>
       <div className="min-h-dvh">
         <DataInitializer />
-        <header>...</header>
-        <main>
-          <ErrorBoundary>
-            <Suspense fallback={<Skeleton />}>
-              <RandomCatList />
-            </Suspense>
-          </ErrorBoundary>
-        </main>
+        <Navbar />
+        <MainContent />
+        <ToastContainer />
       </div>
     </LazyMotion>
   );
 };
 ```
+
+**Descomposición del Layout:**
+- `Navbar` → Header sticky con branding + controles de tema/fuente
+- `MainContent` → Área principal con listas de gatos
+- `ToastContainer` → Contenedor de notificaciones
 
 ### 2.3 Flujo de Carga de Datos
 
@@ -99,6 +102,16 @@ App.jsx
           └── usePreloadCats
                   ├── dispatch(fetchRandomCats())
                   └── dispatch(fetchFavouriteCats())
+```
+
+**MainContent**:
+```
+MainContent.jsx
+  ├── ErrorBoundary
+  │     └── Suspense (fallback=InitialLoadSkeleton)
+  │           ├── RandomCatList
+  │           └── FavoriteCatList
+  └── CatErrorHandler
 ```
 
 ### 2.4 Listas de Gatos
@@ -177,13 +190,18 @@ const CatCard = ({ cat, onAction, actionType, disabled }) => {
 
 ```
 features/nueva-feature/
-├── api/
-├── adapters/
-├── services/
-├── redux/
-├── hooks/
-└── components/
+├── api/              # Cliente HTTP (Axios)
+├── adapters/         # Mappers/Transformadores
+├── services/         # Orquestación de API
+├── redux/            # Slice y Thunks
+├── hooks/            # Hooks fachada
+└── components/       # Componentes UI
 ```
+
+**Reglas de ubicación:**
+- Componentes reutilizables globalmente → `src/shared/components/`
+- Componentes de layout → `src/app/components/`
+- Configuración → `src/config/`
 
 ### Paso 2: Definir Slice de Redux
 
@@ -244,14 +262,18 @@ const FeatureComponent = () => {
 };
 ```
 
-### Paso 5: Integrar en App.jsx
+### Paso 5: Integrar en MainContent.jsx
 
 ```javascript
-import FeatureComponent from "./features/nueva-feature/components/FeatureComponent";
+import FeatureComponent from "@features/nueva-feature/components/FeatureComponent";
 
-const App = () => (
-  <main>
-    <FeatureComponent />
+const MainContent = () => (
+  <main className="container mx-auto p-4">
+    <ErrorBoundary>
+      <Suspense fallback={<Skeleton />}>
+        <FeatureComponent />
+      </Suspense>
+    </ErrorBoundary>
   </main>
 );
 ```

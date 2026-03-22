@@ -51,7 +51,7 @@
 | ----------------------------- | ----------------------------------------------------------------------------- |
 | FCP (First Contentful Paint)  | < 1.5s en 4G                                                                  |
 | CLS (Cumulative Layout Shift) | `0.0` — Los Skeletons deben coincidir exactamente con las dimensiones finales de la tarjeta                    |
-| División de código (Code splitting)                | `RandomCatList` y `FavouriteCatList` cargados perezosamente vía `React.lazy`           |
+| División de código (Code splitting)                | `RandomCatList` y `FavoriteCatList` cargados perezosamente vía `React.lazy`           |
 | Memoización                   | `CatCard` envuelto en `React.memo`; `useCats` usa `useMemo` y `useCallback` |
 
 ### NFR-02: Usabilidad

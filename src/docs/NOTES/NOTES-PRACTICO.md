@@ -9,10 +9,18 @@
 ```
 src/
 ├── app/
-│   └── store.js                 # Configuración de Redux
+│   ├── store.js                 # Configuración de Redux
+│   └── components/              # Componentes de Layout
+│       ├── Navbar.jsx           # Header sticky + controles
+│       ├── MainContent.jsx      # Área principal con listas
+│       └── ToastContainer.jsx   # Contenedor de notificaciones
 ├── config/
 │   ├── env.js                   # Variables de entorno
-│   └── motionConfig.js          # LazyMotion config
+│   ├── motionConfig.js          # LazyMotion config
+│   ├── apiConstants.js          # Constantes de API
+│   ├── storageKeys.js           # Claves localStorage
+│   ├── toastMessages.js         # Mensajes de toast
+│   └── uiText.jsx               # Textos de UI
 ├── features/
 │   ├── cats/
 │   │   ├── api/
@@ -27,25 +35,35 @@ src/
 │   │   │   ├── useCats.js      # Hook fachada
 │   │   │   └── usePreloadCats.js
 │   │   └── components/
-│   │       ├── RandomCatList.jsx   # Container
-│   │       ├── FavouriteCatList.jsx
-│   │       ├── CatList.jsx        # Presentational
-│   │       └── CatCard.jsx        # Presentational
+│   │       ├── RandomCatList.jsx    # Container
+│   │       ├── FavoriteCatList.jsx  # Container (antes FavouriteCatList)
+│   │       ├── CatList.jsx         # Presentational (React.memo)
+│   │       ├── CatCard.jsx         # Presentational (React.memo)
+│   │       └── CatCardFooter.jsx    # Footer con botones
 │   ├── theme/
 │   │   ├── redux/themeSlice.js
 │   │   └── hooks/useTheme.js
 │   └── font/
+│       ├── redux/fontSlice.js
+│       └── hooks/useFont.js
 ├── shared/
 │   ├── components/
 │   │   ├── ErrorBoundary.jsx
 │   │   ├── EmptyState.jsx
 │   │   ├── DataInitializer.jsx
+│   │   ├── SectionHeader.jsx        # Encabezados de sección
+│   │   ├── LoadingSpinner.jsx
+│   │   ├── InitialLoadSkeleton.jsx  # Skeleton de carga inicial
 │   │   └── skeletons/
+│   │       ├── SkeletonCard.jsx
+│   │       ├── SkeletonGrid.jsx
+│   │       └── skeletonVariants.js  # Variantes de skeletons
 │   ├── hooks/
 │   │   ├── useAppearance.js
 │   │   └── usePageTitle.js
 │   └── utils/
-│       └── cn.js               # clsx + tailwind-merge
+│       ├── cn.js               # clsx + tailwind-merge
+│       └── appLogger.js       # Logging con timestamps (reemplaza debugLogger.js)
 └── App.jsx
 ```
 

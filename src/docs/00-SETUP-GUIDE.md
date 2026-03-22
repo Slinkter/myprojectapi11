@@ -178,13 +178,53 @@ import fontReducer from "@features/font/redux/fontSlice";
 
 const store = configureStore({
   reducer: {
-    cats: catsReducer, // Gestiona listas de gatos aleatorios y favoritos
-    theme: themeReducer, // Gestiona modo "dark" | "light"
-    font: fontReducer, // Gestiona la familia de fuentes seleccionada
+    cats: catsReducer,
+    theme: themeReducer,
+    font: fontReducer,
   },
 });
 
 export default store;
+```
+
+Crea los componentes de layout en `src/app/components/`:
+
+```javascript
+// src/app/components/Navbar.jsx
+const Navbar = () => (
+  <header className="sticky top-0 z-50 bg-background/80 border-b border-border backdrop-blur-md">
+    {/* Branding + Theme/Font controls */}
+  </header>
+);
+
+// src/app/components/MainContent.jsx
+const MainContent = () => (
+  <main className="container mx-auto p-4">
+    {/* RandomCatList + FavoriteCatList */}
+  </main>
+);
+
+// src/app/components/ToastContainer.jsx
+// Contenedor de react-hot-toast
+```
+
+Actualiza `src/App.jsx`:
+
+```jsx
+import Navbar from "@app/components/Navbar";
+import MainContent from "@app/components/MainContent";
+import ToastContainer from "@app/components/ToastContainer";
+
+const App = () => (
+  <LazyMotion features={motionFeatures}>
+    <div className="min-h-dvh">
+      <DataInitializer />
+      <Navbar />
+      <MainContent />
+      <ToastContainer />
+    </div>
+  </LazyMotion>
+);
 ```
 
 Envuelve tu aplicación en `src/main.jsx`:
@@ -223,11 +263,23 @@ src/features/cats/
 └── index.js        ← API Pública (solo exporta lo que otros necesitan)
 ```
 
+## Paso 8 — Configurar Archivos de Configuración Centralizada
+
+```text
+src/config/
+├── env.js           ← Variables de entorno validadas
+├── apiConstants.js  ← Constantes de API (timeout, limits)
+├── storageKeys.js   ← Claves de localStorage
+├── toastMessages.js ← Mensajes de toast
+├── uiText.jsx       ← Textos de UI
+└── motionConfig.js  ← LazyMotion config
+```
+
 > **Regla:** Un componente en `features/theme/` **nunca** debe importar desde `features/cats/`. Las características están aisladas. Solo se comunican a través del store de Redux.
 
 ---
 
-## Paso 8 — Desplegar en GitHub Pages
+## Paso 9 — Desplegar en GitHub Pages
 
 ```bash
 # Construir y desplegar en GitHub Pages
