@@ -1,3 +1,9 @@
+/**
+ * @file Generic Cat List component.
+ * @description Renders a grid of CatCard components with animations, loading skeletons,
+ * and empty state handling. Used by both random and favourite cat lists.
+ */
+
 import React from "react";
 import PropTypes from "prop-types";
 import { m, AnimatePresence, useReducedMotion } from "framer-motion";

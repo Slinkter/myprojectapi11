@@ -1,3 +1,8 @@
+/**
+ * @file Random Cat List component.
+ * @description Displays the random cat gallery with save-to-favourites functionality.
+ */
+
 import { useMemo, useCallback } from "react";
 import { useCats } from "@features/cats/hooks/useCats";
 import CatList from "./CatList";

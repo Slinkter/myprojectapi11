@@ -13,6 +13,13 @@ import { logAction } from "@shared/utils/debugLogger";
 /**
  * Hook to preload cat data at app startup.
  * @returns {Object} Preloading status.
+ * @property {boolean} isPreloading - True while any cat data is being fetched.
+ * @property {boolean} hasData - True when at least some cat data has been loaded.
+ *
+ * @example
+ * ```js
+ * const { isPreloading, hasData } = usePreloadCats();
+ * ```
  */
 export const usePreloadCats = () => {
     const { random, favourites, loading } = useSelector((state) => state.cats);

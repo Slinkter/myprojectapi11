@@ -3,9 +3,17 @@ import SkeletonCard from "./skeletons/SkeletonCard";
 import SectionHeader from "@shared/components/SectionHeader";
 
 /**
- * Single skeleton shown during initial load.
+ * Full-page skeleton shown during initial data load.
+ * Displays skeleton cards for both random and favourite sections.
  * @component
  * @returns {JSX.Element}
+ *
+ * @example
+ * ```jsx
+ * <Suspense fallback={<InitialLoadSkeleton />}>
+ *   <Content />
+ * </Suspense>
+ * ```
  */
 const InitialLoadSkeleton = React.memo(() => (
     <div className="space-y-12">

@@ -9,8 +9,13 @@ import PropTypes from "prop-types";
 /**
  * CatCardHeader component.
  * @param {object} props - Component properties.
- * @param {string} props.id - The cat ID.
+ * @param {string} props.id - The cat ID to display.
  * @returns {JSX.Element} The header element.
+ *
+ * @example
+ * ```jsx
+ * <CatCardHeader id="abc123" />
+ * ```
  */
 const CatCardHeader = ({ id }) => (
   <div className="flex items-center justify-between px-4 py-3 bg-muted/50 border-b border-border">

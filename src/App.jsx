@@ -48,6 +48,11 @@ const App = () => {
 
 export default App;
 
+/**
+ * Sticky navigation bar with branding and theme/font controls.
+ * @component
+ * @returns {JSX.Element} The navigation header element.
+ */
 const Navbar = () => {
   return (
     <header className="sticky top-0 z-50 bg-background/80 border-b border-border backdrop-blur-md">
@@ -64,6 +69,11 @@ const Navbar = () => {
   );
 };
 
+/**
+ * Main content area rendering cat lists within an ErrorBoundary and Suspense.
+ * @component
+ * @returns {JSX.Element} The main content section.
+ */
 const Main = () => {
   return (
     <main className="container mx-auto p-4">
@@ -78,6 +88,11 @@ const Main = () => {
   );
 };
 
+/**
+ * Toast notification container configured with react-hot-toast.
+ * @component
+ * @returns {JSX.Element} The toast container element.
+ */
 const Alert = () => {
   return (
     <Toaster

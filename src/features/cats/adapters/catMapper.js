@@ -10,33 +10,6 @@ import { z } from "zod";
  * Zod schema for raw API response from /images/search.
  * @constant {z.ZodType<Object>}
  */
-const RAW_SEARCH_CAT_SCHEMA = z.object({
-    id: z.string(),
-    url: z.string().url(),
-    width: z.number().optional(),
-    height: z.number().optional(),
-});
-
-/**
- * Zod schema for raw API response from /favourites.
- * @constant {z.ZodType<Object>}
- */
-const RAW_FAVOURITE_CAT_SCHEMA = z.object({
-    id: z.number(),
-    user_id: z.string(),
-    image_id: z.string(),
-    sub_id: z.string().nullable(),
-    created_at: z.string(),
-    image: z.object({
-        id: z.string(),
-        url: z.string().url(),
-    }),
-});
-
-/**
- * Schema for our normalized CatEntity.
- * @constant {z.ZodType<Object>}
- */
 const CAT_ENTITY_SCHEMA = z.object({
     id: z.string(),
     url: z.string().url(),
@@ -76,25 +49,7 @@ export const mapToCatEntity = (rawCat) => {
     }
 
     // Validate with Zod
-    return CAT_ENTITY_SCHEMA.parse(normalized);
-};
-
-/**
- * Validates raw cat data from /favourites endpoint.
- * @param {Object} data - Raw favourite data.
- * @returns {{success: boolean, data?: RawFavouriteCatSchema, error?: z.ZodError}}
- */
-export const validateRawFavourite = (data) => {
-    return RAW_FAVOURITE_CAT_SCHEMA.safeParse(data);
-};
-
-/**
- * Validates raw cat data from /images/search endpoint.
- * @param {Object} data - Raw search data.
- * @returns {{success: boolean, data?: RawSearchCatSchema, error?: z.ZodError}}
- */
-export const validateRawSearch = (data) => {
-    return RAW_SEARCH_CAT_SCHEMA.safeParse(data);
+return CAT_ENTITY_SCHEMA.parse(normalized);
 };
 
 /**

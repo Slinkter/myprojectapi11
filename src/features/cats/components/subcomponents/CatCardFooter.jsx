@@ -15,6 +15,11 @@ import { BsFillHeartFill, BsHeart, BsTrash } from "react-icons/bs";
  * @param {import('react').MouseEventHandler<HTMLButtonElement>} props.onAction - Action handler triggered on click.
  * @param {boolean} props.disabled - Disabled state.
  * @returns {JSX.Element} The footer element.
+ *
+ * @example
+ * ```jsx
+ * <CatCardFooter actionType="save" onAction={handleSave} disabled={false} />
+ * ```
  */
 const CatCardFooter = ({ actionType, onAction, disabled }) => {
   const isSave = actionType === "save";

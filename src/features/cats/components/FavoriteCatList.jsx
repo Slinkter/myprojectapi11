@@ -1,3 +1,8 @@
+/**
+ * @file Favourite Cat List component.
+ * @description Displays the user's saved favourite cats with delete functionality.
+ */
+
 import { useCats } from "@features/cats/hooks/useCats";
 import CatList from "./CatList";
 import { EMPTY_STATE_MESSAGES, SECTION_TITLES } from "@config/uiText";

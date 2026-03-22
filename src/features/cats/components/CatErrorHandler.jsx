@@ -1,3 +1,8 @@
+/**
+ * @file Component to handle and display cat API errors.
+ * @description Shows an error alert with a retry button when cat fetching fails.
+ */
+
 import React from "react";
 import { MdErrorOutline } from "react-icons/md";
 import { useCats } from "@features/cats/hooks/useCats";
