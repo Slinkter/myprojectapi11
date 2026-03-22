@@ -19,24 +19,13 @@ import { toggleTheme as toggleThemeAction } from "@features/theme/redux/themeSli
  */
 
 /**
- * Facade hook for theme state management.
- * 
- * @returns {UseThemeFacade} Object containing theme mode and toggle function.
- * 
- * @example
- * const { theme, toggleTheme } = useTheme();
- * 
- * return (
- *     <button onClick={toggleTheme}>
- *         {theme === 'dark' ? '🌙' : '☀️'}
- *     </button>
- * );
+ * @returns {UseThemeFacade}
  */
 export const useTheme = () => {
     const dispatch = useDispatch();
     const theme = useSelector((state) => state.theme.mode);
 
-const toggleTheme = useCallback(() => {
+    const toggleTheme = useCallback(() => {
         dispatch(toggleThemeAction());
     }, [dispatch]);
 

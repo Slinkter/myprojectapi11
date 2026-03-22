@@ -3,63 +3,43 @@
  * @description Manages theme (dark/light mode) and font family by:
  * - Applying CSS classes to the document root
  * - Persisting preferences to localStorage
- * 
- * This hook should be called once at the root of the application.
  */
 
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
-/**
- * @typedef {Object} UseAppearanceReturn
- * @description This hook does not return any value. It handles side effects only.
- */
+const STORAGE_KEY_THEME_APPEARANCE = "theme";
+const STORAGE_KEY_FONT_APPEARANCE = "font";
 
-/**
- * Synchronizes Redux theme and font state with the DOM and localStorage.
- * 
- * @returns {UseAppearanceReturn} This hook does not return a value.
- * 
- * @example
- * const App = () => {
- *     useAppearance();
- *     return <div>My App</div>;
- * };
- */
+const persistToStorage = (key, value) => {
+    try {
+        localStorage.setItem(key, value);
+    } catch (error) {
+        console.error(`Failed to persist ${key} to localStorage:`, error);
+    }
+};
+
+const applyThemeToDom = (themeMode) => {
+    const root = document.documentElement;
+    root.classList.toggle("dark", themeMode === "dark");
+};
+
+const applyFontToDom = (fontFamily) => {
+    const root = document.documentElement;
+    root.style.setProperty("--font-family", fontFamily);
+};
+
 export const useAppearance = () => {
     const themeMode = useSelector((state) => state.theme.mode);
     const fontFamily = useSelector((state) => state.font.family);
 
-    /**
-     * Effect: Apply theme class to document root and persist to localStorage.
-     */
     useEffect(() => {
-        const root = document.documentElement;
-
-        if (themeMode === "dark") {
-            root.classList.add("dark");
-        } else {
-            root.classList.remove("dark");
-        }
-
-        try {
-            localStorage.setItem("theme", themeMode);
-        } catch (error) {
-            console.error("Failed to persist theme to localStorage:", error);
-        }
+        applyThemeToDom(themeMode);
+        persistToStorage(STORAGE_KEY_THEME_APPEARANCE, themeMode);
     }, [themeMode]);
 
-    /**
-     * Effect: Apply font family CSS variable to document root and persist to localStorage.
-     */
     useEffect(() => {
-        const root = document.documentElement;
-        root.style.setProperty("--font-family", fontFamily);
-
-        try {
-            localStorage.setItem("font", fontFamily);
-        } catch (error) {
-            console.error("Failed to persist font to localStorage:", error);
-        }
+        applyFontToDom(fontFamily);
+        persistToStorage(STORAGE_KEY_FONT_APPEARANCE, fontFamily);
     }, [fontFamily]);
 };

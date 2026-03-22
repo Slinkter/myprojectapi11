@@ -6,7 +6,7 @@
 
 import { catApiService } from "../api/catApi";
 import { mapToCatEntities } from "../adapters/catMapper";
-import { logApi } from "@shared/utils/debugLogger";
+import { logApi } from "@shared/utils/appLogger";
 
 /**
  * @typedef {import('../adapters/catMapper').CatEntity} CatEntity

@@ -5,25 +5,13 @@
 
 import axios from "axios";
 import { config } from "@config/env";
-import { logApi } from "@shared/utils/debugLogger";
+import { logApi } from "@shared/utils/appLogger";
 import { API_TIMEOUT, DEFAULT_CAT_LIMIT } from "@config/apiConstants";
 
 /**
  * @typedef {Object} RawApiCat
- * @property {string} id - The unique identifier of the cat image from TheCatAPI.
+ * @property {string} id - The unique identifier of the cat image.
  * @property {string} url - The URL pointing to the cat image.
- * @property {number} width - The width of the returned image.
- * @property {number} height - The height of the returned image.
- */
-
-/**
- * @typedef {Object} RawFavouriteCat
- * @property {number} id - The unique identifier of the favourite record.
- * @property {string} user_id - The user ID associated with the favourite.
- * @property {string} image_id - The ID of the image that was favorited.
- * @property {string} sub_id - Optional sub-ID for filtering over TheCatApi.
- * @property {string} created_at - Timestamp of when the favourite was created.
- * @property {Pick<RawApiCat, "id" | "url">} image - The nested image object.
  */
 
 const api = axios.create({
@@ -33,7 +21,6 @@ const api = axios.create({
 });
 
 /**
- * Low-level API client for managing requests to TheCatAPI.
  * @namespace
  */
 export const catApiService = {

@@ -1,50 +1,29 @@
 /**
  * @file Hook to manage application font state.
- * @description Provides access to the current font family, list of available
- * fonts, and a function to change the active font.
+ * @description Provides access to the current font family and a function to change it.
  */
 
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeFont as changeFontAction } from "@features/font/redux/fontSlice";
 
 /**
- * @typedef {Object} Font
- * @property {string} family - CSS font-family value.
- * @property {string} name - Display name for the font.
- */
-
-/**
  * @typedef {Object} UseFontFacade
- * @property {string} font - Currently active font family (e.g., 'Inter').
- * @property {Font[]} fonts - List of all available fonts.
+ * @property {string} font - Currently active font family.
+ * @property {Array<{family: string, name: string}>} fonts - List of available fonts.
  * @property {function(string): void} changeFont - Function to set a new font family.
  */
 
 /**
- * Facade hook for font state management.
- * 
- * @returns {UseFontFacade} Object containing font state and change function.
- * 
- * @example
- * const { font, fonts, changeFont } = useFont();
- * 
- * return (
- *     <select value={font} onChange={(e) => changeFont(e.target.value)}>
- *         {fonts.map(f => <option key={f.family} value={f.family}>{f.name}</option>)}
- *     </select>
- * );
+ * @returns {UseFontFacade}
  */
 export const useFont = () => {
-    const { family: font, list: fonts } = useSelector((state) => state.font);
     const dispatch = useDispatch();
+    const { family: font, list: fonts } = useSelector((state) => state.font);
 
-    /**
-     * Dispatches action to change the active font.
-     * @param {string} newFontFamily - The new font family to apply.
-     */
-    const changeFont = (newFontFamily) => {
+    const changeFont = useCallback((newFontFamily) => {
         dispatch(changeFontAction(newFontFamily));
-    };
+    }, [dispatch]);
 
     return { font, fonts, changeFont };
 };

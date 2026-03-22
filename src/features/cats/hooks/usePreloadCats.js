@@ -8,7 +8,7 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchRandomCats, fetchFavouriteCats } from "@features/cats/redux/catsSlice";
-import { logAction } from "@shared/utils/debugLogger";
+import { logAction } from "@shared/utils/appLogger";
 
 /**
  * Hook to preload cat data at app startup.

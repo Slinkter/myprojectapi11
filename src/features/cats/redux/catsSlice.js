@@ -5,46 +5,36 @@
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { catService } from "../services/catService";
-import { logAction, logEnd } from "@shared/utils/debugLogger";
+import { logAction, logEnd } from "@shared/utils/appLogger";
 
 /**
  * @typedef {import('../adapters/catMapper').CatEntity} CatEntity
  */
 
-/**
- * Thunk to fetch a list of random cats.
- * @type {import('@reduxjs/toolkit').AsyncThunk<CatEntity[], void, {}>}
- */
+const handleAsyncError = (error) => error.message;
+
 export const fetchRandomCats = createAsyncThunk(
   "cats/fetchRandom",
   async (_, { rejectWithValue }) => {
     try {
       return await catService.getRandomCats();
     } catch (error) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(handleAsyncError(error));
     }
   },
 );
 
-/**
- * Thunk to fetch the list of favourite cats.
- * @type {import('@reduxjs/toolkit').AsyncThunk<CatEntity[], void, {}>}
- */
 export const fetchFavouriteCats = createAsyncThunk(
   "cats/fetchFavorites",
   async (_, { rejectWithValue }) => {
     try {
       return await catService.getFavouriteCats();
     } catch (error) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(handleAsyncError(error));
     }
   },
 );
 
-/**
- * Thunk to save a cat as favourite.
- * @type {import('@reduxjs/toolkit').AsyncThunk<{cat: CatEntity, favouriteId: number}, CatEntity, {}>}
- */
 export const saveCat = createAsyncThunk(
   "cats/save",
   async (cat, { rejectWithValue }) => {
@@ -52,15 +42,11 @@ export const saveCat = createAsyncThunk(
       const favouriteId = await catService.saveFavourite(cat.id);
       return { cat, favouriteId };
     } catch (error) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(handleAsyncError(error));
     }
   },
 );
 
-/**
- * Thunk to delete a cat from favourites.
- * @type {import('@reduxjs/toolkit').AsyncThunk<number, CatEntity, {}>}
- */
 export const deleteCat = createAsyncThunk(
   "cats/delete",
   async (cat, { rejectWithValue }) => {
@@ -68,7 +54,7 @@ export const deleteCat = createAsyncThunk(
       await catService.deleteFavourite(cat.favouriteId);
       return cat.favouriteId;
     } catch (error) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(handleAsyncError(error));
     }
   },
 );
