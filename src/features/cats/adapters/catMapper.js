@@ -39,7 +39,7 @@ const RawFavouriteCatSchema = z.object({
  */
 const CatEntitySchema = z.object({
     id: z.string(),
-    url: z.string().url(),
+    url: z.url(),
     favouriteId: z.number().nullable(),
 });
 
