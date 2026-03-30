@@ -75,7 +75,7 @@ const CatList = React.memo((props) => {
         emptyStateMessage,
     } = props;
 
-    const showSkeleton = cats.length === 0;
+    const showSkeleton = loading || cats.length === 0;
     const isEmpty = !loading && cats.length === 0;
 
     const containerVariants = shouldReduceMotion
