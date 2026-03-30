@@ -3,7 +3,7 @@
  * @description Renders a cat image with an entrance animation and an overlay action button in a minimal style.
  */
 
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import PropTypes from "prop-types";
 import { useReducedMotion } from "framer-motion";
 import { cn } from "@shared/utils/cn";
@@ -26,6 +26,7 @@ import CatCardFooter from "./subcomponents/CatCardFooter";
  */
 const CatCard = ({ cat, onAction, actionType, disabled }) => {
   const shouldReduceMotion = useReducedMotion();
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   /**
    * Handle action click.
@@ -40,6 +41,13 @@ const CatCard = ({ cat, onAction, actionType, disabled }) => {
     },
     [disabled, onAction, cat],
   );
+
+  /**
+   * Handle image load.
+   */
+  const handleImageLoad = useCallback(() => {
+    setImageLoaded(true);
+  }, []);
 
   const hoverClasses = shouldReduceMotion
     ? ""
@@ -67,12 +75,15 @@ const CatCard = ({ cat, onAction, actionType, disabled }) => {
     <div className={cn("relative overflow-hidden bg-muted rounded-2xl shadow-sm group", hoverClasses)}>
 {/* CARD BODY (Image) */}
       <div className="relative aspect-square w-full">
+        {!imageLoaded && (
+          <div className="absolute inset-0 bg-muted animate-pulse rounded-2xl" />
+        )}
         <img
           src={cat.url}
           alt={`Cat ${cat.id}`}
           loading="lazy"
-          crossOrigin="anonymous"
-          className={imageClasses}
+          onLoad={handleImageLoad}
+          className={cn(imageClasses, imageLoaded ? "opacity-100" : "opacity-0")}
         />
         <div className={overlayClasses} />
       </div>
