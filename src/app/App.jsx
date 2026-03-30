@@ -5,10 +5,10 @@
 
 import { LazyMotion } from "framer-motion";
 
-import DataInitializer from "@shared/components/DataInitializer";
-import Navbar from "@app/components/Navbar";
-import MainContent from "@app/components/MainContent";
-import ToastContainer from "@app/components/ToastContainer";
+import DataInitializer from "@app/providers/DataInitializer";
+import Navbar from "@widgets/navbar/ui/Navbar";
+import MainContent from "@widgets/main-content/ui/MainContent";
+import ToastContainer from "@widgets/toast/ui/ToastContainer";
 import { useAppearance } from "@shared/hooks/useAppearance";
 import { usePageTitle } from "@shared/hooks/usePageTitle";
 import { motionFeatures } from "@config/motionConfig";
