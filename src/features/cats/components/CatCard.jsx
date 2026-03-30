@@ -73,7 +73,7 @@ const CatCard = ({ cat, onAction, actionType, disabled, loading = false }) => {
       : "absolute bottom-3 right-3 z-10 transition-opacity duration-300 opacity-0 group-hover:opacity-100";
 
   return (
-    <div className={cn("relative overflow-hidden bg-muted rounded-2xl shadow-sm group cursor-pointer", hoverClasses)}>
+    <div className={cn("relative overflow-hidden bg-muted rounded-2xl shadow-sm group", hoverClasses)}>
 {/* CARD BODY (Image) */}
       <div className="relative aspect-square w-full">
         {!imageLoaded && (
