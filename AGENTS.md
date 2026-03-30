@@ -2,8 +2,6 @@
 
 **React 19 + Vite 7** cat gallery with favorites and theme customization. Uses **Feature-Sliced Design (FSD)** and **Redux Toolkit**.
 
-## Package Manager
-
 **Use pnpm exclusively** — do NOT use npm or yarn.
 
 ## Build / Lint / Test Commands
@@ -14,13 +12,14 @@
 | `pnpm run dev` | Start dev server at http://localhost:5173 |
 | `pnpm run build` | Production build to `./dist` |
 | `pnpm run preview` | Preview production build locally |
-| `pnpm run lint` | Run ESLint (**0 warnings policy**) |
+| `pnpm run lint` | Run ESLint with 0 warnings policy |
+| `pnpm run test` | Echoes error - no tests configured |
 
 **Note:** There are **no tests** in this project. Do not add test frameworks without consulting the user first.
 
 ## CI/CD (GitHub Actions)
 
-- Push to `main` → lint + build → deploy to GitHub Pages (requires `CAT_API_KEY` secret)
+- Push to `main` → lint + build → deploy to GitHub Pages (requires `CAT_API_KEY`)
 - Push to `develop` → lint + build only
 - PR to `main` → lint + build (branch protection)
 
@@ -33,23 +32,19 @@
 - **Language:** JavaScript (ES6+) with **strict JSDoc typing** — no TypeScript
 - **Formatting:** Prettier defaults
 - **Linting:** ESLint with 0 warnings policy — **always run `pnpm run lint` before committing**
-- **CSS:** Tailwind CSS v4 — use semantic tokens, never hardcode colors (`bg-muted`, not `bg-gray-200`)
-- Use `cn()` utility for className merging: `import { cn } from '@shared/utils/cn'`
+- **CSS:** Tailwind CSS v4 — use semantic tokens (`bg-muted`, not `bg-gray-200`)
 
-### Import Order (path aliases in vite.config.js)
+### Path Aliases
 
-```javascript
-// 1. External libraries
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
+| Alias | Resolution |
+|-------|------------|
+| `@features` | `./src/features` |
+| `@shared` | `./src/shared` |
+| `@app` | `./src/app` |
+| `@config` | `./src/config` |
+| `@widgets` | `./src/widgets` |
 
-// 2. Internal imports (aliases)
-@import "@features/cats/..."
-@import "@shared/ui/..."
-@import "@app/store"
-@import "@config/env"
-```
+Import order: External libs → Internal aliases (@features, @shared, @app, @config, @widgets)
 
 ### Naming Conventions
 
@@ -63,28 +58,39 @@ import axios from 'axios';
 | Facade Return Types | `PascalCase` + `Facade` | `UseCatsFacade` |
 | Booleans | `is/has/should` prefix | `isLoading`, `hasError` |
 
-### JSDoc Requirements
+### JSDoc & PropTypes Requirements
 
-All exported functions, hooks, and component props MUST be documented:
+All exported functions, hooks, and components MUST be documented with JSDoc and define PropTypes:
 
 ```javascript
 /** @typedef {import('../adapters/catMapper').CatEntity} CatEntity */
-/**
- * @param {CatEntity} props.cat - The normalized cat entity.
- */
-export const CatCard = ({ cat }) => { ... };
 
 /**
- * @typedef {Object} UseCatsFacade
- * @property {CatEntity[]} randomCats
- * @property {boolean} isLoading
- * @property {function(): void} loadRandomCats
+ * @param {Object} props - Component properties.
+ * @param {CatEntity} props.cat - The normalized cat entity.
+ * @param {function(CatEntity): void} props.onAction - Action callback.
+ * @param {'save'|'delete'} props.actionType - Action type.
+ * @param {boolean} props.disabled - Whether action is disabled.
+ * @returns {JSX.Element}
  */
-/**
- * @returns {UseCatsFacade}
- */
-export const useCats = () => { ... };
+const CatCard = ({ cat, onAction, actionType, disabled }) => { ... };
+
+CatCard.propTypes = {
+  cat: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+  }).isRequired,
+  onAction: PropTypes.func.isRequired,
+  actionType: PropTypes.oneOf(["save", "delete"]).isRequired,
+  disabled: PropTypes.bool.isRequired,
+};
 ```
+
+### Performance
+
+- Use `React.memo()` for components that re-render often
+- Use `useCallback()` for event handlers passed as props
+- Use `useReducedMotion()` from framer-motion
 
 ---
 
@@ -108,12 +114,9 @@ src/
 ├── config/                # env.js, motionConfig.js
 ├── features/[feature]/    # api, adapters, services, redux, hooks, components
 ├── shared/                # ui, hooks, components, utils (cn.js)
+├── widgets/               # Page-level components (navbar, main-content, toast)
 └── App.jsx                # Root layout
 ```
-
-### Key Shared Components
-
-`EmptyState.jsx` | `DataInitializer.jsx` | `ErrorBoundary.jsx` | `SkeletonGrid.jsx`
 
 ---
 
@@ -133,6 +136,17 @@ try {
 
 ---
 
+## Environment Variables
+
+Create `.env` in root (see `.env.example`):
+
+```env
+VITE_BASE_URL=https://api.thecatapi.com/v1
+VITE_API_KEY=your_api_key_here
+```
+
+---
+
 ## Git Workflow
 
 ```
@@ -142,20 +156,4 @@ feature/...  # New features
 fix/...      # Bug fixes
 ```
 
-**Commit format (Conventional Commits):**
-```
-feat: add cat tagging functionality
-fix: resolve double-save on heart click
-refactor: extract catMapper to adapter layer
-```
-
----
-
-## Environment Variables
-
-Create `.env` in root (see `.env.example`):
-
-```env
-VITE_BASE_URL=https://api.thecatapi.com/v1
-VITE_API_KEY=your_api_key_here
-```
+**Commit format:** `feat: add feature`, `fix: resolve bug`, `refactor: extract mapper`

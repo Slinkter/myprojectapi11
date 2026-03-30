@@ -1,32 +1,50 @@
 /**
  * @file Cat mappers and adapters.
  * @description Transforms raw data from external sources into domain entities.
+ * @see {@link https://github.com/Slinkter/myprojectapi11#cors-proxy|CORS Proxy Documentation}
  */
 
 import { z } from "zod";
 
 const CAT_ENTITY_SCHEMA = z.object({
     id: z.string(),
-    url: z.string().url(),
+    url: z.string(),
     favouriteId: z.number().nullable(),
 });
 
 /**
  * @typedef {Object} CatEntity
  * @property {string} id - The Cat image unique identifier.
- * @property {string} url - The URL to the cat image.
+ * @property {string} url - The proxied URL to bypass CORS restrictions.
  * @property {number|null} favouriteId - The ID of the favourite record.
  */
 
+/**
+ * CORS proxy endpoint for development.
+ * Routes through Vite dev server proxy to bypass browser CORS restrictions.
+ * @constant {string}
+ */
+const CORS_PROXY = "/api/cors-proxy?url=";
+
+/**
+ * Normalizes favourite response from TheCatAPI.
+ * @param {Object} rawCat - Raw API response.
+ * @returns {Object} Normalized cat entity with proxied URL.
+ */
 const normalizeFavouriteResponse = (rawCat) => ({
     id: rawCat.image.id,
-    url: rawCat.image.url,
+    url: `${CORS_PROXY}${encodeURIComponent(rawCat.image.url)}`,
     favouriteId: rawCat.id,
 });
 
+/**
+ * Normalizes image search response from TheCatAPI.
+ * @param {Object} rawCat - Raw API response.
+ * @returns {Object} Normalized cat entity with proxied URL.
+ */
 const normalizeImageSearchResponse = (rawCat) => ({
     id: rawCat.id,
-    url: rawCat.url,
+    url: `${CORS_PROXY}${encodeURIComponent(rawCat.url)}`,
     favouriteId: null,
 });
 

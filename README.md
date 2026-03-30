@@ -137,6 +137,7 @@ src/
 
 | Feature                        | Descripción                                                               |
 | ------------------------------ | ------------------------------------------------------------------------- |
+| **CORS Proxy**                 | Solución con proxy de Vite para cargar imágenes en desarrollo            |
 | **Score 100/100 react-doctor** | Validación completa de código React                                       |
 | **LazyMotion + domAnimation**  | Bundle optimizado (~30kb ahorro en framer-motion)                         |
 | **prefers-reduced-motion**     | Accesibilidad para usuarios sensibles a animaciones                       |
@@ -149,6 +150,56 @@ src/
 | **Botones consistentes**       | Fondo negro redondeado con ícono blanco                                   |
 | **Favicon personalizado**      | Ícono de gato en `/public/cat.svg`                                        |
 | **JSDoc mejorado**             | Tipados completos con ejemplos en todos los hooks                         |
+
+---
+
+## 🔐 Proxy CORS (Desarrollo)
+
+El proyecto usa un proxy de Vite para evitar problemas de CORS al cargar imágenes del CDN de TheCatAPI.
+
+### Problema Original
+
+El navegador bloquea solicitudes a `cdn2.thecatapi.com` porque el servidor no envía headers CORS correctos.
+
+### Solución
+
+```
+┌─────────────┐     /api/cors-proxy?url=...     ┌─────────────┐
+│  Navegador  │  ──────────────────────────→   │  Vite Dev   │
+│  (localhost)│     (mismo origen = OK)         │   Proxy     │
+└─────────────┘                                 └─────────────┘
+                                                      │
+                                                      ↓
+                                            https://cdn2.thecatapi.com
+                                            (servidor a servidor)
+```
+
+### Configuración
+
+**vite.config.js:**
+```javascript
+server: {
+  proxy: {
+    "/api/cors-proxy": {
+      target: "https://cdn2.thecatapi.com",
+      changeOrigin: true,
+      rewrite: (path) => decodeURIComponent(path.replace(/^\/api\/cors-proxy\?url=/, "")),
+    },
+  },
+}
+```
+
+**catMapper.js:**
+```javascript
+const CORS_PROXY = "/api/cors-proxy?url=";
+
+// Transforma: https://cdn2.thecatapi.com/images/abc.jpg
+// En: /api/cors-proxy?url=https%3A%2F%2Fcdn2.thecatapi.com%2Fimages%2Fabc.jpg
+```
+
+### ⚠️ Nota
+
+Esta solución funciona en **desarrollo** (`pnpm run dev`). Para **producción** (GitHub Pages), las imágenes pueden no cargar correctamente debido a las restricciones CORS del navegador.
 
 ---
 

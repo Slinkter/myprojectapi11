@@ -71,6 +71,7 @@ const CatCard = ({ cat, onAction, actionType, disabled }) => {
           src={cat.url}
           alt={`Cat ${cat.id}`}
           loading="lazy"
+          crossOrigin="anonymous"
           className={imageClasses}
         />
         <div className={overlayClasses} />
