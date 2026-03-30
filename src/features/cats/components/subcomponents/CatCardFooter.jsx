@@ -32,7 +32,7 @@ const CatCardFooter = ({ actionType, onAction, disabled, loading = false }) => {
       onClick={onAction}
       disabled={isDisabled}
       className={cn(
-        "flex items-center justify-center w-9 h-9 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/30",
+        "flex items-center justify-center w-9 h-9 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/30 cursor-pointer",
         isDisabled
           ? "bg-black/50 cursor-not-allowed"
           : "bg-black/70 hover:bg-black text-white active:scale-95",
