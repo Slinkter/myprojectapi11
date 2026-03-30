@@ -208,10 +208,10 @@ Esta solución funciona en **desarrollo** (`pnpm run dev`). Para **producción**
 | Documento                                                              | Contenido                                        |
 | ---------------------------------------------------------------------- | ------------------------------------------------ |
 | [`AGENTS.md`](./AGENTS.md)                                             | Guía para agentes IA (build, lint, arquitectura) |
-| [`src/docs/00-SETUP-GUIDE.md`](./src/docs/00-SETUP-GUIDE.md)           | Instalación desde cero                           |
-| [`src/docs/04-ARCHITECTURE.md`](./src/docs/04-ARCHITECTURE.md)         | Patrones FSD, flujo de datos                     |
-| [`src/docs/05-UI-DESIGN-SYSTEM.md`](./src/docs/05-UI-DESIGN-SYSTEM.md) | Tokens de Tailwind, animaciones                  |
-| [`src/docs/06-CONTRIBUTING.md`](./src/docs/06-CONTRIBUTING.md)         | Convenciones, JSDoc, flujo Git                   |
+| [`docs/00-SETUP-GUIDE.md`](./docs/00-SETUP-GUIDE.md)           | Instalación desde cero                           |
+| [`docs/04-ARCHITECTURE.md`](./docs/04-ARCHITECTURE.md)         | Patrones FSD, flujo de datos                     |
+| [`docs/05-UI-DESIGN-SYSTEM.md`](./docs/05-UI-DESIGN-SYSTEM.md) | Tokens de Tailwind, animaciones                  |
+| [`docs/06-CONTRIBUTING.md`](./docs/06-CONTRIBUTING.md)         | Convenciones, JSDoc, flujo Git                   |
 
 ---
 
