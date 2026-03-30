@@ -60,6 +60,7 @@ const gridVariants = {
  * @param {'save' | 'delete'} props.actionType - Action type for the card.
  * @param {(cat: CatEntity) => boolean} props.isActionDisabled - Function that determines if action is disabled.
  * @param {boolean} props.loading - If `true`, shows loading skeleton.
+ * @param {boolean} [props.actionLoading] - If `true`, shows loading on action buttons.
  * @param {import('react').ReactNode} [props.emptyStateMessage] - Message to display if list is empty.
  * @returns {JSX.Element} The rendered React component.
  */
@@ -72,6 +73,7 @@ const CatList = React.memo((props) => {
         actionType,
         isActionDisabled,
         loading,
+        actionLoading = false,
         emptyStateMessage,
     } = props;
 
@@ -87,7 +89,11 @@ const CatList = React.memo((props) => {
         : listItemVariants;
 
     return (
-        <section className="w-full mb-12">
+        <section 
+            className="w-full mb-12"
+            aria-live="polite"
+            aria-busy={loading}
+        >
             {title && <SectionHeader title={title} />}
             {showSkeleton ? (
                 <SkeletonGrid />
@@ -117,6 +123,7 @@ const CatList = React.memo((props) => {
                                     onAction={onAction}
                                     actionType={actionType}
                                     disabled={isActionDisabled(cat)}
+                                    loading={actionLoading}
                                 />
                             </m.div>
                         ))}
@@ -136,6 +143,7 @@ CatList.propTypes = {
     actionType: PropTypes.oneOf(["save", "delete"]).isRequired,
     isActionDisabled: PropTypes.func.isRequired,
     loading: PropTypes.bool.isRequired,
+    actionLoading: PropTypes.bool,
     emptyStateMessage: PropTypes.node,
 };
 

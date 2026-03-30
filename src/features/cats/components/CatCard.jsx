@@ -22,9 +22,10 @@ import CatCardFooter from "./subcomponents/CatCardFooter";
  * @param {(cat: CatEntity) => void} props.onAction - Function to execute when action button is clicked.
  * @param {'save'|'delete'} props.actionType - Action type.
  * @param {boolean} props.disabled - If action button should be disabled.
+ * @param {boolean} [props.loading] - If action is in loading state.
  * @returns {JSX.Element} A cat card.
  */
-const CatCard = ({ cat, onAction, actionType, disabled }) => {
+const CatCard = ({ cat, onAction, actionType, disabled, loading = false }) => {
   const shouldReduceMotion = useReducedMotion();
   const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -72,7 +73,7 @@ const CatCard = ({ cat, onAction, actionType, disabled }) => {
       : "absolute bottom-3 right-3 z-10 transition-opacity duration-300 opacity-0 group-hover:opacity-100";
 
   return (
-    <div className={cn("relative overflow-hidden bg-muted rounded-2xl shadow-sm group", hoverClasses)}>
+    <div className={cn("relative overflow-hidden bg-muted rounded-2xl shadow-sm group cursor-pointer", hoverClasses)}>
 {/* CARD BODY (Image) */}
       <div className="relative aspect-square w-full">
         {!imageLoaded && (
@@ -99,6 +100,7 @@ const CatCard = ({ cat, onAction, actionType, disabled }) => {
           actionType={actionType}
           onAction={handleAction}
           disabled={disabled}
+          loading={loading}
         />
       </div>
     </div>
@@ -113,6 +115,7 @@ CatCard.propTypes = {
   onAction: PropTypes.func.isRequired,
   actionType: PropTypes.oneOf(["save", "delete"]).isRequired,
   disabled: PropTypes.bool.isRequired,
+  loading: PropTypes.bool,
 };
 
 export default React.memo(CatCard);

@@ -35,6 +35,7 @@ const RandomCatList = () => {
             actionType="save"
             isActionDisabled={isCatInFavourites}
             loading={loading.random}
+            actionLoading={loading.saving}
         />
     );
 };

@@ -23,6 +23,7 @@ const FavoriteCatList = () => {
             actionType="delete"
             isActionDisabled={() => false}
             loading={loading.favourites}
+            actionLoading={loading.deleting}
             emptyStateMessage={EMPTY_STATE_MESSAGES.FAVOURITES}
         />
     );
