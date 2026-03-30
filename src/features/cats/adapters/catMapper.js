@@ -15,7 +15,7 @@ const CAT_ENTITY_SCHEMA = z.object({
 /**
  * @typedef {Object} CatEntity
  * @property {string} id - The Cat image unique identifier.
- * @property {string} url - The proxied URL to bypass CORS restrictions.
+ * @property {string} url - The image URL (proxied in dev, direct in prod).
  * @property {number|null} favouriteId - The ID of the favourite record.
  */
 
@@ -24,7 +24,14 @@ const CAT_ENTITY_SCHEMA = z.object({
  * Routes through Vite dev server proxy to bypass browser CORS restrictions.
  * @constant {string}
  */
-const CORS_PROXY = "/api/cors-proxy?url=";
+const CORS_PROXY_DEV = "/api/cors-proxy?url=";
+
+const getImageUrl = (url) => {
+    if (import.meta.env.PROD) {
+        return url;
+    }
+    return `${CORS_PROXY_DEV}${encodeURIComponent(url)}`;
+};
 
 /**
  * Normalizes favourite response from TheCatAPI.
@@ -33,7 +40,7 @@ const CORS_PROXY = "/api/cors-proxy?url=";
  */
 const normalizeFavouriteResponse = (rawCat) => ({
     id: rawCat.image.id,
-    url: `${CORS_PROXY}${encodeURIComponent(rawCat.image.url)}`,
+    url: getImageUrl(rawCat.image.url),
     favouriteId: rawCat.id,
 });
 
@@ -44,7 +51,7 @@ const normalizeFavouriteResponse = (rawCat) => ({
  */
 const normalizeImageSearchResponse = (rawCat) => ({
     id: rawCat.id,
-    url: `${CORS_PROXY}${encodeURIComponent(rawCat.url)}`,
+    url: getImageUrl(rawCat.url),
     favouriteId: null,
 });
 
