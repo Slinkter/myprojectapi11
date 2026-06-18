@@ -1,18 +1,18 @@
 /**
- * @file Empty state component.
- * @description Displays a message when there's no content to show.
+ * @file Componente de estado vacío.
+ * @description Muestra un mensaje cuando no hay contenido para mostrar.
  */
 
 import PropTypes from "prop-types";
 import { m } from "framer-motion";
 
 /**
- * Renders an empty state message with animation.
+ * Renderiza un mensaje de estado vacío con animación.
  * @component
- * @param {object} props - Component properties.
- * @param {string} props.message - Message to display.
- * @param {string} [props.icon] - Optional icon class or emoji.
- * @returns {JSX.Element} The empty state component.
+ * @param {object} props - Propiedades del componente.
+ * @param {string} props.message - Mensaje a mostrar.
+ * @param {string} [props.icon] - Clase de icono opcional o emoji.
+ * @returns {JSX.Element} El componente de estado vacío.
  */
 const EmptyState = ({ message, icon }) => {
   return (

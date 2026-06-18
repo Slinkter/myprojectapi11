@@ -6,6 +6,12 @@
 import PropTypes from "prop-types";
 import SkeletonCard from "./SkeletonCard";
 
+/**
+ * Rejilla de esqueletos para tarjetas de gatos.
+ * @param {object} props - Propiedades del componente.
+ * @param {number} [props.count=12] - Número de tarjetas a mostrar.
+ * @returns {JSX.Element}
+ */
 const SkeletonGrid = ({ count = 12 }) => (
   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6  gap-6">
     {Array.from({ length: count }).map((_, index) => (

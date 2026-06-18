@@ -1,23 +1,23 @@
 /**
- * @file Application Environment Configuration.
- * @description Centralizes and validates environment variables to avoid
- * scattered `import.meta.env` calls throughout the codebase.
+ * @file Configuración del Entorno de la Aplicación.
+ * @description Centraliza y valida las variables de entorno para evitar
+ * llamadas dispersas a `import.meta.env` en todo el código base.
  */
 
 import { z } from "zod";
 
 /**
- * Environment variable schema definition.
+ * Definición del esquema de variables de entorno.
  * @constant {z.ZodType<Object>}
  */
 const EnvSchema = z.object({
-    VITE_BASE_URL: z.url("VITE_BASE_URL must be a valid URL"),
-    VITE_API_KEY: z.string().min(1, "VITE_API_KEY is required"),
+    VITE_BASE_URL: z.url("VITE_BASE_URL debe ser una URL válida"),
+    VITE_API_KEY: z.string().min(1, "VITE_API_KEY es requerida"),
 });
 
 /**
- * Validates critical environment variables.
- * In development, missing or invalid variables result in an early crash for better DX.
+ * Valida variables de entorno críticas.
+ * En desarrollo, las variables faltantes o inválidas provocan un fallo temprano para una mejor DX.
  */
 const validateEnv = () => {
     const result = EnvSchema.safeParse({
@@ -27,23 +27,23 @@ const validateEnv = () => {
 
     if (!result.success) {
         const errors = result.error.errors.map((e) => e.message).join(", ");
-        const message = `[App Config] Invalid environment variables: ${errors}`;
+        const message = `[App Config] Variables de entorno inválidas: ${errors}`;
         console.error(message);
-        // Crash in development if environment is malformed.
+        // Fallar en desarrollo si el entorno está mal formado.
         if (import.meta.env.DEV) {
             throw new Error(message);
         }
     }
 };
 
-// Run validation immediately
+// Ejecutar validación inmediatamente
 validateEnv();
 
 /**
- * Global configuration object for the application.
- * @property {object} api - API specific configurations.
- * @property {string} api.baseUrl - The base URL for the API.
- * @property {string} api.apiKey - The authentication key for the API.
+ * Objeto de configuración global para la aplicación.
+ * @property {object} api - Configuraciones específicas de la API.
+ * @property {string} api.baseUrl - La URL base para la API.
+ * @property {string} api.apiKey - La clave de autenticación para la API.
  */
 export const config = {
     api: {

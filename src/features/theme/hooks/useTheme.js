@@ -1,7 +1,7 @@
 /**
- * @file Hook to manage application theme state.
- * @description Provides access to the current theme (light/dark mode)
- * and a function to toggle between them.
+ * @file Hook para gestionar el estado del tema de la aplicación.
+ * @description Proporciona acceso al tema actual (modo claro/oscuro)
+ * y una función para alternar entre ellos.
  */
 
 import { useCallback } from "react";
@@ -14,18 +14,18 @@ import { toggleTheme as toggleThemeAction } from "@features/theme/redux/themeSli
 
 /**
  * @typedef {Object} UseThemeFacade
- * @property {ThemeMode} theme - Current active theme mode.
- * @property {function(): void} toggleTheme - Function to switch between light and dark mode.
+ * @property {ThemeMode} theme - Modo de tema activo actual.
+ * @property {function(): void} toggleTheme - Función para cambiar entre modo claro y oscuro.
  */
 
 /**
- * Facade hook for theme state management.
- * 
- * @returns {UseThemeFacade} Object containing theme mode and toggle function.
- * 
+ * Hook de fachada para la gestión del estado del tema.
+ *
+ * @returns {UseThemeFacade} Objeto que contiene el modo de tema y la función de alternancia.
+ *
  * @example
  * const { theme, toggleTheme } = useTheme();
- * 
+ *
  * return (
  *     <button onClick={toggleTheme}>
  *         {theme === 'dark' ? '🌙' : '☀️'}
@@ -33,10 +33,10 @@ import { toggleTheme as toggleThemeAction } from "@features/theme/redux/themeSli
  * );
  */
 export const useTheme = () => {
-    const dispatch = useDispatch();
     const theme = useSelector((state) => state.theme.mode);
+    const dispatch = useDispatch();
 
-const toggleTheme = useCallback(() => {
+    const toggleTheme = useCallback(() => {
         dispatch(toggleThemeAction());
     }, [dispatch]);
 

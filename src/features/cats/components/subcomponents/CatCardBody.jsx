@@ -1,6 +1,6 @@
 /**
- * @file CatCardBody component.
- * @description Renders the main content (image) of a cat card.
+ * @file Componente CatCardBody.
+ * @description Renderiza el contenido principal (imagen) de una tarjeta de gato.
  */
 
 import React from "react";
@@ -8,11 +8,11 @@ import PropTypes from "prop-types";
 import { useReducedMotion } from "framer-motion";
 
 /**
- * CatCardBody component.
- * @param {object} props - Component properties.
- * @param {string} props.url - The cat image URL.
- * @param {string} props.id - The cat ID.
- * @returns {JSX.Element} The body element.
+ * Componente CatCardBody.
+ * @param {object} props - Propiedades del componente.
+ * @param {string} props.url - La URL de la imagen del gato.
+ * @param {string} props.id - El ID del gato.
+ * @returns {JSX.Element} El elemento del cuerpo.
  */
 const CatCardBody = ({ url, id }) => {
   const shouldReduceMotion = useReducedMotion();
@@ -29,7 +29,7 @@ const CatCardBody = ({ url, id }) => {
     <div className="relative aspect-square w-full">
       <img
         src={url}
-        alt={`Cat ${id}`}
+        alt={`Gato ${id}`}
         loading="lazy"
         className={imageClasses}
       />

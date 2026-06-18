@@ -1,12 +1,12 @@
 /**
- * @file Framer Motion configuration.
- * @description Optimized motion features for reduced bundle size.
+ * @file Configuración de Framer Motion.
+ * @description Funcionalidades de movimiento optimizadas para reducir el tamaño del paquete.
  */
 
 import { domAnimation } from "framer-motion";
 
 /**
- * Lazy-loaded animation features for framer-motion.
- * Use this with LazyMotion to reduce bundle size by ~30kb.
+ * Funcionalidades de animación cargadas de forma diferida para framer-motion.
+ * Utilice esto con LazyMotion para reducir el tamaño del paquete en aproximadamente 30kb.
  */
 export const motionFeatures = domAnimation;

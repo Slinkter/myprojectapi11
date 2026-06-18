@@ -1,7 +1,7 @@
 /**
- * @file Generic Select/Dropdown Component.
- * @description Wraps a native select element with custom styling
- * to ensure consistency across light and dark modes.
+ * @file Componente Select/Desplegable genérico.
+ * @description Envuelve un elemento select nativo con un estilo personalizado
+ * para asegurar la consistencia en los modos claro y oscuro.
  */
 
 import PropTypes from "prop-types";
@@ -12,21 +12,21 @@ import { cn } from "@shared/lib/cn";
 
 /**
  * @typedef {Object} SelectOption
- * @property {string} value - The underlying value of the option.
- * @property {string} label - The human-readable label for the option.
+ * @property {string} value - El valor subyacente de la opción.
+ * @property {string} label - La etiqueta legible por humanos para la opción.
  */
 
 /**
- * A styled select component.
+ * Un componente de selección estilizado.
  *
  * @component
- * @param {object} props - Component properties.
- * @param {string|number} props.value - Controlled value.
- * @param {import('react').ChangeEventHandler<HTMLSelectElement>} props.onChange - Change handler passing the selected event.
- * @param {SelectOption[]} props.options - Array of options to display.
- * @param {string} [props.className] - Optional container classes.
- * @param {string} [props.ariaLabel] - Accessibility label.
- * @returns {JSX.Element} The rendered React component.
+ * @param {object} props - Propiedades del componente.
+ * @param {string|number} props.value - Valor controlado.
+ * @param {import('react').ChangeEventHandler<HTMLSelectElement>} props.onChange - Manejador de cambio que pasa el evento seleccionado.
+ * @param {SelectOption[]} props.options - Array de opciones a mostrar.
+ * @param {string} [props.className] - Clases de contenedor opcionales.
+ * @param {string} [props.ariaLabel] - Etiqueta de accesibilidad.
+ * @returns {JSX.Element} El componente React renderizado.
  */
 const Select = ({ value, onChange, options, className = "", ariaLabel }) => {
   return (

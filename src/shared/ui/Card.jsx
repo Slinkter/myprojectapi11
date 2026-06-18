@@ -1,19 +1,19 @@
 /**
- * @file Generic Card component.
- * @description A reusable card container following Atomic Design.
+ * @file Componente de Tarjeta genérico.
+ * @description Un contenedor de tarjeta reutilizable siguiendo el Diseño Atómico.
  */
 
 import PropTypes from "prop-types";
 import { cn } from "@shared/lib/cn";
 
 /**
- * A basic card component.
+ * Un componente de tarjeta básico.
  * 
  * @component
- * @param {object} props - Component properties.
- * @param {React.ReactNode} props.children - Card content.
- * @param {string} [props.className] - Additional CSS classes.
- * @returns {JSX.Element} The rendered card.
+ * @param {object} props - Propiedades del componente.
+ * @param {React.ReactNode} props.children - Contenido de la tarjeta.
+ * @param {string} [props.className] - Clases CSS adicionales.
+ * @returns {JSX.Element} La tarjeta renderizada.
  */
 const Card = ({ children, className = "" }) => {
   return (
@@ -32,7 +32,7 @@ Card.propTypes = {
 };
 
 /**
- * Card Header subcomponent.
+ * Subcomponente Card Header.
  */
 Card.Header = ({ children, className = "" }) => (
   <div className={cn("px-4 py-3 border-b border-border bg-muted/50", className)}>
@@ -47,7 +47,7 @@ Card.Header.propTypes = {
 };
 
 /**
- * Card Body subcomponent.
+ * Subcomponente Card Body.
  */
 Card.Body = ({ children, className = "" }) => (
   <div className={cn("p-4", className)}>
@@ -62,7 +62,7 @@ Card.Body.propTypes = {
 };
 
 /**
- * Card Footer subcomponent.
+ * Subcomponente Card Footer.
  */
 Card.Footer = ({ children, className = "" }) => (
   <div className={cn("px-4 py-3 border-t border-border bg-muted/50", className)}>

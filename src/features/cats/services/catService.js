@@ -1,7 +1,7 @@
 /**
- * @file Cat service layer.
- * @description Mediates between the data source (API) and the application state.
- * This is the only place that knows about the API service and the Mappers.
+ * @file Capa de servicio de gatos.
+ * @description Media entre la fuente de datos (API) y el estado de la aplicación.
+ * Este es el único lugar que conoce el servicio de la API y los Mapeadores.
  */
 
 import { catApiService } from "../api/catApi";
@@ -13,7 +13,7 @@ import { logApi } from "@shared/lib/debugLogger";
  */
 
 /**
- * Service to manage cat operations. Represents the application's domain services.
+ * Servicio para gestionar las operaciones de los gatos. Representa los servicios de dominio de la aplicación.
  * @namespace
  */
 export const catService = {

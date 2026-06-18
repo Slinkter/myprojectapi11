@@ -1,6 +1,6 @@
 /**
- * @file CatCardFooter component.
- * @description Renders a minimal floating action button for a cat card.
+ * @file Componente CatCardFooter.
+ * @description Renderiza un botón de acción flotante minimalista para una tarjeta de gato.
  */
 
 import React from "react";
@@ -10,16 +10,16 @@ import { cn } from "@shared/lib/cn";
 import IconButton from "@shared/ui/IconButton";
 
 /**
- * CatCardFooter component.
- * @param {object} props - Component properties.
- * @param {'save' | 'delete'} props.actionType - Action type.
- * @param {import('react').MouseEventHandler<HTMLButtonElement>} props.onAction - Action handler triggered on click.
- * @param {boolean} props.disabled - Disabled state.
- * @returns {JSX.Element} The footer element.
+ * Componente CatCardFooter.
+ * @param {object} props - Propiedades del componente.
+ * @param {'save' | 'delete'} props.actionType - Tipo de acción.
+ * @param {import('react').MouseEventHandler<HTMLButtonElement>} props.onAction - Manejador de acción disparado al hacer clic.
+ * @param {boolean} props.disabled - Estado deshabilitado.
+ * @returns {JSX.Element} El elemento del pie de página.
  */
 const CatCardFooter = ({ actionType, onAction, disabled }) => {
   const isSave = actionType === "save";
-  const label = isSave ? "Add to favourites" : "Remove from favourites";
+  const label = isSave ? "Añadir a favoritos" : "Eliminar de favoritos";
 
   return (
     <IconButton

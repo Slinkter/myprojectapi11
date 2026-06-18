@@ -1,8 +1,8 @@
 /**
- * @file Container for the random cat list.
- * @description This component handles logic for displaying
- * random cats, using the `CatList` presentation component.
- * Data is preloaded at app level via usePreloadCats.
+ * @file Contenedor para la lista de gatos aleatorios.
+ * @description Este componente maneja la lógica para mostrar
+ * gatos aleatorios, utilizando el componente de presentación `CatList`.
+ * Los datos se precargan a nivel de aplicación a través de usePreloadCats.
  */
 
 import { useMemo, useCallback } from "react";
@@ -15,9 +15,9 @@ import { logStart, logState } from "@shared/lib/debugLogger";
  */
 
 /**
- * Orchestrates rendering of the random cat list.
+ * Orquestas el renderizado de la lista de gatos aleatorios.
  * @component
- * @returns {JSX.Element} The rendered React component.
+ * @returns {JSX.Element} El componente React renderizado.
  */
 const RandomCatList = () => {
   logStart("RandomCatList render");
@@ -25,15 +25,15 @@ const RandomCatList = () => {
 
   logState("RandomCatList", { randomCats: randomCats.length, "loading.random": loading.random });
 
-  // Optimization: Memoize favourite IDs in a Set for O(1) lookups.
+  // Optimización: Memorizar IDs de favoritos en un Set para búsquedas O(1).
   const favouriteContext = useMemo(() => {
     return new Set(favouriteCats.map((cat) => cat.id));
   }, [favouriteCats]);
 
   /**
-   * Checks if a cat from the random list is already in favourites.
-   * @param {CatEntity} cat - The cat to check.
-   * @returns {boolean} - `true` if the cat is a favourite.
+   * Comprueba si un gato de la lista aleatoria ya está en favoritos.
+   * @param {CatEntity} cat - El gato a comprobar.
+   * @returns {boolean} - `true` si el gato es un favorito.
    */
   const isCatInFavourites = useCallback(
     (cat) => {
@@ -46,7 +46,7 @@ const RandomCatList = () => {
 
   return (
     <CatList
-      title="Random Kittens"
+      title="Gatitos Aleatorios"
       cats={randomCats}
       onAction={saveFavouriteCat}
       actionType="save"

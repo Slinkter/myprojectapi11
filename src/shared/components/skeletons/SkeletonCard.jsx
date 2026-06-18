@@ -6,7 +6,7 @@
 import { m } from "framer-motion";
 
 /**
- * Animation variants for skeleton pulse.
+ * Variantes de animación para el pulso del esqueleto.
  * @constant {Object}
  */
 const skeletonVariants = {
@@ -22,7 +22,7 @@ const skeletonVariants = {
 };
 
 /**
- * Skeleton card with smooth pulse animation.
+ * Tarjeta de esqueleto con animación de pulso suave.
  * @component
  * @returns {JSX.Element}
  */

@@ -1,26 +1,26 @@
 /**
- * @file Optimized Debug Logging Utility.
- * @description Provides a standardized, visually distinct way to trace application 
- * events, state changes, and API lifecycle in the browser console.
- * Each log includes a high-resolution timestamp (HH:MM:SS.mmm).
+ * @file Utilidad de Registro de Depuración Optimizada.
+ * @description Proporciona una forma estandarizada y visualmente distinta de rastrear eventos
+ * de la aplicación, cambios de estado y el ciclo de vida de la API en la consola del navegador.
+ * Cada registro incluye una marca de tiempo de alta resolución (HH:MM:SS.mmm).
  */
 
 /**
- * Returns a formatted timestamp string (HH:MM:SS.mmm).
- * Configured for Lima, Peru (GMT-05).
+ * Devuelve una cadena de marca de tiempo formateada (HH:MM:SS.mmm).
+ * Configurada para Lima, Perú (GMT-05).
  * 
  * @private
- * @returns {string} The current time substring.
+ * @returns {string} La subcadena de la hora actual.
  * 
  * @description
- * Uses 'en-GB' (British English) for a consistent 24-hour clock format 
- * (00:00:00 to 23:59:59) which is the preferred standard for engineering logs,
- * while keeping the physical time data from the 'America/Lima' timezone.
+ * Utiliza 'en-GB' (inglés británico) para un formato de reloj de 24 horas consistente
+ * (00:00:00 a 23:59:59), que es el estándar preferido para registros de ingeniería,
+ * manteniendo los datos de hora física de la zona horaria 'America/Lima'.
  * 
  * @example 
- * // Output format: 09:30:15.123 (GMT-05)
+ * // Formato de salida: 09:30:15.123 (GMT-05)
  * 
- * // Original UTC version (Archived):
+ * // Versión original en UTC (Archivada):
  * // const time = () => new Date().toISOString().split("T")[1].slice(0, 12);
  */
 const time = () => {
@@ -43,46 +43,45 @@ const time = () => {
 
 
 /**
- * Logs the start of a logical sequence (render, mount, logic start).
- * @param {string} label - The name of the process being started.
- * @example logStart("CatGallery mounted"); 
- * // Output: ⏱️ 09:12:45.123 ➡️ CatGallery mounted
+ * Registra el inicio de una secuencia lógica (renderizado, montaje, inicio de lógica).
+ * @param {string} label - El nombre del proceso que se inicia.
+ * @example logStart("CatGallery montado"); 
+ * // Salida: ⏱️ 09:12:45.123 ➡️ CatGallery montado
  */
 export const logStart = (label) => console.log(`⏱️ ${time()} ➡️ ${label}`);
 
 /**
- * Logs the successful completion of a sequence with optional data.
- * @param {string} label - The name of the process completed.
- * @param {any} [data] - Optional payload or result object to inspect.
- * @example logEnd("RandomCats Load", { total: 10 }); 
- * // Output: ⏱️ 09:12:46.540 ✅ RandomCats Load { total: 10 }
+ * Registra la finalización exitosa de una secuencia con datos opcionales.
+ * @param {string} label - El nombre del proceso completado.
+ * @param {any} [data] - Carga útil opcional u objeto de resultado a inspeccionar.
+ * @example logEnd("Carga de RandomCats", { total: 10 }); 
+ * // Salida: ⏱️ 09:12:46.540 ✅ Carga de RandomCats { total: 10 }
  */
 export const logEnd = (label, data) =>
     console.log(`⏱️ ${time()} ✅ ${label}`, data || "");
 
 /**
- * Logs the current value of a state or variable.
- * @param {string} label - Description of the state.
- * @param {any} state - The state object or value to tree-view.
+ * Registra el valor actual de un estado o variable.
+ * @param {string} label - Descripción del estado.
+ * @param {any} state - El objeto de estado o valor a visualizar en árbol.
  * @example logState("UserPreferences", { theme: 'dark' });
- * // Output: ⏱️ 09:12:46.800 📊 UserPreferences: { theme: 'dark' }
+ * // Salida: ⏱️ 09:12:46.800 📊 UserPreferences: { theme: 'dark' }
  */
 export const logState = (label, state) =>
     console.log(`⏱️ ${time()} 📊 ${label}:`, state);
 
 /**
- * Logs a Redux action or specific atomic event.
- * @param {string} action - The action identifier or description.
+ * Registra una acción de Redux o un evento atómico específico.
+ * @param {string} action - El identificador o descripción de la acción.
  * @example logAction("cats/save/pending");
- * // Output: ⏱️ 09:12:47.100 ⚡ cats/save/pending
+ * // Salida: ⏱️ 09:12:47.100 ⚡ cats/save/pending
  */
 export const logAction = (action) => console.log(`⏱️ ${time()} ⚡ ${action}`);
 
 /**
- * Logs an outgoing network request or API orchestration step.
- * @param {string} label - Description of the API call.
+ * Registra una solicitud de red saliente o un paso de orquestación de API.
+ * @param {string} label - Descripción de la llamada a la API.
  * @example logApi("catService.fetchImages");
- * // Output: 🌍 09:12:47.250 catService.fetchImages
+ * // Salida: 🌍 09:12:47.250 catService.fetchImages
  */
 export const logApi = (label) => console.log(`🌍 ${time()} ${label}`);
-

@@ -1,6 +1,6 @@
 /**
- * @file Redux Slice for managing cat state.
- * @description Application layer: Handles global state and async workflows.
+ * @file Slice de Redux para gestionar el estado de los gatos.
+ * @description Capa de aplicación: Maneja el estado global y los flujos de trabajo asíncronos.
  */
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
@@ -12,7 +12,7 @@ import { logAction, logEnd } from "@shared/lib/debugLogger";
  */
 
 /**
- * Thunk to fetch a list of random cats.
+ * Thunk para obtener una lista de gatos aleatorios.
  * @type {import('@reduxjs/toolkit').AsyncThunk<CatEntity[], void, {}>}
  */
 export const fetchRandomCats = createAsyncThunk(
@@ -27,7 +27,7 @@ export const fetchRandomCats = createAsyncThunk(
 );
 
 /**
- * Thunk to fetch the list of favourite cats.
+ * Thunk para obtener la lista de gatos favoritos.
  * @type {import('@reduxjs/toolkit').AsyncThunk<CatEntity[], void, {}>}
  */
 export const fetchFavouriteCats = createAsyncThunk(
@@ -42,7 +42,7 @@ export const fetchFavouriteCats = createAsyncThunk(
 );
 
 /**
- * Thunk to save a cat as favourite.
+ * Thunk para guardar un gato como favorito.
  * @type {import('@reduxjs/toolkit').AsyncThunk<{cat: CatEntity, favouriteId: number}, CatEntity, {}>}
  */
 export const saveCat = createAsyncThunk(
@@ -58,7 +58,7 @@ export const saveCat = createAsyncThunk(
 );
 
 /**
- * Thunk to delete a cat from favourites.
+ * Thunk para eliminar un gato de favoritos.
  * @type {import('@reduxjs/toolkit').AsyncThunk<number, CatEntity, {}>}
  */
 export const deleteCat = createAsyncThunk(
@@ -91,14 +91,14 @@ const catsSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            // Fetch Random
+            // Obtener Aleatorios
             .addCase(fetchRandomCats.pending, (state) => {
                 logAction("fetchRandomCats PENDING");
                 state.loading.random = true;
                 state.error = null;
             })
             .addCase(fetchRandomCats.fulfilled, (state, action) => {
-                logEnd("fetchRandomCats DONE", `${action.payload.length} cats`);
+                logEnd("fetchRandomCats DONE", `${action.payload.length} gatos`);
                 state.loading.random = false;
                 state.random = action.payload;
             })
@@ -107,7 +107,7 @@ const catsSlice = createSlice({
                 state.loading.random = false;
                 state.error = action.payload;
             })
-            // Fetch Favourites
+            // Obtener Favoritos
             .addCase(fetchFavouriteCats.pending, (state) => {
                 logAction("fetchFavouriteCats PENDING");
                 state.loading.favourites = true;
@@ -116,7 +116,7 @@ const catsSlice = createSlice({
             .addCase(fetchFavouriteCats.fulfilled, (state, action) => {
                 logEnd(
                     "fetchFavouriteCats DONE",
-                    `${action.payload.length} favourites`,
+                    `${action.payload.length} favoritos`,
                 );
                 state.loading.favourites = false;
                 state.favourites = action.payload;
@@ -126,7 +126,7 @@ const catsSlice = createSlice({
                 state.loading.favourites = false;
                 state.error = action.payload;
             })
-            // Save
+            // Guardar
             .addCase(saveCat.pending, (state) => {
                 logAction("saveCat PENDING");
                 state.loading.saving = true;
@@ -142,7 +142,7 @@ const catsSlice = createSlice({
                 state.loading.saving = false;
                 state.error = action.payload;
             })
-            // Delete
+            // Eliminar
             .addCase(deleteCat.pending, (state) => {
                 logAction("deleteCat PENDING");
                 state.loading.deleting = true;

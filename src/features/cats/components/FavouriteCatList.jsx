@@ -1,8 +1,8 @@
 /**
- * @file Container for the favourite cat list.
- * @description This component handles logic for displaying
- * the user's favourite cats, using the `CatList` presentation component.
- * Data is preloaded at app level.
+ * @file Contenedor para la lista de gatos favoritos.
+ * @description Este componente maneja la lógica para mostrar
+ * los gatos favoritos del usuario, utilizando el componente de presentación `CatList`.
+ * Los datos se precargan a nivel de aplicación.
  */
 
 import { useCats } from "@features/cats/hooks/useCats";
@@ -10,9 +10,9 @@ import CatList from "./CatList";
 import { logStart, logState } from "@shared/lib/debugLogger";
 
 /**
- * Orchestrates rendering of the favourite cat list.
+ * Orquestas el renderizado de la lista de gatos favoritos.
  * @component
- * @returns {JSX.Element} The rendered React component.
+ * @returns {JSX.Element} El componente React renderizado.
  */
 const FavouriteCatList = () => {
   logStart("FavouriteCatList render");
@@ -24,7 +24,7 @@ const FavouriteCatList = () => {
 
   return (
     <CatList
-      title="Favourite Kittens"
+      title="Gatitos Favoritos"
       cats={favouriteCats}
       onAction={deleteFavouriteCat}
       actionType="delete"
@@ -32,8 +32,8 @@ const FavouriteCatList = () => {
       loading={loading.favourites}
       emptyStateMessage={
         <span>
-          You have no favourite kittens yet. <br />
-          Click the heart on a kitten to save it!
+          Aún no tienes gatitos favoritos. <br />
+          ¡Haz clic en el corazón de un gatito para guardarlo!
         </span>
       }
     />

@@ -1,7 +1,7 @@
 /**
- * @file Individual Cat Card Component.
- * @description Renders a cat image with an entrance animation and an overlay action button in a minimal style.
- * Implements the Compound Component pattern.
+ * @file Componente de Tarjeta de Gato Individual.
+ * @description Renderiza una imagen de gato con una animación de entrada y un botón de acción superpuesto en un estilo minimalista.
+ * Implementa el patrón de Componente Compuesto.
  */
 
 import React from "react";
@@ -14,14 +14,14 @@ import CatCardBody from "./subcomponents/CatCardBody";
 import CatCardFooter from "./subcomponents/CatCardFooter";
 
 /**
- * Individual Cat Card Component.
- * @description Renders a cat card container using the generic Card atom.
+ * Componente de Tarjeta de Gato Individual.
+ * @description Renderiza un contenedor de tarjeta de gato utilizando el átomo genérico Card.
  *
  * @component
- * @param {object} props - Component properties.
- * @param {import('react').ReactNode} props.children - Child components.
- * @param {string} [props.className] - Optional CSS classes.
- * @returns {JSX.Element} A cat card container.
+ * @param {object} props - Propiedades del componente.
+ * @param {import('react').ReactNode} props.children - Componentes hijos.
+ * @param {string} [props.className] - Clases CSS opcionales.
+ * @returns {JSX.Element} Un contenedor de tarjeta de gato.
  */
 const CatCard = ({ children, className }) => {
   const shouldReduceMotion = useReducedMotion();
@@ -49,7 +49,7 @@ CatCard.propTypes = {
 
 const MemoizedCatCard = React.memo(CatCard);
 
-// Expose subcomponents as part of CatCard for easier discovery
+// Exponer subcomponentes como parte de CatCard para facilitar su descubrimiento
 MemoizedCatCard.Header = CatCardHeader;
 MemoizedCatCard.Body = CatCardBody;
 MemoizedCatCard.Footer = CatCardFooter;

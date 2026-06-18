@@ -1,15 +1,15 @@
 /**
- * @file Data initializer component.
- * @description Handles initial data loading for the application.
- * This separates data fetching logic from the main App component.
+ * @file Componente inicializador de datos.
+ * @description Maneja la carga inicial de datos para la aplicación.
+ * Esto separa la lógica de obtención de datos del componente App principal.
  */
 
 import { usePreloadCats } from "@features/cats/hooks/usePreloadCats";
 
 /**
- * Component responsible for preloading cat data on app initialization.
+ * Componente responsable de precargar los datos de los gatos en la inicialización de la aplicación.
  * @component
- * @returns {null} This component renders nothing.
+ * @returns {null} Este componente no renderiza nada.
  */
 const DataInitializer = () => {
   usePreloadCats();

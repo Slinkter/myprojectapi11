@@ -1,17 +1,17 @@
 /**
- * @file Constants for the font feature.
- * @description Defines the available fonts for the application.
+ * @file Constantes para la funcionalidad de fuentes.
+ * @description Define las fuentes disponibles para la aplicación.
  */
 
 /**
  * @typedef {object} Font
- * @property {string} name - The display name of the font.
- * @property {string} family - The CSS font-family value.
+ * @property {string} name - El nombre para mostrar de la fuente.
+ * @property {string} family - El valor de font-family de CSS.
  */
 
 /**
- * List of available fonts for the application.
- * Matches the Google Fonts imports in index.html.
+ * Lista de fuentes disponibles para la aplicación.
+ * Coincide con las importaciones de Google Fonts en index.html.
  * @type {Font[]}
  */
 export const AVAILABLE_FONTS = [

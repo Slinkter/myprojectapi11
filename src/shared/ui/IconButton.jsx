@@ -1,7 +1,7 @@
 /**
- * @file Circular icon button component.
- * @description A reusable button component optimized for displaying icons.
- * Provides consistent styling, hover states, and accessibility support.
+ * @file Componente de botón de icono circular.
+ * @description Un componente de botón reutilizable optimizado para mostrar iconos.
+ * Proporciona un estilo consistente, estados de hover y soporte de accesibilidad.
  */
 
 import React from "react";
@@ -12,15 +12,15 @@ import { cn } from "@shared/lib/cn";
 
 /**
  * @typedef {Object} IconButtonProps
- * @property {React.ReactNode} children - Icon element (should be ~24x24px).
- * @property {React.MouseEventHandler<HTMLButtonElement>} onClick - Click handler.
- * @property {boolean} [disabled=false] - Disabled state.
- * @property {string} [className] - Additional CSS classes.
- * @property {string} ariaLabel - Accessibility label (required).
+ * @property {React.ReactNode} children - Elemento de icono (debería ser de ~24x24px).
+ * @property {React.MouseEventHandler<HTMLButtonElement>} onClick - Manejador de clics.
+ * @property {boolean} [disabled=false] - Estado deshabilitado.
+ * @property {string} [className] - Clases CSS adicionales.
+ * @property {string} ariaLabel - Etiqueta de accesibilidad (obligatoria).
  */
 
 /**
- * Button variants for micro-interactions.
+ * Variantes de botón para micro-interacciones.
  * @constant {Object}
  */
 const buttonVariants = {
@@ -29,14 +29,14 @@ const buttonVariants = {
 };
 
 /**
- * A circular button component designed for icon-only actions.
+ * Un componente de botón circular diseñado para acciones de solo icono.
  * 
  * @component
- * @param {IconButtonProps} props - Component properties.
- * @returns {JSX.Element} Rendered button element.
+ * @param {IconButtonProps} props - Propiedades del componente.
+ * @returns {JSX.Element} Elemento de botón renderizado.
  * 
  * @example
- * <IconButton onClick={handleClick} ariaLabel="Close modal">
+ * <IconButton onClick={handleClick} ariaLabel="Cerrar modal">
  *     <BsXCircle />
  * </IconButton>
  */

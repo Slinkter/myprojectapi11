@@ -1,6 +1,6 @@
 /**
- * @file Generic Button component.
- * @description A reusable button component with multiple variants and sizes.
+ * @file Componente de Botón genérico.
+ * @description Un componente de botón reutilizable con múltiples variantes y tamaños.
  */
 
 import PropTypes from "prop-types";
@@ -9,7 +9,7 @@ import { useReducedMotion } from "framer-motion";
 import { cn } from "@shared/lib/cn";
 
 /**
- * Button variants for framer-motion interactions.
+ * Variantes de botón para las interacciones con framer-motion.
  */
 const buttonVariants = {
   hover: { scale: 1.02 },
@@ -17,19 +17,19 @@ const buttonVariants = {
 };
 
 /**
- * A reusable button component.
+ * Un componente de botón reutilizable.
  *
  * @component
- * @param {object} props - Component properties.
- * @param {React.ReactNode} props.children - Button content.
- * @param {() => void} [props.onClick] - Click handler.
- * @param {string} [props.type='button'] - Button type.
- * @param {'primary' | 'secondary' | 'destructive' | 'outline' | 'ghost'} [props.variant='primary'] - Visual style.
- * @param {'sm' | 'md' | 'lg'} [props.size='md'] - Button size.
- * @param {boolean} [props.disabled=false] - Disabled state.
- * @param {string} [props.className] - Additional CSS classes.
- * @param {string} [props.ariaLabel] - Accessibility label.
- * @returns {JSX.Element} The rendered button.
+ * @param {object} props - Propiedades del componente.
+ * @param {React.ReactNode} props.children - Contenido del botón.
+ * @param {() => void} [props.onClick] - Manejador de clics.
+ * @param {string} [props.type='button'] - Tipo de botón.
+ * @param {'primary' | 'secondary' | 'destructive' | 'outline' | 'ghost'} [props.variant='primary'] - Estilo visual.
+ * @param {'sm' | 'md' | 'lg'} [props.size='md'] - Tamaño del botón.
+ * @param {boolean} [props.disabled=false] - Estado deshabilitado.
+ * @param {string} [props.className] - Clases CSS adicionales.
+ * @param {string} [props.ariaLabel] - Etiqueta de accesibilidad.
+ * @returns {JSX.Element} El botón renderizado.
  */
 const Button = ({
   children,

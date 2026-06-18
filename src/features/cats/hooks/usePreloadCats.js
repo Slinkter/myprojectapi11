@@ -1,8 +1,8 @@
 /**
- * @file Hook to preload cat data on app initialization.
- * @description Fetches data immediately when the app starts,
- * before components mount, preventing layout shift.
- * Loads random cats first, then favourites.
+ * @file Hook para precargar los datos de los gatos en la inicialización de la aplicación.
+ * @description Obtiene los datos inmediatamente cuando comienza la aplicación,
+ * antes de que los componentes se monten, evitando saltos en el diseño.
+ * Carga primero los gatos aleatorios y luego los favoritos.
  */
 
 import { useEffect, useRef } from "react";
@@ -11,8 +11,8 @@ import { fetchRandomCats, fetchFavouriteCats } from "@features/cats/redux/catsSl
 import { logAction } from "@shared/lib/debugLogger";
 
 /**
- * Hook to preload cat data at app startup.
- * @returns {Object} Preloading status.
+ * Hook para precargar datos de gatos al inicio de la aplicación.
+ * @returns {Object} Estado de la precarga.
  */
 export const usePreloadCats = () => {
     const { random, favourites, loading } = useSelector((state) => state.cats);

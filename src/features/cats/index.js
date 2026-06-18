@@ -1,18 +1,18 @@
 /**
- * @file Public API (Entry Point) for the Cats feature.
- * @description Following Feature-Sliced Design (FSD), this file acts as a 
- * "Public API" that encapsulates internal implementation details. 
+ * @file API Pública (Punto de Entrada) para la funcionalidad de Gatos.
+ * @description Siguiendo el Diseño por Capas de Funcionalidades (FSD), este archivo actúa como una
+ * "API Pública" que encapsula los detalles de implementación interna.
  *
- * DATA FLOW (Top-Down Architecture):
+ * FLUJO DE DATOS (Arquitectura Top-Down):
  * 
  * [CAPA UI] -> [CAPA HOOKS] -> [CAPA REDUX] -> [CAPA SERVICES] -> [CAPA API/ADAPTERS]
  * CatList   -> useCats      -> catsSlice   -> catService     -> catApi + catMapper (Zod 4)
- * (Render)  -> (Facade)     -> (Thunk)     -> (Business)     -> (Network & Validation)
+ * (Render)  -> (Fachada)    -> (Thunk)     -> (Negocio)      -> (Red y Validación)
  * 
  *   +-----------+         +------------+         +------------+        +------------+         +------------+
  *   |           |         |            |         |            |        |            |         |            |
  *   | RandomCat |---(1)-->|  useCats   |---(2)-->| catsSlice  |---(3)-->| catService |---(4)-->|   catApi   |
- *   |   List    | (Call)  | (Facade)   | (Thunk) | (Business) | (Call) | (Axios)    | (JSON)  | (Network)  |
+ *   |   List    | (Call)  | (Fachada)  | (Thunk) | (Negocio)  | (Call) | (Axios)    | (JSON)  | (Red)      |
  *   |           |         |            |         |            |        |            |         |            |
  *   +-----------+         +------------+         +------------+        +------------+         +------------+
  *         ^                                                                                          |
@@ -20,27 +20,25 @@
  *         |                                                                                   +------------+
  *         |                                                                                   |            |
  *         +-----------------------------(7)----------------------------(6)-------------------| catMapper  |
- *                 (Re-render)                  (Normalización)                (Zod 4)     | (Clean)    |
+ *                 (Re-renderizado)              (Normalización)                 (Zod 4)     | (Limpio)    |
  *                                                                                          +------------+
  */
 
 /** 
- * 1. Global State Connection 
- * Exports the reducer for the Redux Store configuration.
+ * 1. Conexión con el Estado Global 
+ * Exporta el reducer para la configuración del Redux Store.
  */
 export { default as catsReducer } from "./redux/catsSlice";
 
 /** 
- * 2. Component Interface (Facade Pattern) 
- * The primary hook for UI components to interact with the feature's data and logic.
- * Hides raw Redux dispatch/select logic.
+ * 2. Interfaz del Componente (Patrón Fachada) 
+ * El hook principal para que los componentes de la UI interactúen con los datos y la lógica de la funcionalidad.
+ * Oculta la lógica bruta de dispatch/select de Redux.
  */
 export { useCats } from "./hooks/useCats";
 
 /** 
- * 3. Feature-Specific Error UI 
- * Reusable component to handle and display API-specific errors.
+ * 3. UI de Error Específica de la Funcionalidad 
+ * Componente reutilizable para manejar y mostrar errores específicos de la API.
  */
 export { default as CatErrorHandler } from "./components/CatErrorHandler";
-
-

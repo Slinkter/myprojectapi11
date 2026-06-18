@@ -1,10 +1,10 @@
 /**
- * @file Hook to synchronize application appearance with the DOM.
- * @description Manages theme (dark/light mode) and font family by:
- * - Applying CSS classes to the document root
- * - Persisting preferences to localStorage
- * 
- * This hook should be called once at the root of the application.
+ * @file Hook para sincronizar la apariencia de la aplicación con el DOM.
+ * @description Gestiona el tema (modo oscuro/claro) y la familia de fuentes mediante:
+ * - La aplicación de clases CSS al elemento raíz del documento
+ * - La persistencia de preferencias en localStorage
+ *
+ * Este hook debe ser llamado una vez en la raíz de la aplicación.
  */
 
 import { useEffect } from "react";
@@ -13,18 +13,18 @@ import { useFont } from "@features/font/hooks/useFont";
 
 /**
  * @typedef {Object} UseAppearanceReturn
- * @description This hook does not return any value. It handles side effects only.
+ * @description Este hook no devuelve ningún valor. Solo gestiona efectos secundarios.
  */
 
 /**
- * Synchronizes theme and font state with the DOM and localStorage.
- * 
- * @returns {UseAppearanceReturn} This hook does not return a value.
- * 
+ * Sincroniza el estado del tema y la fuente con el DOM y localStorage.
+ *
+ * @returns {UseAppearanceReturn} Este hook no devuelve un valor.
+ *
  * @example
  * const App = () => {
  *     useAppearance();
- *     return <div>My App</div>;
+ *     return <div>Mi Aplicación</div>;
  * };
  */
 export const useAppearance = () => {
@@ -32,7 +32,7 @@ export const useAppearance = () => {
     const { font: fontFamily } = useFont();
 
     /**
-     * Effect: Apply theme class to document root and persist to localStorage.
+     * Efecto: Aplica la clase de tema al raíz del documento y persiste en localStorage.
      */
     useEffect(() => {
         const root = document.documentElement;
@@ -46,12 +46,12 @@ export const useAppearance = () => {
         try {
             localStorage.setItem("theme", themeMode);
         } catch (error) {
-            console.error("Failed to persist theme to localStorage:", error);
+            console.error("Error al persistir el tema en localStorage:", error);
         }
     }, [themeMode]);
 
     /**
-     * Effect: Apply font family CSS variable to document root and persist to localStorage.
+     * Efecto: Aplica la variable CSS de familia de fuentes al raíz del documento y persiste en localStorage.
      */
     useEffect(() => {
         const root = document.documentElement;
@@ -60,7 +60,7 @@ export const useAppearance = () => {
         try {
             localStorage.setItem("font", fontFamily);
         } catch (error) {
-            console.error("Failed to persist font to localStorage:", error);
+            console.error("Error al persistir la fuente en localStorage:", error);
         }
     }, [fontFamily]);
 };

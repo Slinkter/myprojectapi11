@@ -1,12 +1,12 @@
 /**
- * @file Initial loading skeleton.
- * @description Shows a skeleton while the app is loading for the first time.
+ * @file Esqueleto de carga inicial.
+ * @description Muestra un esqueleto mientras la aplicación se carga por primera vez.
  */
 
 import SkeletonCard from "@shared/components/skeletons/SkeletonCard";
 
 /**
- * Single skeleton shown during initial load.
+ * Esqueleto único mostrado durante la carga inicial.
  * @component
  * @returns {JSX.Element}
  */
@@ -15,7 +15,7 @@ const InitialLoadSkeleton = () => {
     <div className="space-y-12">
       <div>
         <h3 className="pb-2 mb-4 text-xl font-bold border-b text-foreground border-border">
-          Random Kittens
+          Gatitos Aleatorios
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
           {Array.from({ length: 12 }).map((_, index) => (
@@ -25,7 +25,7 @@ const InitialLoadSkeleton = () => {
       </div>
       <div>
         <h3 className="pb-2 mb-4 text-xl font-bold border-b text-foreground border-border">
-          Favourite Kittens
+          Gatitos Favoritos
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {Array.from({ length: 12 }).map((_, index) => (

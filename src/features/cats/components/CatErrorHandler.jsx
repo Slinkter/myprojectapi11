@@ -1,6 +1,6 @@
 /**
- * @file Component to handle and display API errors for the Cats feature.
- * @description Displays an error message and a retry button when cat data fetching fails.
+ * @file Componente para manejar y mostrar errores de la API para la funcionalidad de Gatos.
+ * @description Muestra un mensaje de error y un botón de reintento cuando falla la obtención de datos de gatos.
  */
 
 import { MdErrorOutline } from "react-icons/md";
@@ -8,8 +8,8 @@ import { useCats } from "@features/cats/hooks/useCats";
 import Button from "@shared/ui/Button";
 
 /**
- * Component to handle and display API errors.
- * @returns {JSX.Element|null} The error alert or null if no error.
+ * Componente para manejar y mostrar errores de la API.
+ * @returns {JSX.Element|null} La alerta de error o null si no hay error.
  */
 const CatErrorHandler = () => {
   const { error, loadRandomCats, loadFavouriteCats } = useCats();
@@ -34,12 +34,12 @@ const CatErrorHandler = () => {
       </div>
       <Button
         onClick={handleRetry}
-        ariaLabel="Retry loading cats"
+        ariaLabel="Reintentar cargar gatos"
         variant="destructive"
         size="sm"
         className="font-bold text-xs"
       >
-        Retry
+        Reintentar
       </Button>
     </div>
   );

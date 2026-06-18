@@ -1,7 +1,7 @@
 /**
- * @file Presentational component to render a list of cat cards.
- * @description Displays a title and a grid of cats. It is agnostic to business logic
- * and renders UI based on received props.
+ * @file Componente de presentación para renderizar una lista de tarjetas de gatos.
+ * @description Muestra un título y una cuadrícula de gatos. Es agnóstico a la lógica de negocio
+ * y renderiza la UI basada en las props recibidas.
  */
 
 import React from "react";
@@ -18,7 +18,7 @@ import { logStart, logState } from "@shared/lib/debugLogger";
  */
 
 /**
- * Animation variants for staggered list entrance.
+ * Variantes de animación para la entrada escalonada de la lista.
  * @constant {Object}
  */
 const listItemVariants = {
@@ -47,7 +47,7 @@ const listItemVariants = {
 };
 
 /**
- * Grid container animation variants.
+ * Variantes de animación para el contenedor de la cuadrícula.
  * @constant {Object}
  */
 const gridVariants = {
@@ -59,18 +59,18 @@ const gridVariants = {
 };
 
 /**
- * Displays a section with a title and a list of cats in a grid format.
+ * Muestra una sección con un título y una lista de gatos en formato de cuadrícula.
  *
  * @component
- * @param {object} props - Component properties.
- * @param {string} [props.title] - Section title.
- * @param {CatEntity[]} props.cats - Array of normalized cats to display.
- * @param {(cat: CatEntity) => void} props.onAction - Function to execute on card action.
- * @param {'save' | 'delete'} props.actionType - Action type for the card.
- * @param {(cat: CatEntity) => boolean} props.isActionDisabled - Function that determines if action is disabled.
- * @param {boolean} props.loading - If `true`, shows loading skeleton.
- * @param {import('react').ReactNode} [props.emptyStateMessage] - Message to display if list is empty.
- * @returns {JSX.Element} The rendered React component.
+ * @param {object} props - Propiedades del componente.
+ * @param {string} [props.title] - Título de la sección.
+ * @param {CatEntity[]} props.cats - Array de gatos normalizados a mostrar.
+ * @param {(cat: CatEntity) => void} props.onAction - Función a ejecutar en la acción de la tarjeta.
+ * @param {'save' | 'delete'} props.actionType - Tipo de acción para la tarjeta.
+ * @param {(cat: CatEntity) => boolean} props.isActionDisabled - Función que determina si la acción está deshabilitada.
+ * @param {boolean} props.loading - Si es `true`, muestra el esqueleto de carga.
+ * @param {import('react').ReactNode} [props.emptyStateMessage] - Mensaje a mostrar si la lista está vacía.
+ * @returns {JSX.Element} El componente React renderizado.
  */
 const CatList = (props) => {
     logStart(`CatList "${props.title}"`);
@@ -87,7 +87,7 @@ const CatList = (props) => {
         emptyStateMessage,
     } = props;
 
-    // Show skeleton immediately when no cats (avoids empty flash)
+    // Mostrar esqueleto inmediatamente cuando no hay gatos (evita parpadeo vacío)
     const showSkeleton = cats.length === 0 && loading;
     const isEmpty = !loading && cats.length === 0;
 
@@ -143,7 +143,7 @@ const CatList = (props) => {
                                     <CatCard>
                                         <CatCard.Body url={cat.url} id={cat.id} />
                                         
-                                        {/* Floating Badge (Original design had it) */}
+                                        {/* Insignia Flotante (El diseño original la tenía) */}
                                         <div className={cn(
                                             "absolute top-3 left-3 px-2 py-1 text-[12px] font-mono font-medium tracking-wider text-white bg-black/40 backdrop-blur-sm rounded-md pointer-events-none",
                                             !shouldReduceMotion && "opacity-0 group-hover:opacity-100 transition-opacity duration-300"

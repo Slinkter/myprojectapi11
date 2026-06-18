@@ -1,6 +1,6 @@
 /**
- * @file Infrastructure layer: TheCatAPI Client.
- * @description Low-level HTTP client for interacting with the external API.
+ * @file Capa de infraestructura: Cliente de TheCatAPI.
+ * @description Cliente HTTP de bajo nivel para interactuar con la API externa.
  */
 
 import axios from "axios";
@@ -9,20 +9,20 @@ import { logApi } from "@shared/lib/debugLogger";
 
 /**
  * @typedef {Object} RawApiCat
- * @property {string} id - The unique identifier of the cat image from TheCatAPI.
- * @property {string} url - The URL pointing to the cat image.
- * @property {number} width - The width of the returned image.
- * @property {number} height - The height of the returned image.
+ * @property {string} id - El identificador único de la imagen del gato de TheCatAPI.
+ * @property {string} url - La URL que apunta a la imagen del gato.
+ * @property {number} width - El ancho de la imagen devuelta.
+ * @property {number} height - El alto de la imagen devuelta.
  */
 
 /**
  * @typedef {Object} RawFavouriteCat
- * @property {number} id - The unique identifier of the favourite record.
- * @property {string} user_id - The user ID associated with the favourite.
- * @property {string} imageId - The ID of the image that was favorited.
- * @property {string} subId - Optional sub-ID for filtering over TheCatApi.
- * @property {string} created_at - Timestamp of when the favourite was created.
- * @property {Pick<RawApiCat, "id" | "url">} image - The nested image object.
+ * @property {number} id - El identificador único del registro de favorito.
+ * @property {string} user_id - El ID de usuario asociado con el favorito.
+ * @property {string} imageId - El ID de la imagen que fue marcada como favorita.
+ * @property {string} subId - Sub-ID opcional para filtrar en TheCatApi.
+ * @property {string} created_at - Marca de tiempo de cuando se creó el favorito.
+ * @property {Pick<RawApiCat, "id" | "url">} image - El objeto de imagen anidado.
  */
 
 const api = axios.create({
@@ -32,7 +32,7 @@ const api = axios.create({
 });
 
 /**
- * Low-level API client for managing requests to TheCatAPI.
+ * Cliente de API de bajo nivel para gestionar solicitudes a TheCatAPI.
  * @namespace
  */
 export const catApiService = {

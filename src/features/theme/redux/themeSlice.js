@@ -23,8 +23,7 @@ const getInitialTheme = () => {
 const themeSlice = createSlice({
     name: "theme",
     initialState: {
-        /** @type {"dark" | "light"} */
-        mode: getInitialTheme(),
+        mode: getInitialTheme() /** @type {"dark" | "light"} */,
     },
     reducers: {
         /**

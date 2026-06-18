@@ -1,6 +1,6 @@
 /**
- * @file Loading spinner component.
- * @description A reusable animated spinner for loading states.
+ * @file Componente de spinner de carga.
+ * @description Un spinner animado reutilizable para estados de carga.
  */
 
 import { m } from "framer-motion";
@@ -8,12 +8,12 @@ import PropTypes from "prop-types";
 
 /**
  * @typedef {Object} LoadingSpinnerProps
- * @property {string} [size] - Size of the spinner (sm, md, lg).
- * @property {string} [className] - Additional CSS classes.
+ * @property {string} [size] - Tamaño del spinner (sm, md, lg).
+ * @property {string} [className] - Clases CSS adicionales.
  */
 
 /**
- * Size configurations for the spinner.
+ * Configuraciones de tamaño para el spinner.
  * @constant {Object}
  */
 const sizeConfig = {
@@ -23,7 +23,7 @@ const sizeConfig = {
 };
 
 /**
- * Animation variants for rotation.
+ * Variantes de animación para la rotación.
  * @constant {Object}
  */
 const spinVariants = {
@@ -38,10 +38,10 @@ const spinVariants = {
 };
 
 /**
- * Animated loading spinner.
+ * Spinner de carga animado.
  * @component
- * @param {LoadingSpinnerProps} props - Component properties.
- * @returns {JSX.Element} Spinner element.
+ * @param {LoadingSpinnerProps} props - Propiedades del componente.
+ * @returns {JSX.Element} Elemento del spinner.
  */
 const LoadingSpinner = ({ size = "md", className = "" }) => {
     const config = sizeConfig[size] || sizeConfig.md;

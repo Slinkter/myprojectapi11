@@ -1,16 +1,16 @@
 /**
- * @file CatCardHeader component.
- * @description Renders the header of a cat card with ID and status indicator.
+ * @file Componente CatCardHeader.
+ * @description Renderiza la cabecera de una tarjeta de gato con el ID e indicador de estado.
  */
 
 import React from "react";
 import PropTypes from "prop-types";
 
 /**
- * CatCardHeader component.
- * @param {object} props - Component properties.
- * @param {string} props.id - The cat ID.
- * @returns {JSX.Element} The header element.
+ * Componente CatCardHeader.
+ * @param {object} props - Propiedades del componente.
+ * @param {string} props.id - El ID del gato.
+ * @returns {JSX.Element} El elemento de la cabecera.
  */
 const CatCardHeader = ({ id }) => (
   <div className="flex items-center justify-between px-4 py-3 bg-muted/50 border-b border-border">
